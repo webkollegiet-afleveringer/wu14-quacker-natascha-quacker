@@ -1,6 +1,7 @@
 import { useLoaderData } from 'react-router';
 import '../style/_base.sass';
 import Navigation from '../components/Navigation/Navigation';
+import Register from '../components/Register/Register';
 
 
 export default function Home() {
@@ -12,6 +13,8 @@ export default function Home() {
     return (
         <section className="home-page">
             <h1>Home</h1>
+
+            <Register />
 
             <Navigation />
         </section>
