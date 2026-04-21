@@ -14,6 +14,12 @@ const getDB = () => {
     return JSON.parse(data);
 };
 
+// Get all quacks
+app.get("/quacks", (req, res) => {
+    const db = getDB();
+    res.json({ quacks: db.quacks });
+});
+
 // GET all users (light)
 app.get("/users", (req, res) => {
     const db = getDB();
