@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router';
 import '../style/_base.sass';
+import Navigation from '../components/Navigation/Navigation';
 
 
 export default function Home() {
@@ -10,7 +11,9 @@ export default function Home() {
 
     return (
         <section className="home-page">
-        <h1>Home</h1>
+            <h1>Home</h1>
+
+            <Navigation />
         </section>
     )
 }
