@@ -20,6 +20,42 @@ app.get("/quacks", (req, res) => {
     res.json({ quacks: db.quacks });
 });
 
+
+app.post("/users", (req, res) => {
+    const db = getDB();
+
+    const { username, email, name, password } = req.body;
+
+    if (!username || !email) {
+        return res.status(400).json({ error: "Missing fields" });
+    }
+
+    const newUser = {
+        id: db.users.length + 1,
+        username,
+        email,
+        name: name || "",
+        password: password || "",
+        avatar: "https://i.pravatar.cc/150",
+        bio: "",
+        joined: new Date().toISOString(),
+        following: 0,
+        followers: 0,
+        messages: [],
+        quacks: [],
+        quacksReplies: [],
+        media: [],
+        likes: []
+    };
+
+    db.users.push(newUser);
+
+    fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
+
+    res.status(201).json(newUser);
+});
+
+
 // GET all users (light)
 app.get("/users", (req, res) => {
     const db = getDB();
