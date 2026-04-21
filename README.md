@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="favicon.svg" alt="Centered Image" width="200">
+  <img src="./src/assets/quacker-logo.svg" alt="Centered Image" width="200">
 </div>
 
 # Udvikling af webapp til Quacker
