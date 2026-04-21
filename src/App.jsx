@@ -1,25 +1,43 @@
-// import { createBrowserRouter, RouterProvider } from "react-router"
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Home from "./pages/Home";
+import Search from "./pages/Search";
+import Notifications from "./pages/Notifications";
+import Messages from "./pages/Messages";
+import Error from "./pages/Error";
 
 
 export default function App() {
 
-  // const browserRouter = createBrowserRouter(
-  //   [
-  //     // {
-  //     //   path: '/',
-  //     //   element: <Home />,
-  //     // },
-  //     // {
-  //     //   path: '*',
-  //     //   element: <Error />
-  //     // }
-  //   ],
-  //   {
-  //     // basename: ""
-  //   }
-  // );
+  const browserRouter = createBrowserRouter(
+    [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/search',
+        element: <Search />,
+      },
+      {
+        path: '/notifications',
+        element: <Notifications />,
+      },
+      {
+        path: '/messages',
+        element: <Messages />,
+      },
+      {
+        path: '*',
+        element: <Error />
+      }
+    ],
+    {
+      basename: "/wu14-quacker-natascha-quacker/"
+    }
+  );
 
-  // return (
-  //   <RouterProvider router={browserRouter} />
-  // )
+  return (
+    <RouterProvider router={browserRouter} />
+  )
+
 }
