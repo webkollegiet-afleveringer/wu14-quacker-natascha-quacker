@@ -1,9 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
+
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Notifications from "./pages/Notifications";
 import Messages from "./pages/Messages";
 import Error from "./pages/Error";
+
+import usersLoader from "./loaders/usersLoader";
+import quacksLoader from "./loaders/quacksLoader";
 
 
 export default function App() {
@@ -13,6 +17,8 @@ export default function App() {
       {
         path: '/',
         element: <Home />,
+        loader: quacksLoader,
+        hydrateFallbackElement: <p>Loading quacks...</p>
       },
       {
         path: '/search',
