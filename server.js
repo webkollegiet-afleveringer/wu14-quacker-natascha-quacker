@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const fs = require("fs");
+import express from "express";
+import cors from "cors";
+import fs from "fs";
 
 const app = express();
 app.use(cors());
@@ -8,12 +8,13 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+// helper til db.json
 const getDB = () => {
     const data = fs.readFileSync("./db.json", "utf-8");
     return JSON.parse(data);
 };
 
-// 🔥 HER er din users route
+// GET all users (light)
 app.get("/users", (req, res) => {
     const db = getDB();
 
@@ -26,7 +27,7 @@ app.get("/users", (req, res) => {
     res.json({ users: lightUsers });
 });
 
-// 🔥 HER er single user route
+// GET single user (full)
 app.get("/users/:id", (req, res) => {
     const db = getDB();
     const id = Number(req.params.id);
@@ -40,7 +41,6 @@ app.get("/users/:id", (req, res) => {
     res.json(user);
 });
 
-// 🔥 starter serveren
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
