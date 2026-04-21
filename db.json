@@ -1,0 +1,33 @@
+{
+    "histories": [
+        {
+            "id": 1,
+            "image": "/historyimages/history.png",
+            "title": "History",
+            "subtitle": "Established in the late 1960s, our family owned business is based in Edinburgh and Falkirk, but services customers across the UK. ",
+            "paragraphs": [
+                {
+                    "title": "",
+                    "text": [
+                        "Our Edinburgh branch has the longest history as an audio retailer in the UK. During recent renovations, receipts were found from Nicolson’s Gramophone Saloon dating back to 1926. In the 1950s WG Graham took over the shop and renamed it WG Graham’s HiFi Corner. Upon his retirement, Graham Tiso bought the business and modernized the name to HiFi Horizon.  ",
+                        "Soon thereafter a young enthusiastic Colin MacKenzie (left), who was recommended by Linn’s own Ivor Tiefenbrun, was employed to manage the shop; with a knack for business and years of experience in the hi-fi industry, Colin would later become the owner of HiFi Horizon. Today, Struan MacKenzie carries on the legacy as the company’s Managing Director."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "image": "/historyimages/record.png",
+            "title": "Record Store Day",
+            "subtitle": "We are proud to be a part of Record Store Day, an annual event that celebrates independent record stores and the culture of vinyl music. ",
+            "paragraphs": [
+                {
+                    "title": "",
+                    "text": [
+                        "Every year, on the third Saturday of April, we join music lovers around the world in celebrating Record Store Day. This event is a celebration of independent record stores and the culture of vinyl music. We offer exclusive releases, special discounts, and live performances to mark the occasion. It's a day for music enthusiasts to come together and support their local record stores while enjoying the unique experience of vinyl."
+                    ]
+                }
+            ]
+        }
+    ]
+}
