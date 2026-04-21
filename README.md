@@ -1,16 +1,26 @@
-# React + Vite
+<div align="center">
+  <img src="favicon.svg" alt="Centered Image" width="200">
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Udvikling af webapp til Quacker
 
-Currently, two official plugins are available:
+I dette projekt skal I udvikle en webapp til det nye sociale medie **Quacker**. Formålet er at skabe en moderne, responsiv og brugervenlig frontend, hvor I arbejder med Vite og ReactJS eller tilsvarende teknologi, og hvor al styling struktureres med SASS. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+I får udleveret et Figma‑design, som dækker de centrale sider i platformen, herunder feed, profilvisning og interaktionselementer, så I har et visuelt udgangspunkt for den overordnede brugeroplevelse. 
 
-## React Compiler
+Registreringssiden er dog ikke en del af designmaterialet, og det er derfor jeres opgave selv at udforme og implementere denne side, så den både passer ind i det eksisterende udtryk og fungerer som en naturlig del af brugerrejsen.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+I vælger selv, hvilken backend‑løsning I vil arbejde med, så længe den understøtter de funktioner, I vurderer nødvendige for jeres prototype, eksempelvis oprettelse af brugere, login og håndtering af opslag. 
 
-## Expanding the ESLint configuration
+Det forventes, at I arbejder med en klar komponentstruktur, gennemtænkt state‑håndtering og en samlet løsning, der afspejler, hvordan et rigtigt socialt medie kunne fungere i praksis.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Minimumskrav
+- Oprettelse af API med f.eks. Express.js, der understøtter følgende funktionaliteter:
+  - oprettelse af nye brugere
+  - login
+  - oprettelse af beskeder
+  - håndtering af følgere
+- Oprettelse af nye brugere med grundlæggende validering af indtastede oplysninger.
+- Login‑funktionalitet, der giver adgang til brugerens personlige feed og profil.
+- Mulighed for at oprette beskeder, som vises i brugerens eget feed.
+- Funktionalitet til at følge andre brugere, så deres beskeder fremgår i feedet.
