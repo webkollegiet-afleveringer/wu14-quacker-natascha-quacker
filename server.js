@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import fs from "fs";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const SECRET = "supersecretkey";
 
@@ -27,11 +28,15 @@ app.get("/quacks", (req, res) => {
 app.post("/users", (req, res) => {
     const db = getDB();
 
-    const { name, username, email, password } = req.body;
+    const result = registerSchema.safeParse(req.body);
 
-    if (!username || !email || !password) {
-        return res.status(400).json({ error: "Missing fields" });
+    if (!result.success) {
+        return res.status(400).json({
+            error: result.error.issues
+        });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = {
         id: db.users.length + 1,
@@ -39,6 +44,7 @@ app.post("/users", (req, res) => {
         username,
         email,
         password,
+        // password: hashedPassword,
         avatar: "",
         bio: "",
         joined: new Date().toISOString(),
