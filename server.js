@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import fs from "fs";
+import jwt from "jsonwebtoken";
+
+const SECRET = "supersecretkey";
 
 const app = express();
 app.use(cors());
@@ -8,7 +11,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-// helper til db.json
+// Helper function to read the database
 const getDB = () => {
     const data = fs.readFileSync("./db.json", "utf-8");
     return JSON.parse(data);
@@ -20,13 +23,13 @@ app.get("/quacks", (req, res) => {
     res.json({ quacks: db.quacks });
 });
 
-
+// Create a new user
 app.post("/users", (req, res) => {
     const db = getDB();
 
     const { name, username, email, password } = req.body;
 
-    if (!username || !email) {
+    if (!username || !email || !password) {
         return res.status(400).json({ error: "Missing fields" });
     }
 
@@ -35,15 +38,23 @@ app.post("/users", (req, res) => {
         name: name || "",
         username,
         email,
-        password: password || "",
+        password
     };
 
     db.users.push(newUser);
-
     fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
 
-    res.status(201).json(newUser);
-    // res.status(201).send({ message: "User registered successfully" });
+    // 🔥 GENERÉR TOKEN
+    const token = jwt.sign(
+        { id: newUser.id, username: newUser.username },
+        SECRET,
+        { expiresIn: "7d" }
+    );
+
+    res.status(201).json({
+        user: newUser,
+        token
+    });
 });
 
 
