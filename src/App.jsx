@@ -17,7 +17,7 @@ export default function App() {
       {
         path: '/',
         element: <Home />,
-        loader: quacksLoader,
+        loader: usersLoader,
         hydrateFallbackElement: <p>Loading quacks...</p>
       },
       {
