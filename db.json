@@ -8,8 +8,34 @@
             "email": "natascha.quacker@example.com",
             "bio": "Just a quacker trying to make it in the world of web development. I love coding, coffee, and quacking around with my friends.",
             "joined": "2023-01-15T10:00:00Z",
-            "following": 100,
-            "followers": 150,
+            "following": [
+                {
+                    "id": 1,
+                    "avatar": "https://i.pravatar.cc/150?img=2",
+                    "name": "John Doe",
+                    "username": "johndoe"
+                },
+                {
+                    "id": 3,
+                    "avatar": "https://i.pravatar.cc/150?img=3",
+                    "name": "Jane Smith",
+                    "username": "janesmith"
+                }
+            ],
+            "followers": [
+                {
+                    "id": 1,
+                    "avatar": "https://i.pravatar.cc/150?img=2",
+                    "name": "John Doe",
+                    "username": "johndoe"
+                },
+                {
+                    "id": 3,
+                    "avatar": "https://i.pravatar.cc/150?img=3",
+                    "name": "Jane Smith",
+                    "username": "janesmith"
+                }
+            ],
             "messages": [
                 {
                     "id": 1,
@@ -57,111 +83,160 @@
             "quacks": [
                 {
                     "id": 1,
-                    "userId": 1,
-                    "userAvatar": "https://i.pravatar.cc/150?img=1",
-                    "username": "nataschaquacker",
                     "created": "2023-01-15T10:00:00Z",
-                    "content": "Hello, world! This is my first quack. #excited",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "views": 100,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "johndoe",
-                            "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
-                            "created": "2023-01-15T11:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "Great to see you here, Natascha! Can't wait to see what you share.",
-                            "created": "2023-01-15T12:00:00Z"
-                        },
-                        {
-                            "id": 3,
-                            "username": "nataschaquacker",
-                            "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
-                            "created": "2023-01-15T13:00:00Z"
-                        }
-                    ],
-                    "reposts": 2,
-                    "likes": 5
+                    "author": {
+                        "id": 1,
+                        "avatar": "https://i.pravatar.cc/150?img=1",
+                        "name": "Natascha Quacker",
+                        "username": "nataschaquacker"
+                    },
+                    "quack": {
+                        "content": "Hello, world! This is my first quack.",
+                        "tags": ["excited"],
+                        "media": [
+                            {
+                                "id": 1,
+                                "type": "image",
+                                "url": "https://via.placeholder.com/150"
+                            }
+                        ],
+                        "views": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "likes": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "avatar": "https://i.pravatar.cc/150?img=2"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "reposts": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
+                                "created": "2023-01-15T11:00:00Z"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "content": "Great to see you here, Natascha! Can't wait to see what you share.",
+                                "created": "2023-01-15T12:00:00Z"
+                            },
+                            {
+                                "id": 3,
+                                "username": "nataschaquacker",
+                                "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
+                                "created": "2023-01-15T13:00:00Z"
+                            }
+                        ]
+                    }
 
                 }
             ],
             "quacksRepliedTo": [
                 {
                     "id": 1,
-                    "userId": 1,
-                    "userAvatar": "https://i.pravatar.cc/150?img=1",
-                    "username": "nataschaquacker",
                     "created": "2023-01-15T10:00:00Z",
-                    "content": "Hello, world! This is my first quack. #excited",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "likes": 5,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "johndoe",
-                            "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
-                            "created": "2023-01-15T11:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "Great to see you here, Natascha! Can't wait to see what you share.",
-                            "created": "2023-01-15T12:00:00Z"
-                        },
-                        {
-                            "id": 3,
-                            "username": "nataschaquacker",
-                            "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
-                            "created": "2023-01-15T13:00:00Z"
-                        }
-                    ]
-
-                },
-                {
-                    "id": 2,
-                    "userId": 2,
-                    "userAvatar": "https://i.pravatar.cc/150?img=2",
-                    "username": "johndoe",
-                    "created": "2023-01-15T14:00:00Z",
-                    "content": "Just had the best coffee ever! #coffeeaddict",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "likes": 10,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "nataschaquacker",
-                            "content": "That looks amazing, John! Where did you get it?",
-                            "created": "2023-01-15T15:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "I need to try that place, John! Thanks for the recommendation.",
-                            "created": "2023-01-15T16:00:00Z"
-                        }
-                    ]
+                    "author": {
+                        "id": 1,
+                        "avatar": "https://i.pravatar.cc/150?img=1",
+                        "name": "Natascha Quacker",
+                        "username": "nataschaquacker"
+                    },
+                    "quack": {
+                        "content": "Hello, world! This is my first quack.",
+                        "tags": ["excited"],
+                        "media": [
+                            {
+                                "id": 1,
+                                "type": "image",
+                                "url": "https://via.placeholder.com/150"
+                            }
+                        ],
+                        "views": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "likes": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "avatar": "https://i.pravatar.cc/150?img=2"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "reposts": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
+                                "created": "2023-01-15T11:00:00Z"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "content": "Great to see you here, Natascha! Can't wait to see what you share.",
+                                "created": "2023-01-15T12:00:00Z"
+                            },
+                            {
+                                "id": 3,
+                                "username": "nataschaquacker",
+                                "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
+                                "created": "2023-01-15T13:00:00Z"
+                            }
+                        ]
+                    }
                 }
             ],
             "media": [
@@ -174,33 +249,74 @@
             "quacksLiked": [
                 {
                     "id": 1,
-                    "userId": 2,
-                    "userAvatar": "https://i.pravatar.cc/150?img=2",
-                    "username": "John Doe",
                     "created": "2023-01-15T17:00:00Z",
-                    "content": "Just had the best coffee ever! #coffeeaddict",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "likes": 10,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "nataschaquacker",
-                            "content": "That looks amazing, John! Where did you get it?",
-                            "created": "2023-01-15T15:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "I need to try that place, John! Thanks for the recommendation.",
-                            "created": "2023-01-15T16:00:00Z"
-                        }
-                    ]
+                    "author": {
+                        "id": 2,
+                        "avatar": "https://i.pravatar.cc/150?img=2",
+                        "name": "John Doe",
+                        "username": "johndoe"
+                    },
+                    "quack": {
+                        "content": "Just had the best coffee ever!",
+                        "tags": ["coffee", "addict"],
+                        "media": [
+                            {
+                                "id": 1,
+                                "type": "image",
+                                "url": "https://via.placeholder.com/150"
+                            }
+                        ],
+                        "views": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "likes": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "avatar": "https://i.pravatar.cc/150?img=2"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "reposts": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "content": "That looks amazing, John! Where did you get it?",
+                                "created": "2023-01-15T15:00:00Z"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "content": "I need to try that place, John! Thanks for the recommendation.",
+                                "created": "2023-01-15T16:00:00Z"
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -212,8 +328,34 @@
             "email": "john.doe@example.com",
             "bio": "Software developer and coffee enthusiast. Passionate about creating innovative solutions and exploring new technologies.",
             "joined": "2023-01-15T10:00:00Z",
-            "following": 50,
-            "followers": 200,
+            "following": [
+                {
+                    "id": 1,
+                    "avatar": "https://i.pravatar.cc/150?img=1",
+                    "name": "Natascha Quacker",
+                    "username": "nataschaquacker"
+                },
+                {
+                    "id": 3,
+                    "avatar": "https://i.pravatar.cc/150?img=3",
+                    "name": "Jane Smith",
+                    "username": "janesmith"
+                }
+            ],
+            "followers": [
+                {
+                    "id": 1,
+                    "avatar": "https://i.pravatar.cc/150?img=1",
+                    "name": "Natascha Quacker",
+                    "username": "nataschaquacker"
+                },
+                {
+                    "id": 3,
+                    "avatar": "https://i.pravatar.cc/150?img=3",
+                    "name": "Jane Smith",
+                    "username": "janesmith"
+                }
+            ],
             "messages": [
                 {
                     "id": 1,
@@ -241,74 +383,153 @@
             "quacks": [
                 {
                     "id": 1,
-                    "userId": 2,
-                    "userAvatar": "https://i.pravatar.cc/150?img=2",
-                    "username": "johndoe",
                     "created": "2023-01-15T14:00:00Z",
-                    "content": "Just had the best coffee ever! #coffeeaddict",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "views": 100,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "nataschaquacker",
-                            "content": "That looks amazing, John! Where did you get it?",
-                            "created": "2023-01-15T15:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "I need to try that place, John! Thanks for the recommendation.",
-                            "created": "2023-01-15T16:00:00Z"
-                        }
-                    ],
-                    "reposts": 2,
-                    "likes": 10
+                    "author": {
+                        "id": 2,
+                        "avatar": "https://i.pravatar.cc/150?img=2",
+                        "name": "John Doe",
+                        "username": "johndoe"
+                    },
+                    "quack": {
+                        "content": "Just had the best coffee ever!",
+                        "tags": ["coffee", "addict"],
+                        "media": [
+                            {
+                                "id": 1,
+                                "type": "image",
+                                "url": "https://via.placeholder.com/150"
+                            }
+                        ],
+                        "views": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "likes": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "avatar": "https://i.pravatar.cc/150?img=2"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "reposts": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "content": "That looks amazing, John! Where did you get it?",
+                                "created": "2023-01-15T15:00:00Z"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "content": "I need to try that place, John! Thanks for the recommendation.",
+                                "created": "2023-01-15T16:00:00Z"
+                            }
+                        ]
+                    }
                 }
             ],
             "quacksRepliedTo": [
                 {
                     "id": 1,
-                    "userId": 1,
-                    "userAvatar": "https://i.pravatar.cc/150?img=1",
-                    "username": "nataschaquacker",
-                    "created": "2023-01-15T10:00:00Z",
-                    "content": "Hello, world! This is my first quack. #excited",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "likes": 5,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "johndoe",
-                            "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
-                            "created": "2023-01-15T11:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "Great to see you here, Natascha! Can't wait to see what you share.",
-                            "created": "2023-01-15T12:00:00Z"
-                        },
-                        {
-                            "id": 3,
-                            "username": "nataschaquacker",
-                            "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
-                            "created": "2023-01-15T13:00:00Z"
-                        }
-                    ]
-
+                    "created": "2023-01-15T14:00:00Z",
+                    "author": {
+                        "id": 1,
+                        "avatar": "https://i.pravatar.cc/150?img=1",
+                        "name": "Natascha Quacker",
+                        "username": "nataschaquacker"
+                    },
+                    "quack": {
+                        "content": "Hello, world! This is my first quack. #excited",
+                        "tags": ["excited"],
+                        "media": [
+                            {
+                                "id": 1,
+                                "type": "image",
+                                "url": "https://via.placeholder.com/150"
+                            }
+                        ],
+                        "views": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "likes": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "avatar": "https://i.pravatar.cc/150?img=2"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "reposts": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
+                                "created": "2023-01-15T11:00:00Z"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "content": "Great to see you here, Natascha! Can't wait to see what you share.",
+                                "created": "2023-01-15T12:00:00Z"
+                            },
+                            {
+                                "id": 3,
+                                "username": "nataschaquacker",
+                                "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
+                                "created": "2023-01-15T13:00:00Z"
+                            }
+                        ]
+                    }
                 }
             ],
             "media": [
@@ -321,149 +542,226 @@
             "quacksLiked": [
                 {
                     "id": 1,
-                    "userId": 1,
-                    "userAvatar": "https://i.pravatar.cc/150?img=1",
-                    "username": "Natascha Quacker",
                     "created": "2023-01-15T17:00:00Z",
-                    "content": "Hello, world! This is my first quack. #excited",
-                    "media": [
-                        {
-                            "id": 1,
-                            "type": "image",
-                            "url": "https://via.placeholder.com/150"
-                        }
-                    ],
-                    "likes": 5,
-                    "comments": [
-                        {
-                            "id": 1,
-                            "username": "johndoe",
-                            "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
-                            "created": "2023-01-15T11:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "username": "janesmith",
-                            "content": "Great to see you here, Natascha! Can't wait to see what you share.",
-                            "created": "2023-01-15T12:00:00Z"
-                        },
-                        {
-                            "id": 3,
-                            "username": "nataschaquacker",
-                            "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
-                            "created": "2023-01-15T13:00:00Z"
-                        }
-                     ]
+                    "author": {
+                        "id": 1,
+                        "avatar": "https://i.pravatar.cc/150?img=1",
+                        "name": "Natascha Quacker",
+                        "username": "nataschaquacker"
+                    },
+                    "quack": {
+                        "content": "Hello, world! This is my first quack. #excited",
+                        "tags": ["excited"],
+                        "media": [
+                            {
+                                "id": 1,
+                                "type": "image",
+                                "url": "https://via.placeholder.com/150"
+                            }
+                        ],"views": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "likes": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "avatar": "https://i.pravatar.cc/150?img=2"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "reposts": [
+                            {
+                                "id": 1,
+                                "username": "nataschaquacker",
+                                "avatar": "https://i.pravatar.cc/150?img=1"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "avatar": "https://i.pravatar.cc/150?img=3"
+                            }
+                        ],
+                        "comments": [
+                            {
+                                "id": 1,
+                                "username": "johndoe",
+                                "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
+                                "created": "2023-01-15T11:00:00Z"
+                            },
+                            {
+                                "id": 2,
+                                "username": "janesmith",
+                                "content": "Great to see you here, Natascha! Can't wait to see what you share.",
+                                "created": "2023-01-15T12:00:00Z"
+                            },
+                            {
+                                "id": 3,
+                                "username": "nataschaquacker",
+                                "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
+                                "created": "2023-01-15T13:00:00Z"
+                            }
+                        ]
+                    }
                 }
             ]
 
-        },
-        {
-            "id": 3,
-            "avatar": "https://i.pravatar.cc/150?img=3",
-            "name": "Jane Smith",
-            "username": "janesmith",
-            "email": "jane.smith@example.com",
-            "bio": "Digital marketer and travel lover. Always excited to connect with like-minded professionals.",
-            "joined": "2023-01-15T10:00:00Z",
-            "following": 75,
-            "followers": 180,
-            "messages": [
-                {
-                    "id": 1,
-                    "with": "nataschaquacker",
-                    "avatar": "https://i.pravatar.cc/150?img=1",
-                    "messages": [
-                        {
-                            "id": 1,
-                            "from": "janesmith",
-                            "avatar": "https://i.pravatar.cc/150?img=3",
-                            "content": "Hi Natascha! Just wanted to say welcome to Quacker!",
-                            "created": "2023-01-15T11:00:00Z"
-                        },
-                        {
-                            "id": 2,
-                            "from": "nataschaquacker",
-                            "avatar": "https://i.pravatar.cc/150?img=1",
-                            "content": "Hey Jane, how's it going?",
-                            "created": "2023-01-15T10:30:00Z"
-                        }
-                    ]
-                }
-            ],
-            "quacks": [],
-            "quacksRepliedTo": [],
-            "media": [],
-            "quacksLiked": []
         }
     ],
     "quacks": [
         {
             "id": 1,
-            "userId": 1,
-            "userAvatar": "https://i.pravatar.cc/150?img=1",
-            "username": "nataschaquacker",
-            "created": "2023-01-15T10:00:00Z",
-            "content": "Hello, world! This is my first quack. #excited",
-            "media": [
-                {
-                    "id": 1,
-                    "type": "image",
-                    "url": "https://via.placeholder.com/150"
-                }
-            ],
-            "likes": 5,
-            "comments": [
-                {
-                    "id": 1,
-                    "username": "johndoe",
-                    "content": "Welcome to Quacker, Natascha! Looking forward to your quacks.",
-                    "created": "2023-01-15T11:00:00Z"
-                },
-                {
-                    "id": 2,
-                    "username": "janesmith",
-                    "content": "Great to see you here, Natascha! Can't wait to see what you share.",
-                    "created": "2023-01-15T12:00:00Z"
-                },
-                {
-                    "id": 3,
-                    "username": "nataschaquacker",
-                    "content": "Thank you, John and Jane! I'm excited to be here and share my quacks with you all.",
-                    "created": "2023-01-15T13:00:00Z"
-                }
-            ]
+            "created": "2023-01-15T14:00:00Z",
+            "author": {
+                "id": 2,
+                "avatar": "https://i.pravatar.cc/150?img=2",
+                "name": "John Doe",
+                "username": "johndoe"
+            },
+            "quack": {
+                "content": "Just had the best coffee ever!",
+                "tags": ["coffee", "addict"],
+                "media": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "url": "https://via.placeholder.com/150"
+                    }
+                ],
+                "views": [
+                    {
+                        "id": 1,
+                        "username": "nataschaquacker",
+                        "avatar": "https://i.pravatar.cc/150?img=1"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "avatar": "https://i.pravatar.cc/150?img=3"
+                    }
+                ],
+                "likes": [
+                    {
+                        "id": 1,
+                        "username": "johndoe",
+                        "avatar": "https://i.pravatar.cc/150?img=2"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "avatar": "https://i.pravatar.cc/150?img=3"
+                    }
+                ],
+                "reposts": [
+                    {
+                        "id": 1,
+                        "username": "nataschaquacker",
+                        "avatar": "https://i.pravatar.cc/150?img=1"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "avatar": "https://i.pravatar.cc/150?img=3"
+                    }
+                ],
+                "comments": [
+                    {
+                        "id": 1,
+                        "username": "nataschaquacker",
+                        "content": "That looks amazing, John! Where did you get it?",
+                        "created": "2023-01-15T15:00:00Z"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "content": "I need to try that place, John! Thanks for the recommendation.",
+                        "created": "2023-01-15T16:00:00Z"
+                    }
+                ]
+            }
         },
         {
             "id": 2,
-            "userId": 2,
-            "userAvatar": "https://i.pravatar.cc/150?img=2",
-            "username": "johndoe",
             "created": "2023-01-15T14:00:00Z",
-            "content": "Just had the best coffee ever! #coffeeaddict",
-            "media": [
-                {
-                    "id": 1,
-                    "type": "image",
-                    "url": "https://via.placeholder.com/150"
-                }
-            ],
-            "likes": 10,
-            "comments": [
-                {
-                    "id": 1,
-                    "username": "nataschaquacker",
-                    "content": "That looks amazing, John! Where did you get it?",
-                    "created": "2023-01-15T15:00:00Z"
-                },
-                {
-                    "id": 2,
-                    "username": "janesmith",
-                    "content": "I need to try that place, John! Thanks for the recommendation.",
-                    "created": "2023-01-15T16:00:00Z"
-                }
-            ]
+            "author": {
+                "id": 2,
+                "avatar": "https://i.pravatar.cc/150?img=2",
+                "name": "John Doe",
+                "username": "johndoe"
+            },
+            "quack": {
+                "content": "Just had the best coffee ever!",
+                "tags": ["coffee", "addict"],
+                "media": [
+                    {
+                        "id": 1,
+                        "type": "image",
+                        "url": "https://via.placeholder.com/150"
+                    }
+                ],
+                "views": [
+                    {
+                        "id": 1,
+                        "username": "nataschaquacker",
+                        "avatar": "https://i.pravatar.cc/150?img=1"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "avatar": "https://i.pravatar.cc/150?img=3"
+                    }
+                ],
+                "likes": [
+                    {
+                        "id": 1,
+                        "username": "johndoe",
+                        "avatar": "https://i.pravatar.cc/150?img=2"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "avatar": "https://i.pravatar.cc/150?img=3"
+                    }
+                ],
+                "reposts": [
+                    {
+                        "id": 1,
+                        "username": "nataschaquacker",
+                        "avatar": "https://i.pravatar.cc/150?img=1"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "avatar": "https://i.pravatar.cc/150?img=3"
+                    }
+                ],
+                "comments": [
+                    {
+                        "id": 1,
+                        "username": "nataschaquacker",
+                        "content": "That looks amazing, John! Where did you get it?",
+                        "created": "2023-01-15T15:00:00Z"
+                    },
+                    {
+                        "id": 2,
+                        "username": "janesmith",
+                        "content": "I need to try that place, John! Thanks for the recommendation.",
+                        "created": "2023-01-15T16:00:00Z"
+                    }
+                ]
+            }
         }
     ]
-
 }
