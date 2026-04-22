@@ -38,7 +38,17 @@ app.post("/users", (req, res) => {
         name: name || "",
         username,
         email,
-        password
+        password,
+        avatar: "",
+        bio: "",
+        joined: new Date().toISOString(),
+        following: 0,
+        followers: 0,
+        messages: [],
+        quacks: [],
+        quacksRepliedTo: [],
+        media: [],
+        quacksLiked: []
     };
 
     db.users.push(newUser);
