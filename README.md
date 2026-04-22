@@ -18,9 +18,9 @@ Det forventes, at I arbejder med en klar komponentstruktur, gennemtænkt state�
 - Oprettelse af API med f.eks. Express.js, der understøtter følgende funktionaliteter:
   - oprettelse af nye brugere
   - login
-  - oprettelse af beskeder
+  - oprettelse af quacks (beskeder)
   - håndtering af følgere
 - Oprettelse af nye brugere med grundlæggende validering af indtastede oplysninger.
 - Login‑funktionalitet, der giver adgang til brugerens personlige feed og profil.
-- Mulighed for at oprette beskeder, som vises i brugerens eget feed.
-- Funktionalitet til at følge andre brugere, så deres beskeder fremgår i feedet.
+- Mulighed for at oprette quacks, som vises i brugerens eget feed.
+- Funktionalitet til at følge andre brugere, så deres quacks fremgår i feedet.
