@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import './Register.sass';
 import { useState } from "react";
-import { registerSchema } from '../validation/authSchema';
+import { registerSchema } from '../../validation/authSchema';
 
 
 export default function Register() {
