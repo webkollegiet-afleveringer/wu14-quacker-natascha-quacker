@@ -3,6 +3,7 @@ import cors from "cors";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { registerSchema } from "./src/components/validation/authSchema";
 
 const SECRET = "supersecretkey";
 
@@ -25,7 +26,7 @@ app.get("/quacks", (req, res) => {
 });
 
 // Create a new user
-app.post("/users", (req, res) => {
+app.post("/users", async (req, res) => {
     const db = getDB();
 
     const result = registerSchema.safeParse(req.body);
