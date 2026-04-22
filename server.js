@@ -37,6 +37,8 @@ app.post("/users", async (req, res) => {
         });
     }
 
+    const { name, username, email, password } = result.data;
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = {
