@@ -3,7 +3,7 @@ import cors from "cors";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { registerSchema } from "./validation/authSchema";
+import { registerSchema } from "./validation/authSchema.js";
 
 const SECRET = "supersecretkey";
 
@@ -36,6 +36,8 @@ app.post("/users", async (req, res) => {
             error: result.error.issues
         });
     }
+
+    const { name, username, email, password } = result.data;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
