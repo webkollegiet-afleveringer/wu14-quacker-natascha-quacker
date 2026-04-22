@@ -24,7 +24,7 @@ app.get("/quacks", (req, res) => {
 app.post("/users", (req, res) => {
     const db = getDB();
 
-    const { username, email, name, password } = req.body;
+    const { name, username, email, password } = req.body;
 
     if (!username || !email) {
         return res.status(400).json({ error: "Missing fields" });
@@ -32,20 +32,10 @@ app.post("/users", (req, res) => {
 
     const newUser = {
         id: db.users.length + 1,
+        name: name || "",
         username,
         email,
-        name: name || "",
         password: password || "",
-        avatar: "https://i.pravatar.cc/150",
-        bio: "",
-        joined: new Date().toISOString(),
-        following: 0,
-        followers: 0,
-        messages: [],
-        quacks: [],
-        quacksReplies: [],
-        media: [],
-        likes: []
     };
 
     db.users.push(newUser);
@@ -53,6 +43,7 @@ app.post("/users", (req, res) => {
     fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
 
     res.status(201).json(newUser);
+    // res.status(201).send({ message: "User registered successfully" });
 });
 
 
@@ -62,6 +53,7 @@ app.get("/users", (req, res) => {
 
     const lightUsers = db.users.map(user => ({
         id: user.id,
+        name: user.name,
         username: user.username,
         email: user.email
     }));
