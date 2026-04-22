@@ -1,33 +1,43 @@
 import express from "express";
 import cors from "cors";
-import fs from "fs";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
+import { connectDB } from "./src/config/db.js";
+import { User } from "./src/models/User.js";
 import { registerSchema } from "./src/validation/authSchema.js";
 
-const SECRET = "supersecretkey";
 
+// Load environment variables from .env file
+dotenv.config();
+
+// Initialize Express app
 const app = express();
+// Allow CORS and parse JSON request bodies
 app.use(cors());
+// This middleware is necessary to parse JSON bodies in POST requests, which we need for the /users endpoint when registering new users.
+// Without this, req.body would be undefined and we wouldn't be able to access the form data sent from the frontend.
 app.use(express.json());
 
+// get the port and JWT secret from environment variables, with defaults for development
 const PORT = process.env.PORT || 3000;
+const SECRET = process.env.JWT_SECRET;
 
-// Helper function to read the database
-const getDB = () => {
-    const data = fs.readFileSync("./db.json", "utf-8");
-    return JSON.parse(data);
-};
+// Connect to MongoDB
+connectDB();
 
-// Get all quacks
+
+// get all quacks
+// this endpoint is just a placeholder for now, since we haven't migrated the quacks data to MongoDB yet. Once we have the quacks in the database, we'll update this endpoint to fetch them from there instead of returning a static message.
 app.get("/quacks", (req, res) => {
-    const db = getDB();
-    res.json({ quacks: db.quacks });
+    res.json({ message: "Quacks endpoint (not migrated yet)" });
 });
 
-// Create a new user
+
+// register new user
 app.post("/users", async (req, res) => {
-    const db = getDB();
 
     const result = registerSchema.safeParse(req.body);
 
@@ -41,15 +51,14 @@ app.post("/users", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = {
-        id: db.users.length + 1,
+    const newUser = await User.create({
         name: name || "",
         username,
         email,
         password: hashedPassword,
         avatar: "",
         bio: "",
-        joined: new Date().toISOString(),
+        joined: new Date(),
         following: 0,
         followers: 0,
         messages: [],
@@ -57,14 +66,10 @@ app.post("/users", async (req, res) => {
         quacksRepliedTo: [],
         media: [],
         quacksLiked: []
-    };
+    });
 
-    db.users.push(newUser);
-    fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
-
-    // generate JWT token
     const token = jwt.sign(
-        { id: newUser.id, username: newUser.username },
+        { id: newUser._id, username: newUser.username },
         SECRET,
         { expiresIn: "7d" }
     );
@@ -76,34 +81,30 @@ app.post("/users", async (req, res) => {
 });
 
 
-// GET all users (light)
-app.get("/users", (req, res) => {
-    const db = getDB();
-
-    const lightUsers = db.users.map(user => ({
-        id: user.id,
-        name: user.name,
-        username: user.username,
-        email: user.email
-    }));
-
-    res.json({ users: lightUsers });
+// get all users (for testing purposes, not paginated or secure – only returns name, username, and email)
+app.get("/users", async (req, res) => {
+    const users = await User.find({}, "name username email");
+    res.json({ users });
 });
 
-// GET single user (full)
-app.get("/users/:id", (req, res) => {
-    const db = getDB();
-    const id = Number(req.params.id);
 
-    const user = db.users.find(u => u.id === id);
+// get user by ID (for profile page) - this will be used to fetch the full user data when visiting a profile
+app.get("/users/:id", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
 
-    if (!user) {
-        return res.status(404).json({ error: "User not found" });
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.json(user);
+    } catch (err) {
+        res.status(400).json({ error: "Invalid user ID" });
     }
-
-    res.json(user);
 });
 
+
+// start server after DB connection is established
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
