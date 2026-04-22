@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { nameField, userNameField, emailField, passwordField } from "./formFields";
+import { nameField, userNameField, emailField, passwordField } from "./formFields.js";
 
 
 export const loginSchema = z.object({
