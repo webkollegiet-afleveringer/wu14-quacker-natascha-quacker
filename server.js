@@ -43,8 +43,7 @@ app.post("/users", (req, res) => {
         name: name || "",
         username,
         email,
-        password,
-        // password: hashedPassword,
+        password: hashedPassword,
         avatar: "",
         bio: "",
         joined: new Date().toISOString(),
@@ -60,7 +59,7 @@ app.post("/users", (req, res) => {
     db.users.push(newUser);
     fs.writeFileSync("./db.json", JSON.stringify(db, null, 2));
 
-    // 🔥 GENERÉR TOKEN
+    // generate JWT token
     const token = jwt.sign(
         { id: newUser.id, username: newUser.username },
         SECRET,
