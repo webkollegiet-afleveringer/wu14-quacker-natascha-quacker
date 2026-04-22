@@ -3,7 +3,7 @@ import cors from "cors";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { registerSchema } from "./validation/authSchema.js";
+import { registerSchema } from "./src/validation/authSchema.js";
 
 const SECRET = "supersecretkey";
 
