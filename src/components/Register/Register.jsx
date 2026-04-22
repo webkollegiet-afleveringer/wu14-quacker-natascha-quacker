@@ -27,22 +27,26 @@ export default function Register() {
             setErrors({});
             console.log('Form is valid:', result.data);
 
-            const response = await fetch('https://natascha-quacker-api.onrender.com/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(async (response) => {
+            try {
+                const response = await fetch('https://natascha-quacker-api.onrender.com/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(errorData.message || `Server responded with ${response.status}`);
+                    throw new Error(data.message || `Server responded with ${response.status}`);
                 }
-                return response.json();
-            })
-            .then(data => {
+
                 console.log('User registered successfully:', data);
+
+                localStorage.setItem("token", data.token);
+
+                localStorage.setItem("user", JSON.stringify(data.user));
 
                 navigate('/');
                 
@@ -53,10 +57,10 @@ export default function Register() {
                     password: '',
                     confirmPassword: ''
                 });
-            })
-            .catch(error => {
+
+            } catch (error) {
                 console.error('Error registering user:', error);
-            });
+            }
 
             return;
         }
@@ -73,8 +77,6 @@ export default function Register() {
         
         setErrors(errors);
     };
-
-
 
     // handleChange function to update the formData state when the user types in the form fields
     // event parameter is the change event triggered by the input fields
