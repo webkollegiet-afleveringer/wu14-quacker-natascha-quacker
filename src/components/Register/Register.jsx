@@ -63,11 +63,19 @@ export default function Register() {
                 }
             }
 
-            if (response.ok) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
+            if (!response.ok) {
+                if (data.field) {
+                    newErrors[data.field] = data.message;
+                }
 
-                navigate("/");
+                if (data.error && Array.isArray(data.error)) {
+                    for (const err of data.error) {
+                        const field = err.path?.[0];
+                        if (field) {
+                            newErrors[field] = err.message;
+                        }
+                    }
+                }
             }
 
         }
