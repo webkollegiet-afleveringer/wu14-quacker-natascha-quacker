@@ -27,13 +27,15 @@ export default function Register() {
     console.log("checking username:", username);
     const [usernameError, setUsernameError] = useState(null);
 
+    const cleanUsername = username?.trim();
+
     useEffect(() => {
-        if (!username || username.length < 3) return;
+        if (!cleanUsername || cleanUsername.length < 2) return;
 
         const timeout = setTimeout(async () => {
             try {
                 const res = await fetch(
-                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${encodeURIComponent(username)}`
+                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${encodeURIComponent(cleanUsername)}`
                 );
 
                 if (!res.ok) return;

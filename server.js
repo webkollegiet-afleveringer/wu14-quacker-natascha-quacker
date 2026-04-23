@@ -56,22 +56,17 @@ app.get("/users/:id", async (req, res) => {
 
 
 // MARK: Check Username Availability
-app.get("/users/check-username", async (req, res) => {
+app.get("/users/check-username", (req, res) => {
+    console.log("QUERY RECEIVED:", req.query);
+
     const username = req.query.username;
 
-    if (!username || typeof username !== "string") {
-        return res.json({ exists: false });
+    if (!username) {
+        console.log("MISSING USERNAME");
+        return res.status(400).json({ message: "missing username" });
     }
 
-    try {
-        const exists = await User.exists({ username });
-
-        return res.json({ exists: !!exists });
-    }
-    catch (err) {
-        console.error(err);
-        return res.json({ exists: false });
-    }
+    return res.json({ exists: false });
 });
 
 // MARK: Register User
