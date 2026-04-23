@@ -53,29 +53,35 @@ app.get("/users", async (req, res) => {
 
 
 // MARK: Check Username Availability
-// app.get("/users/check-username", async (req, res) => {
-//     console.log("CHECK USERNAME HIT");
+app.get("/users/check-username", async (req, res) => {
+    try {
+        const { username } = req.query;
 
-//     const username = req.query.username;
+        if (!username) {
+            return res.status(400).json({
+                message: "Username is required"
+            });
+        }
 
-//     if (!username) {
-//         return res.status(400).json({ message: "missing username" });
-//     }
+        const cleanUsername = username.trim().toLowerCase();
 
-//     try {
-//         const exists = await User.exists({
-//             username: new RegExp(`^${username}$`, "i")
-//         });
+        const existingUser = await User.findOne({
+            username: cleanUsername
+        });
 
-//         return res.json({
-//             exists: !!exists
-//         });
-//     }
-//     catch (err) {
-//         console.error(err);
-//         return res.status(500).json({ message: "server error" });
-//     }
-// });
+        return res.json({
+            exists: !!existingUser
+        });
+
+    }
+    catch (error) {
+        console.error("check-username error:", error);
+
+        return res.status(500).json({
+            message: "Server error"
+        });
+    }
+});
 
 
 // MARK: Get User by ID
@@ -108,15 +114,6 @@ app.post("/users", async (req, res) => {
         }
 
         const { name, username, email, password } = result.data;
-
-        const existing = await User.findOne({ username });
-
-        if (existing) {
-            return res.status(400).json({
-                field: "username",
-                message: "Username is already taken"
-            });
-        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 

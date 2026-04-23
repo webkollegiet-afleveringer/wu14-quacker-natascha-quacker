@@ -13,12 +13,63 @@ export default function Register() {
     const {
         register,
         handleSubmit,
+        watch,
         setError,
+        clearErrors,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(registerSchema),
-        mode: "onSubmit"
+        mode: "onChange"
     });
+
+    const username = watch("username") || "";
+
+    const [debouncedUsername, setDebouncedUsername] = useState(username);
+
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedUsername(username);
+        }, 400);
+
+        return () => clearTimeout(timer);
+    }, [username]);
+
+
+    useEffect(() => {
+        const checkUsername = async () => {
+            if (!debouncedUsername) return;
+            if (debouncedUsername.length > 100) return;
+
+            try {
+                const res = await fetch(
+                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${encodeURIComponent(
+                        debouncedUsername
+                    )}`
+                );
+
+                const data = await res.json();
+
+                if (data.exists) {
+                    setError("username", {
+                        type: "server",
+                        message: "Username is already taken"
+                    });
+                } else {
+                    clearErrors("username");
+                }
+
+            } catch {
+                setError("username", {
+                    type: "server",
+                    message: "Could not validate username"
+                });
+            }
+        };
+
+        checkUsername();
+    }, [debouncedUsername, setError, clearErrors]);
+
 
     const onSubmit = async (data) => {
         try {
@@ -34,7 +85,6 @@ export default function Register() {
             const result = await res.json();
 
             if (!res.ok) {
-
                 if (result.field) {
                     setError(result.field, {
                         type: "server",
@@ -63,14 +113,14 @@ export default function Register() {
 
             navigate("/");
 
-        }
-        catch (err) {
+        } catch {
             setError("root", {
                 type: "server",
-                message: "Network error. Please try again."
+                message: "Network error"
             });
         }
     };
+
 
     return (
         <section className="register">
@@ -80,25 +130,14 @@ export default function Register() {
 
                 <label>
                     Full Name
-                    <input
-                        type="text"
-                        placeholder="Full name"
-                        {...register("name")}
-                    />
-                    {errors.name && (
-                        <p className="register__error">
-                            {errors.name.message}
-                        </p>
-                    )}
+                    <input {...register("name")} />
+                    {errors.name && <p>{errors.name.message}</p>}
                 </label>
 
                 <label>
                     Username
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        {...register("username")}
-                    />
+                    <input {...register("username")} />
+
                     {errors.username && (
                         <p className="register__error">
                             {errors.username.message}
@@ -107,46 +146,22 @@ export default function Register() {
                 </label>
 
                 <label>
-                    Email adresse
-                    <input
-                        type="email"
-                        placeholder="Email adresse"
-                        {...register("email")}
-                    />
-                    {errors.email && (
-                        <p className="register__error">
-                            {errors.email.message}
-                        </p>
-                    )}
+                    Email
+                    <input type="email" {...register("email")} />
+                    {errors.email && <p>{errors.email.message}</p>}
                 </label>
 
                 <label>
                     Password
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="new-password"
-                        {...register("password")}
-                    />
-                    {errors.password && (
-                        <p className="register__error">
-                            {errors.password.message}
-                        </p>
-                    )}
+                    <input type="password" {...register("password")} />
+                    {errors.password && <p>{errors.password.message}</p>}
                 </label>
 
                 <label>
-                    Bekræft Password
-                    <input
-                        type="password"
-                        placeholder="Bekræft Password"
-                        autoComplete="new-password"
-                        {...register("confirmPassword")}
-                    />
+                    Confirm Password
+                    <input type="password" {...register("confirmPassword")} />
                     {errors.confirmPassword && (
-                        <p className="register__error">
-                            {errors.confirmPassword.message}
-                        </p>
+                        <p>{errors.confirmPassword.message}</p>
                     )}
                 </label>
 
