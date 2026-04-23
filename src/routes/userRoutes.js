@@ -3,7 +3,8 @@ import {
     getUsers,
     getUserById,
     checkAvailability,
-    registerUser
+    registerUser,
+    loginUser
 } from "../controllers/userControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
