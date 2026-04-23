@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router';
 import './Register.sass';
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from '../../validation/authSchema';
 
 
@@ -8,68 +10,88 @@ export default function Register() {
 
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        name: '',
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError
+    } = useForm({
+        resolver: zodResolver(registerSchema)
     });
 
-    const [errors, setErrors] = useState({});
+    const username = watch("username");
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const [usernameStatus, setUsernameStatus] = useState(null);
 
-        let collectedErrors = {};
+    useEffect(() => {
+        if (!username) return;
 
-        const result = registerSchema.safeParse(formData);
+        const timeout = setTimeout(async () => {
+            try {
+                const res = await fetch(
+                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${username}`
+                );
 
-        if (!result.success) {
-            for (const err of result.error.issues) {
-                const field = err.path[0];
-                collectedErrors[field] = err.message;
+                const data = await res.json();
+
+                if (data.exists) {
+                    setUsernameStatus("taken");
+                }
+                else {
+                    setUsernameStatus("available");
+                }
             }
-        }
+            catch (err) {
+                setUsernameStatus(null);
+            }
+        }, 500);
 
-        if (Object.keys(collectedErrors).length > 0) {
-            setErrors(collectedErrors);
-            return;
-        }
+        return () => clearTimeout(timeout);
+        
+    }, [username]);
 
+    const onSubmit = async (data) => {
         try {
             const response = await fetch("https://natascha-quacker-api.onrender.com/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(data)
             });
 
-            const data = await response.json();
+            const result = await response.json();
 
             if (!response.ok) {
-                if (data.field) {
-                    collectedErrors[data.field] = data.message;
+                // server errors (fx username exists)
+                if (result.field) {
+                    setError(result.field, {
+                        type: "server",
+                        message: result.message
+                    });
                 }
 
-                if (data.error && Array.isArray(data.error)) {
-                    for (const err of data.error) {
+                if (result.error && Array.isArray(result.error)) {
+                    result.error.forEach((err) => {
                         const field = err.path?.[0];
-                        collectedErrors[field] = err.message;
-                    }
+                        setError(field, {
+                            type: "server",
+                            message: err.message
+                        });
+                    });
                 }
 
-                setErrors(collectedErrors);
                 return;
             }
 
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("token", result.token);
+            localStorage.setItem("user", JSON.stringify(result.user));
 
             navigate("/");
-
         }
         catch (err) {
-            setErrors({ general: "Network error" });
+            setError("root", {
+                type: "server",
+                message: "Network error"
+            });
         }
     };
 
@@ -89,7 +111,7 @@ export default function Register() {
 
             <h1>Create Quackount</h1>
 
-            <form className='register__form' onSubmit={handleSubmit}>
+            <form className='register__form' onSubmit={handleSubmit(onSubmit)}>
 
                 <label>
                     <span className='register__label'>Full Name</span>
@@ -98,10 +120,16 @@ export default function Register() {
                         id="name" 
                         name="name" 
                         placeholder='Full name' 
-                        onChange={handleChange}
-                        value={formData.name} 
+                        {...register("name")}
                     />
-                    {errors.name && <p className='register__error'>{errors.name}</p>}
+                    {usernameStatus === "taken" && (
+                        <p className="register__error">Username is already taken</p>
+                    )}
+
+                    {usernameStatus === "available" && (
+                        <p className="register__success">Username is available</p>
+                    )}
+                    {errors.name && <p className='register__error'>{errors.name.message}</p>}
                 </label>
 
                 <label>
@@ -111,10 +139,9 @@ export default function Register() {
                         id="username" 
                         name="username" 
                         placeholder='Username' 
-                        onChange={handleChange}
-                        value={formData.username} 
+                        {...register("username")}
                     />
-                    {errors.username && <p className='register__error'>{errors.username}</p>}
+                    {errors.username && <p className='register__error'>{errors.username.message}</p>}
                 </label>
 
                 <label>
@@ -124,10 +151,9 @@ export default function Register() {
                         id="email" 
                         name="email" 
                         placeholder='Email adresse' 
-                        onChange={handleChange}
-                        value={formData.email}  
+                        {...register("email")}  
                     />
-                    {errors.email && <p className='register__error'>{errors.email}</p>}
+                    {errors.email && <p className="register__error">{errors.email.message}</p>}
                 </label>
                 
                 <label>
@@ -137,11 +163,10 @@ export default function Register() {
                         id="password" 
                         name="password" 
                         placeholder='Password' 
-                        onChange={handleChange}
-                        value={formData.password} 
+                        {...register("password")} 
                         autoComplete="new-password" 
                     />
-                    {errors.password && <p className='register__error'>{errors.password}</p>}
+                    {errors.password && <p className='register__error'>{errors.password.message}</p>}
                 </label>
 
                 <label>
@@ -151,11 +176,10 @@ export default function Register() {
                         id="confirmPassword" 
                         name="confirmPassword" 
                         placeholder='Bekræft Password' 
-                        onChange={handleChange}
-                        value={formData.confirmPassword} 
+                        {...register("confirmPassword")}
                         autoComplete="new-password" 
                     />
-                    {errors.confirmPassword && <p className='register__error'>{errors.confirmPassword}</p>}
+                    {errors.confirmPassword && <p className='register__error'>{errors.confirmPassword.message}</p>}
                 </label>
 
                 <button type="submit" className='register__button'>Opret konto</button>
