@@ -15,34 +15,38 @@ export default function Register() {
         register,
         handleSubmit,
         watch,
+        trigger,
         setError,
         formState: { errors }
     } = useForm({
-        resolver: zodResolver(registerSchema)
+        resolver: zodResolver(registerSchema),
+        mode: "onChange"
     });
 
     const username = watch("username") || "";
+    console.log("checking username:", username);
     const [usernameError, setUsernameError] = useState(null);
 
     useEffect(() => {
-        if (!username) return;
+        if (!username || username.length < 3) return;
 
         const timeout = setTimeout(async () => {
             try {
                 const res = await fetch(
-                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${username}`
+                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${encodeURIComponent(username)}`
                 );
+
+                if (!res.ok) return;
 
                 const data = await res.json();
 
-                if (data.exists) {
-                    setError("username", {
-                        type: "manual",
-                        message: "Username is already taken"
-                    });
-                }
-            } catch {
-                // ignore
+                setError("username", {
+                    type: "manual",
+                    message: data.exists ? "Username is already taken" : ""
+                });
+
+            } catch (err) {
+                console.log("check failed");
             }
         }, 400);
 

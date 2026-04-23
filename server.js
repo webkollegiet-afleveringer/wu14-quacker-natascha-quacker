@@ -59,11 +59,14 @@ app.get("/users/:id", async (req, res) => {
 app.get("/users/check-username", async (req, res) => {
     const { username } = req.query;
 
+    if (!username || typeof username !== "string") {
+        return res.status(200).json({ exists: false });
+    }
+
     const exists = await User.exists({ username });
 
     res.json({ exists: !!exists });
 });
-
 
 // MARK: Register User
 app.post("/users", async (req, res) => {
