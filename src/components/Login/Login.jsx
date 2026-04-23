@@ -1,107 +1,82 @@
-import { useState } from 'react';
-import { loginSchema } from '../../validation/authSchema';
-import './Login.sass';
-import { useNavigate } from 'react-router';
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../hooks/useAuth.jsx";
+import "./Login.sass";
 
 
 export default function Login() {
 
+    const { login } = useAuth();
+
+    const { register, handleSubmit, setError, formState: { errors } } = useForm();
+    
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
-
-    const [errors, setErrors] = useState({});
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            setErrors({ general: "No token found. Please register first." });
-            return;
-        }
-        
-        // Check if token is valid by sending a request to the server with the token in the Authorization header and see if we get a valid response back, if not, show an error message to the user
-        // check if token matches a token in the database
-        // if token is in the database, check if it belongs to the email trying to sign in
-
-
-        const result = loginSchema.safeParse(formData);
-
-        if (result.success) {
-            setErrors({});
-            console.log('Form is valid:', result.data);
-
-            try {
-                const response = await fetch('https://natascha-quacker-api.onrender.com/login', {
-                    method: 'POST',
+    const onSubmit = async (data) => {
+        try {
+            const res = await fetch(
+                "https://natascha-quacker-api.onrender.com/users/login",
+                {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
-                        // 'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({
-                        email: formData.email,
-                        password: formData.password
-                    })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.message || `Server responded with ${response.status}`);
+                    body: JSON.stringify(data)
                 }
+            );
 
-                console.log('User logged in successfully:', data);
+            const result = await res.json();
 
-                localStorage.setItem("token", data.token);
-
-                localStorage.setItem("user", JSON.stringify(data.user));
-
-                navigate('/');
-                
-                setFormData({
-                    email: '',
-                    password: ''
+            if (!res.ok) {
+                setError(result.field || "root", {
+                    message: result.message
                 });
-
-            } catch (error) {
-                console.error('Error logging in user:', error);
+                return;
             }
 
-            return;
+            login(result.user, result.token);
+
+            navigate("/");
+
         }
-
-        const errors = {};
-
-        for (const err of result.error.issues) {
-            const field = err.path[0];
-
-            if (!errors[field]) {
-                errors[field] = err.message;
-            }
+        catch {
+            setError("root", {
+                message: "Network error"
+            });
         }
-        
-        setErrors(errors);
     };
 
-    // handleChange function to update the formData state when the user types in the form fields
-    // event parameter is the change event triggered by the input fields
-    const handleChange = (event) => {
-        // destructure the "name" and "value" properties from the event.target, which is the input field that triggered the change event
-        const { name, value } = event.target;
-        // update the formData state by spreading the previous formData and updating the specific field that changed (using the "name" property as the key and the "value" property as the new value for that field)
-        setFormData({...formData, [name]: value });
-    };
-    
     return (
-        <section className="login-page">
+        <section className="login">
             <h1>Login</h1>
-            
-        </section>
-    )
 
+            <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+
+                <label>
+                    Email
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        {...register("email")}
+                    />
+                    {errors.email && <p className="login__error">{errors.email.message}</p>}
+                </label>
+
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        {...register("password")}
+                    />
+                    {errors.password && <p className="login__error">{errors.password.message}</p>}
+                </label>
+
+                {errors.root && <p className="login__error">{errors.root.message}</p>}
+
+                <button type="submit" className="login__button">Login</button>
+
+            </form>
+        </section>
+    );
 }
