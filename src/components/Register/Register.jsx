@@ -21,77 +21,61 @@ export default function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // 1. Frontend validation (Zod)
+        let newErrors = {};
+
         const result = registerSchema.safeParse(formData);
 
         if (!result.success) {
-            const errors = {};
-
             for (const err of result.error.issues) {
                 const field = err.path[0];
-                if (!errors[field]) {
-                    errors[field] = err.message;
+                if (!newErrors[field]) {
+                    newErrors[field] = err.message;
                 }
             }
-
-            setErrors(errors);
-            return;
         }
 
-        setErrors({});
-
-        // 2. Backend request (REAL validation)
         try {
-            const response = await fetch("https://natascha-quacker-api.onrender.com/users", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            });
+            const response = await fetch(
+                "https://natascha-quacker-api.onrender.com/users",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                }
+            );
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw data; // email/username errors kommer her
+                if (data.field) {
+                    newErrors[data.field] = data.message;
+                }
+                else if (data.error && Array.isArray(data.error)) {
+                    for (const err of data.error) {
+                        const field = err.path?.[0];
+                        if (field) {
+                            newErrors[field] = err.message;
+                        }
+                    }
+                }
+                else {
+                    newErrors.general = data.message;
+                }
             }
 
-            console.log("User registered:", data);
+            if (response.ok) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user));
 
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
-
-            navigate("/");
-
-            setFormData({
-                name: "",
-                username: "",
-                email: "",
-                password: "",
-                confirmPassword: ""
-            });
+                navigate("/");
+            }
 
         }
         catch (error) {
-            const errors = {};
-
-            if (Array.isArray(error.error)) {
-                for (const err of error.error) {
-                    const field = err.path?.[0];
-                    if (field) {
-                        errors[field] = err.message;
-                    }
-                }
-            }
-            else if (error.field) {
-                errors[error.field] = error.message;
-            }
-            else {
-                errors.general = error.message;
-            }
-
-            setErrors(errors);
+            newErrors.general = "Network error";
         }
+
+        setErrors(newErrors);
     };
 
     // handleChange function to update the formData state when the user types in the form fields
