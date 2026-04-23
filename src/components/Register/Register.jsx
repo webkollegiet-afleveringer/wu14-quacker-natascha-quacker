@@ -1,20 +1,11 @@
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, Watch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
 import "./Register.sass";
+import { registerSchema } from "../../validation/authSchema";
 
-// MARK: Zod schema
-const registerSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    username: z.string().min(1, "Username is required"),
-    email: z.string().email("Invalid email"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
-    confirmPassword: z.string().min(1, "Please confirm password")
-}).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"]
-});
 
 export default function Register() {
     const navigate = useNavigate();
@@ -23,11 +14,40 @@ export default function Register() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
-        setError
+        watch,
+        setError,
+        formState: { errors }
     } = useForm({
         resolver: zodResolver(registerSchema)
     });
+
+    const username = watch("username") || "";
+    const [usernameError, setUsernameError] = useState(null);
+
+    useEffect(() => {
+        if (!username) return;
+
+        const timeout = setTimeout(async () => {
+            try {
+                const res = await fetch(
+                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${username}`
+                );
+
+                const data = await res.json();
+
+                if (data.exists) {
+                    setError("username", {
+                        type: "manual",
+                        message: "Username is already taken"
+                    });
+                }
+            } catch {
+                // ignore
+            }
+        }, 400);
+
+        return () => clearTimeout(timeout);
+    }, [username]);
 
     // MARK: Submit
     const onSubmit = async (data) => {
@@ -77,7 +97,7 @@ export default function Register() {
             });
         }
     };
-    
+
 
     return (
         <section className='register'>
@@ -104,25 +124,7 @@ export default function Register() {
                     <input
                         type="text"
                         placeholder="Username"
-                        {...register("username", {
-                            validate: async (value) => {
-                                if (!value) return "Username is required";
-
-                                try {
-                                    const res = await fetch(
-                                        `https://natascha-quacker-api.onrender.com/users/check-username?username=${value}`
-                                    );
-
-                                    const data = await res.json();
-
-                                    return data.exists
-                                        ? "Username is already taken"
-                                        : true;
-                                } catch {
-                                    return "Could not validate username";
-                                }
-                            }
-                        })}
+                        {...register("username")}
                     />
 
                     {errors.username && (
