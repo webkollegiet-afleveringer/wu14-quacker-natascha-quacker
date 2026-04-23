@@ -52,30 +52,44 @@ app.get("/users", async (req, res) => {
 });
 
 
-// MARK: Check Username Availability
-app.get("/users/check-username", async (req, res) => {
+// MARK: Check Username/Email
+app.get("/users/check-availability", async (req, res) => {
     try {
-        const { username } = req.query;
+        const { username, email } = req.query;
 
-        if (!username) {
+        if (!username && !email) {
             return res.status(400).json({
-                message: "Username is required"
+                message: "username or email is required"
             });
         }
 
-        const cleanUsername = username.trim().toLowerCase();
+        const response = {};
 
-        const existingUser = await User.findOne({
-            username: cleanUsername
-        });
+        if (username) {
+            const cleanUsername = username.trim().toLowerCase();
 
-        return res.json({
-            exists: !!existingUser
-        });
+            const existingUsername = await User.findOne({
+                username: cleanUsername
+            });
+
+            response.usernameExists = !!existingUsername;
+        }
+
+        if (email) {
+            const cleanEmail = email.trim().toLowerCase();
+
+            const existingEmail = await User.findOne({
+                email: cleanEmail
+            });
+
+            response.emailExists = !!existingEmail;
+        }
+
+        return res.json(response);
 
     }
     catch (error) {
-        console.error("check-username error:", error);
+        console.error("check-availability error:", error);
 
         return res.status(500).json({
             message: "Server error"
