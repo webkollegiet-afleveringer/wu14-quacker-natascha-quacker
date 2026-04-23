@@ -58,75 +58,102 @@ app.get("/users/:id", async (req, res) => {
 // MARK: Register User
 app.post("/users", async (req, res) => {
 
-    const result = registerSchema.safeParse(req.body);
+    try {
+        const result = registerSchema.safeParse(req.body);
 
-    if (!result.success) {
-        return res.status(400).json({
-            error: result.error.issues
+        if (!result.success) {
+            return res.status(400).json({
+                error: result.error.issues
+            });
+        }
+
+        const { name, username, email, password } = result.data;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = await User.create({
+            name: name || "",
+            username,
+            email,
+            password: hashedPassword,
+            avatar: "",
+            bio: "",
+            joined: new Date(),
+            following: 0,
+            followers: 0,
+            messages: [],
+            quacks: [],
+            quacksRepliedTo: [],
+            media: [],
+            quacksLiked: []
+        });
+
+        const token = jwt.sign(
+            { id: newUser._id, username: newUser.username },
+            SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.status(201).json({
+            user: newUser,
+            token
+        });
+
+    }
+    catch (error) {
+        console.error(error);
+
+        // 🔥 Mongo duplicate key error
+        if (error.code === 11000) {
+            if (error.keyPattern.email) {
+                return res.status(400).json({
+                    field: "email",
+                    message: "Email already exists"
+                });
+            }
+
+            if (error.keyPattern.username) {
+                return res.status(400).json({
+                    field: "username",
+                    message: "Username already exists"
+                });
+            }
+        }
+
+        res.status(500).json({
+            message: "Something went wrong"
         });
     }
-
-    const { name, username, email, password } = result.data;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = await User.create({
-        name: name || "",
-        username,
-        email,
-        password: hashedPassword,
-        avatar: "",
-        bio: "",
-        joined: new Date(),
-        following: 0,
-        followers: 0,
-        messages: [],
-        quacks: [],
-        quacksRepliedTo: [],
-        media: [],
-        quacksLiked: []
-    });
-
-    const token = jwt.sign(
-        { id: newUser._id, username: newUser.username },
-        SECRET,
-        { expiresIn: "7d" }
-    );
-
-    res.status(201).json({
-        user: newUser,
-        token
-    });
 });
 
 
 // MARK: Login User
-// app.post("/login", async (req, res) => {
+app.post("/login", async (req, res) => {
     
-//     const { username, password } = req.body;
-//     const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     
-//     if (!user) {
-//         return res.status(401).json({ error: "Invalid credentials" });
-//     }
+    if (!user) {
+        return res.status(401).json({ error: "Invalid credentials" });
+    }
     
-//     const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     
-//     if (!isMatch) {
-//         return res.status(401).json({ error: "Invalid credentials" });
-//     }
+    if (!isMatch) {
+        return res.status(401).json({ error: "Invalid credentials" });
+    }
     
-//     const token = jwt.sign(
-//         { id: user._id, username: user.username },
-//         SECRET,
-//         { expiresIn: "7d" }
-//     );
+    const token = jwt.sign(
+        { id: user._id, email: user.email },
+        SECRET,
+        { expiresIn: "7d" }
+    );
     
-//     res.json({
-//         user,
-//         token
-//     });
-// });
+    res.json({
+        user,
+        token
+    });
+});
 
 
 // MARK: Update User Profile
