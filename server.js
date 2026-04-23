@@ -103,30 +103,17 @@ app.post("/users", async (req, res) => {
     catch (error) {
         console.error(error);
 
-        // 🔥 Mongo duplicate key error
         if (error.code === 11000) {
-            if (error.keyPattern.email) {
-                return res.status(400).json({
-                    field: "email",
-                    message: "Email already exists"
-                });
-            }
+            const field = Object.keys(error.keyPattern)[0];
 
-            if (error.keyPattern.username) {
-                return res.status(400).json({
-                    field: "username",
-                    message: "Username already exists"
-                });
-            }
+            return res.status(400).json({
+                field,
+                message: `${field} already exists`
+            });
         }
 
-        return res.status(400).json({
-            error: [
-                {
-                    path: ["email"],
-                    message: "Email already exists"
-                }
-            ]
+        res.status(500).json({
+            message: "Server error"
         });
     }
 });
