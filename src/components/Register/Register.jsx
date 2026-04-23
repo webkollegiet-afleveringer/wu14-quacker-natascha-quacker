@@ -38,8 +38,11 @@ export default function Register() {
 
                 const data = await response.json();
 
+                // if (!response.ok) {
+                //     throw new Error(data.message || `Server responded with ${response.status}`);
+                // }
                 if (!response.ok) {
-                    throw new Error(data.message || `Server responded with ${response.status}`);
+                    throw data;
                 }
 
                 console.log('User registered successfully:', data);
@@ -58,8 +61,20 @@ export default function Register() {
                     confirmPassword: ''
                 });
 
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Error registering user:', error);
+
+                if (error.field) {
+                    setErrors({
+                        [error.field]: error.message
+                    });
+                }
+                else {
+                    setErrors({
+                        general: error.message || "Something went wrong"
+                    });
+                }
             }
 
             return;
