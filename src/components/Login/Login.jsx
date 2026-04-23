@@ -53,7 +53,7 @@ export default function Login() {
             <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
 
                 <label>
-                    Email
+                    <p className="login__label">Email</p>
                     <input
                         type="email"
                         placeholder="Email"
@@ -63,7 +63,7 @@ export default function Login() {
                 </label>
 
                 <label>
-                    Password
+                    <p className="login__label">Password</p>
                     <input
                         type="password"
                         placeholder="Password"
