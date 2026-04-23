@@ -14,8 +14,6 @@ import { registerSchema } from "./src/validation/authSchema.js";
 // Load environment variables from .env file
 dotenv.config();
 
-console.log("🔥 SERVER STARTED - NEW DEPLOY ACTIVE");
-
 // Initialize Express app
 const app = express();
 // Allow CORS and parse JSON request bodies
@@ -40,6 +38,20 @@ app.get("/users", async (req, res) => {
 });
 
 
+// MARK: Check Username Availability
+app.get("/users/check-username", (req, res) => {
+    console.log("CHECK USERNAME HIT");
+
+    const username = req.query.username;
+
+    if (!username) {
+        return res.status(400).json({ message: "missing username" });
+    }
+
+    return res.json({ exists: false });
+});
+
+
 // MARK: Get User by ID
 // get user by ID (for profile page) - this will be used to fetch the full user data when visiting a profile
 app.get("/users/:id", async (req, res) => {
@@ -56,12 +68,6 @@ app.get("/users/:id", async (req, res) => {
     }
 });
 
-
-// MARK: Check Username Availability
-app.get("/users/check-username", (req, res) => {
-    console.log("🔥 CHECK USERNAME HIT");
-    res.json({ exists: false });
-});
 
 // MARK: Register User
 app.post("/users", async (req, res) => {
