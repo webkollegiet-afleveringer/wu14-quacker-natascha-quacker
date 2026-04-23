@@ -130,32 +130,62 @@ export const registerUser = async (req, res) => {
 
 
 // MARK: Login User
-// export const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({
+            email: email.toLowerCase()
+        });
+
+        if (!user) {
+            return res.status(400).json({
+                field: "email",
+                message: "Invalid email or password"
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json({
+                field: "password",
+                message: "Invalid email or password"
+            });
+        }
+
+        const token = jwt.sign(
+            { id: user._id, username: user.username },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.json({
+            user,
+            token
+        });
+
+    }
+    catch (err) {
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+};
+
+
+// MARK: Get Current User
+// export const getCurrentUser = async (req, res) => {
 //     try {
-//         const { email, password } = req.body;
-//         const user = await User.findOne({ email });
-        
-//         if (!user) {
-//             return res.status(401).json({ error: "Invalid credentials" });
-//         }
-//         const isMatch = await bcrypt.compare(password, user.password);
-        
-//         if (!isMatch) {
-//             return res.status(401).json({ error: "Invalid credentials" });
-//         }
-//         const token = jwt.sign(
-//             { id: user._id, email: user.email },
-//             SECRET,
-//             { expiresIn: "7d" }
-//         );
-//         res.json({
-//             user,
-//             token
-//         });
+//         const user = await User.findById(req.user.id).select("-password");
+
+//         res.json({ user });
+
 //     }
-//     catch (err) {
-//         console.error(err);
-//         res.status(500).json({ message: "Server error" });
+//     catch {
+//         res.status(500).json({
+//             message: "Server error"
+//         });
 //     }
 // };
     
