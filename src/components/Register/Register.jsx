@@ -23,52 +23,83 @@ export default function Register() {
     });
 
     const username = watch("username") || "";
+    const email = watch("email") || "";
 
     const [debouncedUsername, setDebouncedUsername] = useState(username);
+    const [debouncedEmail, setDebouncedEmail] = useState(email);
 
     
     useEffect(() => {
-        const timer = setTimeout(() => {
+        const t = setTimeout(() => {
             setDebouncedUsername(username);
         }, 400);
 
-        return () => clearTimeout(timer);
+        return () => clearTimeout(t);
     }, [username]);
 
 
     useEffect(() => {
-        const checkUsername = async () => {
-            if (!debouncedUsername) return;
-            if (debouncedUsername.length > 100) return;
+        const t = setTimeout(() => {
+            setDebouncedEmail(email);
+        }, 400);
+
+        return () => clearTimeout(t);
+    }, [email]);
+
+
+    useEffect(() => {
+        const checkAvailability = async () => {
+            if (!debouncedUsername && !debouncedEmail) return;
 
             try {
+                const params = new URLSearchParams();
+
+                if (debouncedUsername) {
+                    params.append("username", debouncedUsername);
+                }
+
+                if (debouncedEmail) {
+                    params.append("email", debouncedEmail);
+                }
+
                 const res = await fetch(
-                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${encodeURIComponent(
-                        debouncedUsername
-                    )}`
+                    `https://natascha-quacker-api.onrender.com/users/check-availability?${params.toString()}`
                 );
 
                 const data = await res.json();
 
-                if (data.exists) {
+                if (data.usernameExists) {
                     setError("username", {
                         type: "server",
                         message: "Username is already taken"
                     });
-                } else {
+                }
+                else {
                     clearErrors("username");
                 }
 
-            } catch {
-                setError("username", {
+                if (data.emailExists) {
+                    setError("email", {
+                        type: "server",
+                        message: "Email is already in use"
+                    });
+                }
+                else {
+                    clearErrors("email");
+                }
+
+            }
+            catch {
+                // optional global error
+                setError("root", {
                     type: "server",
-                    message: "Could not validate username"
+                    message: "Could not validate availability"
                 });
             }
         };
 
-        checkUsername();
-    }, [debouncedUsername, setError, clearErrors]);
+        checkAvailability();
+    }, [debouncedUsername, debouncedEmail, setError, clearErrors]);
 
 
     const onSubmit = async (data) => {
@@ -85,6 +116,8 @@ export default function Register() {
             const result = await res.json();
 
             if (!res.ok) {
+
+                // single field error (username/email exists fallback)
                 if (result.field) {
                     setError(result.field, {
                         type: "server",
@@ -92,6 +125,7 @@ export default function Register() {
                     });
                 }
 
+                // zod backend errors
                 if (Array.isArray(result.error)) {
                     result.error.forEach((err) => {
                         const field = err.path?.[0];
@@ -113,14 +147,14 @@ export default function Register() {
 
             navigate("/");
 
-        } catch {
+        }
+        catch {
             setError("root", {
                 type: "server",
                 message: "Network error"
             });
         }
     };
-
 
     return (
         <section className="register">
@@ -131,13 +165,16 @@ export default function Register() {
                 <label>
                     Full Name
                     <input {...register("name")} />
-                    {errors.name && <p>{errors.name.message}</p>}
+                    {errors.name && (
+                        <p className="register__error">
+                            {errors.name.message}
+                        </p>
+                    )}
                 </label>
 
                 <label>
                     Username
                     <input {...register("username")} />
-
                     {errors.username && (
                         <p className="register__error">
                             {errors.username.message}
@@ -148,20 +185,30 @@ export default function Register() {
                 <label>
                     Email
                     <input type="email" {...register("email")} />
-                    {errors.email && <p>{errors.email.message}</p>}
+                    {errors.email && (
+                        <p className="register__error">
+                            {errors.email.message}
+                        </p>
+                    )}
                 </label>
 
                 <label>
                     Password
                     <input type="password" {...register("password")} />
-                    {errors.password && <p>{errors.password.message}</p>}
+                    {errors.password && (
+                        <p className="register__error">
+                            {errors.password.message}
+                        </p>
+                    )}
                 </label>
 
                 <label>
                     Confirm Password
                     <input type="password" {...register("confirmPassword")} />
                     {errors.confirmPassword && (
-                        <p>{errors.confirmPassword.message}</p>
+                        <p className="register__error">
+                            {errors.confirmPassword.message}
+                        </p>
                     )}
                 </label>
 
