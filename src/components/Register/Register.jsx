@@ -15,7 +15,6 @@ export default function Register() {
         handleSubmit,
         watch,
         setError,
-        clearErrors,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(registerSchema),
@@ -74,18 +73,12 @@ export default function Register() {
                         message: "Username is already taken"
                     });
                 }
-                else {
-                    clearErrors("username");
-                }
 
                 if (data.emailExists) {
                     setError("email", {
                         type: "server",
                         message: "Email is already in use"
                     });
-                }
-                else {
-                    clearErrors("email");
                 }
 
             }
@@ -99,7 +92,7 @@ export default function Register() {
         };
 
         checkAvailability();
-    }, [debouncedUsername, debouncedEmail, setError, clearErrors]);
+    }, [debouncedUsername, debouncedEmail, setError]);
 
 
     const onSubmit = async (data) => {
@@ -145,6 +138,8 @@ export default function Register() {
             localStorage.setItem("token", result.token);
             localStorage.setItem("user", JSON.stringify(result.user));
 
+            alert("Registration successful!");
+            
             navigate("/");
 
         }
