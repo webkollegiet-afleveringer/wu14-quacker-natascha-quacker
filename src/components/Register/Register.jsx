@@ -10,52 +10,16 @@ import { registerSchema } from "../../validation/authSchema";
 export default function Register() {
     const navigate = useNavigate();
 
-    // MARK: React Hook Form
     const {
         register,
         handleSubmit,
-        watch,
-        trigger,
         setError,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(registerSchema),
-        mode: "onChange"
+        mode: "onSubmit"
     });
 
-    const username = watch("username") || "";
-    console.log("checking username:", username);
-    const [usernameError, setUsernameError] = useState(null);
-
-    const cleanUsername = username?.trim();
-
-    useEffect(() => {
-        if (!cleanUsername || cleanUsername.length < 2) return;
-
-        const timeout = setTimeout(async () => {
-            try {
-                const res = await fetch(
-                    `https://natascha-quacker-api.onrender.com/users/check-username?username=${encodeURIComponent(cleanUsername)}`
-                );
-
-                if (!res.ok) return;
-
-                const data = await res.json();
-
-                setError("username", {
-                    type: "manual",
-                    message: data.exists ? "Username is already taken" : ""
-                });
-
-            } catch (err) {
-                console.log("check failed");
-            }
-        }, 400);
-
-        return () => clearTimeout(timeout);
-    }, [username]);
-
-    // MARK: Submit
     const onSubmit = async (data) => {
         try {
             const res = await fetch(
@@ -70,7 +34,7 @@ export default function Register() {
             const result = await res.json();
 
             if (!res.ok) {
-                // backend validation errors (fx username exists)
+
                 if (result.field) {
                     setError(result.field, {
                         type: "server",
@@ -78,9 +42,12 @@ export default function Register() {
                     });
                 }
 
-                if (result.error && Array.isArray(result.error)) {
+                if (Array.isArray(result.error)) {
                     result.error.forEach((err) => {
                         const field = err.path?.[0];
+
+                        if (!field) return;
+
                         setError(field, {
                             type: "server",
                             message: err.message
@@ -95,67 +62,66 @@ export default function Register() {
             localStorage.setItem("user", JSON.stringify(result.user));
 
             navigate("/");
+
         }
         catch (err) {
             setError("root", {
                 type: "server",
-                message: "Network error"
+                message: "Network error. Please try again."
             });
         }
     };
 
-
     return (
-        <section className='register'>
+        <section className="register">
             <h1>Create Quackount</h1>
 
-            <form className='register__form' onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="register__form">
 
                 <label>
-                    <span className='register__label'>Full Name</span>
+                    Full Name
                     <input
                         type="text"
                         placeholder="Full name"
                         {...register("name")}
                     />
                     {errors.name && (
-                        <p className='register__error'>
+                        <p className="register__error">
                             {errors.name.message}
                         </p>
                     )}
                 </label>
 
                 <label>
-                    <span className='register__label'>Username</span>
+                    Username
                     <input
                         type="text"
                         placeholder="Username"
                         {...register("username")}
                     />
-
                     {errors.username && (
-                        <p className='register__error'>
+                        <p className="register__error">
                             {errors.username.message}
                         </p>
                     )}
                 </label>
 
                 <label>
-                    <span className='register__label'>Email adresse</span>
+                    Email adresse
                     <input
                         type="email"
                         placeholder="Email adresse"
                         {...register("email")}
                     />
                     {errors.email && (
-                        <p className='register__error'>
+                        <p className="register__error">
                             {errors.email.message}
                         </p>
                     )}
                 </label>
 
                 <label>
-                    <span className='register__label'>Password</span>
+                    Password
                     <input
                         type="password"
                         placeholder="Password"
@@ -163,14 +129,14 @@ export default function Register() {
                         {...register("password")}
                     />
                     {errors.password && (
-                        <p className='register__error'>
+                        <p className="register__error">
                             {errors.password.message}
                         </p>
                     )}
                 </label>
 
                 <label>
-                    <span className='register__label'>Bekræft Password</span>
+                    Bekræft Password
                     <input
                         type="password"
                         placeholder="Bekræft Password"
@@ -178,20 +144,19 @@ export default function Register() {
                         {...register("confirmPassword")}
                     />
                     {errors.confirmPassword && (
-                        <p className='register__error'>
+                        <p className="register__error">
                             {errors.confirmPassword.message}
                         </p>
                     )}
                 </label>
 
-                {/* GENERAL ERROR */}
                 {errors.root && (
-                    <p className='register__error'>
+                    <p className="register__error">
                         {errors.root.message}
                     </p>
                 )}
 
-                <button type="submit" className='register__button'>
+                <button type="submit" className="register__button">
                     Opret konto
                 </button>
 
