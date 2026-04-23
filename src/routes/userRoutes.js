@@ -1,10 +1,11 @@
 import express from "express";
+
 import {
     getUsers,
     getUserById,
     checkAvailability,
     registerUser
-} from "../controllers/userController.js";
+} from "../controllers/userControllers.js";
 
 
 // MARK: ROUTES
