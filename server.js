@@ -1,3 +1,17 @@
+// import app from "./src/app.js";
+// import dotenv from "dotenv";
+
+// dotenv.config();
+
+// const PORT = process.env.PORT || 3000;
+
+// app.listen(PORT, () => {
+//     console.log(`🚀 Server running on port ${PORT}`);
+// });
+
+
+
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -39,7 +53,7 @@ app.get("/users", async (req, res) => {
 
 
 // MARK: Check Username Availability
-app.get("/users/check-username", (req, res) => {
+app.get("/users/check-username", async (req, res) => {
     console.log("CHECK USERNAME HIT");
 
     const username = req.query.username;
@@ -48,7 +62,19 @@ app.get("/users/check-username", (req, res) => {
         return res.status(400).json({ message: "missing username" });
     }
 
-    return res.json({ exists: false });
+    try {
+        const exists = await User.exists({
+            username: new RegExp(`^${username}$`, "i")
+        });
+
+        return res.json({
+            exists: !!exists
+        });
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "server error" });
+    }
 });
 
 
