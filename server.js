@@ -120,8 +120,13 @@ app.post("/users", async (req, res) => {
             }
         }
 
-        res.status(500).json({
-            message: "Something went wrong"
+        return res.status(400).json({
+            error: [
+                {
+                    path: ["email"],
+                    message: "Email already exists"
+                }
+            ]
         });
     }
 });

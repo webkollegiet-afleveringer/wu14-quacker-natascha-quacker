@@ -21,76 +21,77 @@ export default function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // 1. Frontend validation (Zod)
         const result = registerSchema.safeParse(formData);
 
-        if (result.success) {
-            setErrors({});
-            console.log('Form is valid:', result.data);
+        if (!result.success) {
+            const errors = {};
 
-            try {
-                const response = await fetch('https://natascha-quacker-api.onrender.com/users', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const data = await response.json();
-
-                // if (!response.ok) {
-                //     throw new Error(data.message || `Server responded with ${response.status}`);
-                // }
-                if (!response.ok) {
-                    throw data;
-                }
-
-                console.log('User registered successfully:', data);
-
-                localStorage.setItem("token", data.token);
-
-                localStorage.setItem("user", JSON.stringify(data.user));
-
-                navigate('/');
-                
-                setFormData({
-                    name: '',
-                    username: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: ''
-                });
-
-            }
-            catch (error) {
-                console.error('Error registering user:', error);
-
-                if (error.field) {
-                    setErrors({
-                        [error.field]: error.message
-                    });
-                }
-                else {
-                    setErrors({
-                        general: error.message || "Something went wrong"
-                    });
+            for (const err of result.error.issues) {
+                const field = err.path[0];
+                if (!errors[field]) {
+                    errors[field] = err.message;
                 }
             }
 
+            setErrors(errors);
             return;
         }
 
-        const errors = {};
+        setErrors({});
 
-        for (const err of result.error.issues) {
-            const field = err.path[0];
+        // 2. Backend request (REAL validation)
+        try {
+            const response = await fetch("https://natascha-quacker-api.onrender.com/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
 
-            if (!errors[field]) {
-                errors[field] = err.message;
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw data; // email/username errors kommer her
             }
+
+            console.log("User registered:", data);
+
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            navigate("/");
+
+            setFormData({
+                name: "",
+                username: "",
+                email: "",
+                password: "",
+                confirmPassword: ""
+            });
+
         }
-        
-        setErrors(errors);
+        catch (error) {
+            const errors = {};
+
+            if (Array.isArray(error.error)) {
+                for (const err of error.error) {
+                    const field = err.path?.[0];
+                    if (field) {
+                        errors[field] = err.message;
+                    }
+                }
+            }
+            else if (error.field) {
+                errors[error.field] = error.message;
+            }
+            else {
+                errors.general = error.message;
+            }
+
+            setErrors(errors);
+        }
     };
 
     // handleChange function to update the formData state when the user types in the form fields
