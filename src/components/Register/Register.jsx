@@ -158,7 +158,7 @@ export default function Register() {
             <form onSubmit={handleSubmit(onSubmit)} className="register__form">
 
                 <label>
-                    Full Name
+                    <p className="register__label">Full Name</p>
                     <input {...register("name")} />
                     {errors.name && (
                         <p className="register__error">
@@ -168,7 +168,7 @@ export default function Register() {
                 </label>
 
                 <label>
-                    Username
+                    <p className="register__label">Username</p>
                     <input {...register("username")} />
                     {errors.username && (
                         <p className="register__error">
@@ -178,7 +178,7 @@ export default function Register() {
                 </label>
 
                 <label>
-                    Email
+                    <p className="register__label">Email</p>
                     <input type="email" {...register("email")} />
                     {errors.email && (
                         <p className="register__error">
@@ -188,7 +188,7 @@ export default function Register() {
                 </label>
 
                 <label>
-                    Password
+                    <p className="register__label">Password</p>
                     <input type="password" {...register("password")} />
                     {errors.password && (
                         <p className="register__error">
@@ -198,7 +198,7 @@ export default function Register() {
                 </label>
 
                 <label>
-                    Confirm Password
+                    <p className="register__label">Confirm Password</p>
                     <input type="password" {...register("confirmPassword")} />
                     {errors.confirmPassword && (
                         <p className="register__error">
