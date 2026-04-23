@@ -55,6 +55,16 @@ app.get("/users/:id", async (req, res) => {
 });
 
 
+// MARK: Check Username Availability
+app.get("/users/check-username", async (req, res) => {
+    const { username } = req.query;
+
+    const exists = await User.exists({ username });
+
+    res.json({ exists: !!exists });
+});
+
+
 // MARK: Register User
 app.post("/users", async (req, res) => {
 
