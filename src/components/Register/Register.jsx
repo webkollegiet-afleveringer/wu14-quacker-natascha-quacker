@@ -21,69 +21,56 @@ export default function Register() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        let newErrors = {};
+        let collectedErrors = {};
 
         const result = registerSchema.safeParse(formData);
 
         if (!result.success) {
             for (const err of result.error.issues) {
                 const field = err.path[0];
-                if (!newErrors[field]) {
-                    newErrors[field] = err.message;
-                }
+                collectedErrors[field] = err.message;
             }
         }
 
+        if (Object.keys(collectedErrors).length > 0) {
+            setErrors(collectedErrors);
+            return;
+        }
+
         try {
-            const response = await fetch(
-                "https://natascha-quacker-api.onrender.com/users",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(formData)
-                }
-            );
+            const response = await fetch("https://natascha-quacker-api.onrender.com/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
 
             const data = await response.json();
 
             if (!response.ok) {
                 if (data.field) {
-                    newErrors[data.field] = data.message;
-                }
-                else if (data.error && Array.isArray(data.error)) {
-                    for (const err of data.error) {
-                        const field = err.path?.[0];
-                        if (field) {
-                            newErrors[field] = err.message;
-                        }
-                    }
-                }
-                else {
-                    newErrors.general = data.message;
-                }
-            }
-
-            if (!response.ok) {
-                if (data.field) {
-                    newErrors[data.field] = data.message;
+                    collectedErrors[data.field] = data.message;
                 }
 
                 if (data.error && Array.isArray(data.error)) {
                     for (const err of data.error) {
                         const field = err.path?.[0];
-                        if (field) {
-                            newErrors[field] = err.message;
-                        }
+                        collectedErrors[field] = err.message;
                     }
                 }
+
+                setErrors(collectedErrors);
+                return;
             }
 
-        }
-        catch (error) {
-            newErrors.general = "Network error";
-        }
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
 
-        setErrors(newErrors);
+            navigate("/");
+
+        }
+        catch (err) {
+            setErrors({ general: "Network error" });
+        }
     };
 
     // handleChange function to update the formData state when the user types in the form fields
