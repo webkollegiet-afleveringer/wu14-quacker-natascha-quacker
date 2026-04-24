@@ -152,6 +152,7 @@ export const registerUser = async (req, res) => {
         // the secret key (SECRET), 
         // and an options object that sets the token's expiration time (7 days in this case)
         // sign the token with the user's ID and username as the payload, using the secret key and setting an expiration time (e.g., 7 days).
+        console.log("SIGN SECRET:", process.env.JWT_SECRET);
         const token = jwt.sign(
             { id: newUser._id, username: newUser.username },
             SECRET,
