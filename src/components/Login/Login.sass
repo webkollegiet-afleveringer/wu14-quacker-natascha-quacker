@@ -1,0 +1,50 @@
+@use '../../style/variables' as var;
+    
+.login
+    display: flex
+    flex-direction: column
+    gap: 3rem
+    // max-width: 800px
+    margin: 6rem auto
+    // padding: 4rem 10rem
+    // border: 1px solid var.$border-color
+    // border-radius: 4px
+
+    h1
+        // color: var.$secondary-title-color
+        font-size: 1.75rem
+        text-align: center
+
+    &__form
+        display: flex
+        flex-direction: column
+        gap: 2rem
+
+    &__error
+        color: red
+        // background-color: var.$primary-icon-bg-color
+        border-radius: 4px
+        text-align: center
+
+    &__label
+        display: block
+        margin: 0 0 .5rem
+        // color: var.$primary-text-color
+        font-size: 1rem
+
+    input
+        width: 100%
+        font-size: 1rem
+        padding: 1rem .75rem
+        // border: 1px solid var.$border-color
+        &::placeholder
+            // color: var.$secondary-text-color
+    
+    &__button
+        font-size: 1.2rem
+        padding: 1rem
+        // background-color: var.$tertiary-bg-color
+        // color: var.$secondary-icon-color
+        border: none
+        cursor: pointer
+        width: 100%

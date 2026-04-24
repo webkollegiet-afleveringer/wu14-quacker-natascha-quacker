@@ -1,0 +1,24 @@
+@use '../../style/variables' as var;
+
+.menu
+    position: fixed
+    inset: 0
+    background: #e7ecf0cc
+    z-index: 1000
+    transition: opacity .6s ease, visibility .6s ease
+    visibility: hidden
+
+    &__content
+        height: 100%
+        width: 80%
+        background: #FFF
+        border-right: 1px solid var.$border-color
+        padding: 2rem
+        transform: translateX(-100%)
+        transition: transform .6s ease
+
+.menu.open
+    visibility: visible
+
+.menu.open .menu__content
+    transform: translateX(0)
