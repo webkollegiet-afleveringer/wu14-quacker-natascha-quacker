@@ -4,6 +4,9 @@
 
 import jwt from "jsonwebtoken";
 
+// get the JWT secret key from environment variables to use for signing and verifying tokens
+const SECRET = process.env.JWT_SECRET;
+
 
 // MARK: Protect Middleware
 export const protect = (req, res, next) => {
@@ -25,11 +28,11 @@ export const protect = (req, res, next) => {
         // split the header by space and take the second part <token> - authHeader.split(" ")[1]
         const token = authHeader.split(" ")[1];
 
-        // verify the token using jwt.verify() method, which checks the token's signature and expiration against the secret key defined in our environment variables (process.env.JWT_SECRET)
+        // verify the token using jwt.verify() method, which checks the token's signature and expiration against the secret key defined in our environment variables (SECRET)
         // when creating a new user, we sign a JWT token with the user's ID and username as the payload(content), using the secret key and setting an expiration time (e.g., 7 days).
         // when a request comes in with an Authorization header containing a token, we use jwt.verify() to check if the token is valid (that it was signed with the correct secret and hasn't expired).
         // if the token is valid, jwt.verify() returns the decoded payload (the user's information)
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, SECRET);
 
         // use the decoded token to attach the user's information to the request object (req.user), so that protected routes can access the user's information (e.g., req.user.id, req.user.username) when handling the request
         req.user = decoded;
