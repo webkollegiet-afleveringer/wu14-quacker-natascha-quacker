@@ -3,6 +3,9 @@
 // The server will only start after a successful connection to the database is established in app.js.
 
 import app from "./app.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
