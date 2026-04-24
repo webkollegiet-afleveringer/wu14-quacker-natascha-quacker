@@ -1,5 +1,8 @@
 // This file sets up the Express application, connects to the database, and defines the routes for the user-related operations. It also applies middleware for CORS and JSON parsing. The server will be started in server.js, which imports this app.
 
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./src/config/db.js";

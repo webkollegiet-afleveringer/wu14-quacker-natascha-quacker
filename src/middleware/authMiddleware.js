@@ -5,8 +5,11 @@
 import jwt from "jsonwebtoken";
 
 // get the JWT secret key from environment variables to use for signing and verifying tokens
-const SECRET = process.env.JWT_SECRET || "fallback_secret_quacker_key";
+const SECRET = process.env.JWT_SECRET;
 
+if (!SECRET) {
+    throw new Error("JWT_SECRET is missing");
+}
 
 // MARK: Protect Middleware
 export const protect = (req, res, next) => {
