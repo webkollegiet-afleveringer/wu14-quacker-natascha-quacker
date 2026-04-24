@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// define a schema for the User model with various fields and their types
 const userSchema = new mongoose.Schema({
     name: String,
     username: { type: String, unique: true },
@@ -42,6 +43,8 @@ const userSchema = new mongoose.Schema({
 });
 
 
+// set the toJSON method to transform the output when converting a user document to JSON
+// this removes sensitive fields like password and internal MongoDB fields, and adds an id field for easier access
 userSchema.set("toJSON", {
     transform: (doc, ret) => {
         ret.id = ret._id;
@@ -52,4 +55,5 @@ userSchema.set("toJSON", {
     }
 });
 
+// export the User model based on the userSchema, allowing us to interact with the users collection in MongoDB
 export const User = mongoose.model("User", userSchema);
