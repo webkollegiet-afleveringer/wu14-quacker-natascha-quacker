@@ -7,7 +7,8 @@ import {
     getUserById,
     checkAvailability,
     registerUser,
-    loginUser
+    loginUser,
+    getCurrentUser
 } from "../controllers/userControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -32,7 +33,7 @@ router.get("/check-availability", checkAvailability);
 router.get("/:id", getUserById);
 
 // get current user (for settings page) - this will be used to fetch the current logged in user data when visiting the settings page, to pre-fill the form with their existing information
-// router.get("/me", protect, getCurrentUser);
+router.get("/me", protect, getCurrentUser);
 
 
 

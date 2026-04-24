@@ -12,16 +12,46 @@ export const AuthProvider = ({ children }) => {
     // setUser is the function to update the user state, it will be called when the user logs in or logs out to update the authentication state across the application
     const [user, setUser] = useState(null);
 
+    const [loading, setLoading] = useState(true);
+
     // useEffect to check for user data in localStorage when the component mounts, and set the user state accordingly. This allows the application to persist the user's authentication state across page refreshes.
     useEffect(() => {
-        // check for user data in localStorage when the component mounts
-        const storedUser = localStorage.getItem("user");
+        const fetchMe = async () => {
+            const token = localStorage.getItem("token");
 
-        // if user data exists in localStorage, parse it and set the user state to the parsed user data.
-        // This allows the application to maintain the user's authentication state even after a page refresh, as long as the token is still valid.
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const res = await fetch(
+                    "https://natascha-quacker-api.onrender.com/users/me",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                );
+
+                if (!res.ok) {
+                    throw new Error("Invalid token");
+                }
+
+                const data = await res.json();
+                setUser(data.user);
+
+            } catch {
+                // token er invalid → logout
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                setUser(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchMe();
     }, []);
 
     // login function to set the user data and token in localStorage, and update the user state. This function will be called when the user successfully logs in.
@@ -47,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
     // provide the user data and authentication functions (login and logout) to any components that consume the AuthContext. This allows components to access the current authentication state and perform login/logout actions as needed.
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
