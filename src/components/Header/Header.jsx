@@ -3,38 +3,43 @@ import logo from '../../assets/quacker-logo.svg';
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link } from 'react-router';
 import { useAuth } from "../../hooks/useAuth.jsx";
-
+import Menu from '../Menu/Menu';
+import { useEffect, useState } from 'react';
 
 
 export default function Header({ title }) {
 
     const { user, logout, loading } = useAuth();
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     if (loading) return <p>Loading...</p>;
     const isLoggedIn = !!user;
 
-    function openMenu() {
-        
-        // when clicking the avatar in the header, open the Menu component that slides in from the left side of the screen.
-        // The Menu component should contain links to the user's profile, messages, and settings, as well as a logout button if the user is logged in. This will provide easy access to important user features and settings from the header.
-
-        console.log("open menu");
+    function toggleMenu() {
+        setMenuOpen(prev => !prev);
     }
 
 
     return (
         <header className="header">
 
+            <Menu 
+                user={user} 
+                logout={logout} 
+                menuOpen={menuOpen} 
+                closeMenu={() => setMenuOpen(false)} 
+            />
+
             <section className='header__user-section'>
             
                 {/* <button>back</button> */}
                 
                 {/* On click - slide open menu on left */}
-                {/* make menu component */}
-                
+
                 <div className="header__avatar">
                     {/* show user avatar if user is logged in */}
-                    {user ? (<img src={null} alt="User Avatar" className='header__user-avatar' onClick={openMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__default-avatar' onClick={openMenu} />) }                    
+                    {user ? (<img src={null} alt="User Avatar" className='header__user-avatar' onClick={toggleMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__default-avatar' onClick={toggleMenu} />) }
                 </div>
             
             </section>
