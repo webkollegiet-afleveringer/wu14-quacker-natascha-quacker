@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const fetchMe = async () => {
             const token = localStorage.getItem("token");
+            console.log("TOKEN:", token);
 
             if (!token) {
                 setLoading(false);
@@ -38,15 +39,21 @@ export const AuthProvider = ({ children }) => {
                     throw new Error("Invalid token");
                 }
 
+                console.log("ME STATUS:", res.status);
+
                 const data = await res.json();
+                console.log("ME DATA:", data);
+
                 setUser(data.user);
 
-            } catch {
-                // token er invalid → logout
+            }
+            catch (error) {
+                console.log("ME ERROR:", error);
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 setUser(null);
-            } finally {
+            }
+            finally {
                 setLoading(false);
             }
         };
