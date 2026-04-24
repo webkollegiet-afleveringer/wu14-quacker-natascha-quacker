@@ -9,7 +9,7 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
     return (
         <section className={`menu ${menuOpen ? "open" : ""}`} onClick={closeMenu}>
             
-            <div className="menu__content" onClick={(e) => e.stopPropagation()}>
+            <div className="menu__content">
                 {user ? (
                     // this section for when user is logged in
                     <section className="user" style={{ display: user ? 'block' : 'none' }}>
