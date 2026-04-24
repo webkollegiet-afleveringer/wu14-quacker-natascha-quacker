@@ -1,3 +1,6 @@
+// This file defines the routes for user-related operations in our Express application.
+// It imports the necessary controllers and middleware, and sets up the endpoints for user registration, login, fetching user data, and checking username/email availability.
+
 import express from "express";
 import {
     getUsers,
