@@ -9,14 +9,154 @@
     visibility: hidden
 
     &__content
+        position: relative
         height: 100%
         width: 80%
         background: #FFF
         border-right: 1px solid var.$border-color
-        padding: 2rem
         transform: translateX(-100%)
         transition: transform .6s ease
 
+    // MARK: Guest Menu
+    &__guest
+        display: flex
+        flex-direction: column
+        align-items: center
+        text-align: center
+        gap: 2rem
+        padding: 2rem 2rem 0 2rem
+        font-size: 1.8rem
+        font-weight: bold
+        color: var.$primary-title-color
+    
+    &__logo
+        height: 5rem
+
+
+    // MARK: User Menu
+    &__user
+        padding: 2rem 2rem 0 2rem
+        grid-template-columns: auto 1fr
+    
+    &__user-avatar
+        height: 3rem
+        width: 3rem
+        border-radius: 50%
+        background-color: var.$icon-color
+
+    &__username
+        font-size: 1.5rem
+        font-weight: bold
+        margin: .5rem 0
+        color: var.$primary-title-color
+
+
+    // MARK: Messages
+    // Messages from other users
+    &__user-messages
+        display: flex
+        justify-content: flex-end
+        gap: 1rem
+
+
+    // Link to messages with specific user
+    &__message-avatar
+        height: 2rem
+        width: 2rem
+        border-radius: 50%
+        background-color: var.$icon-color
+
+
+    // Link to all messages with all users
+    &__messages-link
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 2rem
+        width: 2rem
+        font-size: 1.5rem
+        border: 1px solid var.$icon-color-active
+        border-radius: 50%
+        .message-icon
+            color: var.$icon-color-active
+
+    &__user-stats
+        grid-column: 1 / 3
+        display: flex
+        gap: 2rem
+        color: var.$secondary-text-color
+        margin: 1rem 0
+        span
+            color: var.$primary-text-color
+            font-weight: bold
+
+
+    // MARK: Navigation
+    &__nav
+        gap: 1.5rem
+        margin: 2rem 0
+        padding: 0 2rem 2rem 2rem
+        border-bottom: 1px solid var.$border-color
+        ul
+            list-style: none
+            li
+                a
+                    padding: 1rem 0
+                    text-decoration: none
+                    display: flex
+                    align-items: center
+                    gap: 1rem
+                    font-size: 1.25rem
+                    color: var.$primary-title-color
+    &__icon
+        font-size: 1.5rem
+        color: var.$icon-color
+
+
+    // MARK: Links
+    &__settings-link, &__help-link
+        display: block
+        margin: 2rem 0
+        padding: 0 2rem
+        font-size: 1.25rem
+        color: var.$primary-title-color
+        text-decoration: none
+
+
+    // MARK: Logout
+    &__user-logout
+        position: absolute
+        bottom: 0
+        left: 50%
+        transform: translateX(-50%)
+        width: 90%
+        margin: 1rem 0
+        padding: 1rem
+        border: 1px solid var.$border-color
+        color: var.$primary-title-color
+        background-color: var.$background-color
+
+
+    // MARK: Login/Register
+    &__guest-options
+        position: absolute
+        bottom: 0
+        left: 50%
+        transform: translateX(-50%)
+        width: 90%
+        text-align: center
+    
+    &__login-link, &__register-link
+        display: block
+        text-decoration: none
+        margin: 0 0 1rem 0
+        padding: 1rem
+        border: 1px solid var.$border-color
+        color: var.$primary-title-color
+        background-color: var.$background-color
+    
+    
+// MARK: Open Menu
 .menu.open
     visibility: visible
 
