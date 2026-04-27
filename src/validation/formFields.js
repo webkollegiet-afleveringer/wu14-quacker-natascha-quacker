@@ -42,17 +42,15 @@ export const passwordField = z
     .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character");
 
 
-// export const subjectField = z
-//     .string()
-//     .trim()
-//     .nonempty("Please fill in the subject")
-//     .max(100, "Subject must not be longer than 100 characters")
-//     // can not contain special characters
-//     .regex(/^[a-zA-ZæøåÆØÅ0-9\s]+$/, "Subject must not contain special characters");
+// content field for creating a quack
+export const contentField = z
+    .string()
+    .trim()
+    // can be empty if media is provided, but if content is provided, it must not be empty
+    .max(300, "Content must not be longer than 300 characters")
 
-
-// export const messageField = z
-//     .string()
-//     .trim()
-//     .nonempty("Please fill in the message")
-//     .max(1000, "Message must not be longer than 1000 characters");
+// media field for creating a quack, optional, must be a string (url or base64), can be empty
+export const mediaField = z
+    .string()
+    .trim()
+    // can be empty if content is provided
