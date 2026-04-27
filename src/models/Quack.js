@@ -1,2 +1,63 @@
 // SET THUS UP BY USING STRUCTURE OF USER MODEL
 // BUT CHANGE TO FIT HOW QUACKS ARE SET UP IN db.json
+
+import mongoose from "mongoose";
+import { array } from "zod";
+
+// define a schema for the Quack model with various fields and their types
+const quackSchema = new mongoose.Schema({
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    quack: {
+        // text in the quack, which is required
+        content: {
+            type: String,
+            required: true
+        },
+        // tags associated with the quack, which is an array of strings
+        // displayed as hashtags after the quack content
+        tags: [String],
+        // media associated with the quack, which is an array of strings (e.g., URLs to images or videos)
+        media: [String],
+        // arrays of user IDs who have viewed, liked, or reposted the quack, referencing the User model
+        views: [
+            { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User" 
+            }
+        ],
+        likes: [
+            { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User" 
+            }
+        ],
+        reposts: [
+            { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User" 
+            }
+        ],
+        // array of comment objects, where each comment has a reference to the user who made the comment and the content of the comment
+        comments: [{
+            user: { 
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User" 
+            },
+            content: { 
+                type: String, 
+                required: true 
+            }
+        }]
+    }
+});
+
+// export the Quack model based on the quackSchema, allowing us to interact with the quacks collection in MongoDB
+export const Quacks = mongoose.model("Quack", quackSchema);
