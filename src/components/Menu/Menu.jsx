@@ -2,6 +2,13 @@ import './Menu.sass';
 import { Link } from 'react-router';
 import { PiDotsThreeOutlineLight } from "react-icons/pi";
 import { useAuth } from '../../hooks/useAuth.jsx';
+import logo from '../../assets/quacker-logo.png';
+import defaultAvatar from '../../assets/default_avatar.png';
+import { IoPersonOutline } from "react-icons/io5";
+import { CiViewList } from "react-icons/ci";
+import { BiMessageRoundedDetail } from "react-icons/bi";
+import { FaRegBookmark } from "react-icons/fa6";
+import { AiOutlineThunderbolt } from "react-icons/ai";
 
 
 export default function Menu({ user, logout, menuOpen, closeMenu }) {
@@ -12,62 +19,110 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
             <div className="menu__content">
                 {user ? (
                     // this section for when user is logged in
-                    <section className="user" style={{ display: user ? 'block' : 'none' }}>
+                    <section className="menu__user" style={{ display: user ? 'grid' : 'none' }}>
                         <div className="menu__user-info">
-                            <img src={user.avatar ? user.avatar : null} alt="User Avatar" className='menu__user-avatar' />
-                            <p className='menu__username'>{user.username ? user.username : ''}</p>
+                            <img src={user.avatar ? user.avatar : defaultAvatar} alt="User Avatar" className='menu__user-avatar' />
+                            <p className='menu__username'>{user.username ? user.username : 'Username not available'}</p>
                         </div>
                         <div className="menu__user-messages">
                             {/* Link to messages with specific user */}
-                            <Link to="/messages">
+                            <Link to="/messages" className='menu__message-link'>
                                 {/* insert image for the user who last messaged me */}
-                                <img src="user-avatar" alt="user-avatar" />
+                                <img src={user.avatar ? user.avatar : defaultAvatar} alt="user-avatar" className='menu__message-avatar' />
                             </Link>
-                            <Link to="/messages">
-                                <PiDotsThreeOutlineLight />
+                            <Link to="/messages" className='menu__messages-link'>
+                                <PiDotsThreeOutlineLight className='message-icon' />
                             </Link>
                         </div>
                         <div className="menu__user-stats">
-                            <p>{user.following ? user.following.length : 0} Following</p>
-                            <p>{user.followers ? user.followers.length : 0} Followers</p>
+                            <p><span>{user.following ? user.following.length : 0}</span> Following</p>
+                            <p><span>{user.followers ? user.followers.length : 0}</span> Followers</p>
                         </div>
                     </section>
                 ) : (
                     // this section for when no user is logged in
-                    <section className="menu__guest" style={{ display: user ? 'none' : 'block' }}>
-                        <p>Welcome to Quacker!</p>
-                        <p>Please log in or register to access your profile, messages, and settings.</p>
-                        <div className="menu__guest-options">
-                            <Link to="/login">Login</Link>
-                            <Link to="/register">Register</Link>
-                        </div>
+                    <section className="menu__guest" style={{ display: user ? 'none' : 'flex' }}>
+                        <img src={logo} alt="Quacker Logo" className='menu__logo' />
+                        <p className='menu__guest-title'>Welcome to Quacker!</p>
                     </section>
                 )}
 
 
-                <nav className="menu__nav">
-                    <ul>
-                        {user ? <li><Link to="/profile">Profile</Link></li> : null}
-                        {user ? <li><Link to="/lists">Lists</Link></li> : null}
-                        <li><Link to="/notifications">Topics</Link></li>
-                        {user ? <li><Link to="/bookmarks">Bookmarks</Link></li> : null}
-                        <li><Link to="/moments">Moments</Link></li>
-                    </ul>
-                </nav>
+                {user ? (
+                    <nav className="menu__nav">
+                        <ul>
+                            <li>
+                                <Link to="/profile" className='menu__profile-link'>
+                                    <IoPersonOutline className='menu__icon' />
+                                    Profile
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/lists" className='menu__lists-link'>
+                                    <CiViewList className='menu__icon' />
+                                    Lists
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/notifications" className='menu__notifications-link'>
+                                    <BiMessageRoundedDetail className='menu__icon' />
+                                    Topics
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/bookmarks" className='menu__bookmarks-link'>
+                                    <FaRegBookmark className='menu__icon' />
+                                    Bookmarks
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/moments" className='menu__moments-link'>
+                                    <AiOutlineThunderbolt className='menu__icon' />
+                                    Moments
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                ) : (
+                    <nav className="menu__nav">
+                        <ul>
+                            <li>
+                                <Link to="/" className='menu__home-link'>Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/users" className='menu__users-link'>Users</Link>
+                            </li>
+                            <li>
+                                <Link to="/groups" className='menu__groups-link'>Groups</Link>
+                            </li>
+                        </ul>
+                    </nav>
+                )}
+                
 
-                <Link to="/settings" className=''>Settings and Privacy</Link>
+                <Link to="/settings" className='menu__settings-link'>
+                    Settings and Privacy
+                </Link>
 
-                <Link to="/help">Help Center</Link>
+                <Link to="/help" className='menu__help-link'>
+                    Help Center
+                </Link>
 
 
                 {/* set up if/else for guest vs logged-in user */}
                 {/* if logged in, show logout option */}
                 {/* if not logged in, show login and register options */}
-                {user ? <button onClick={logout}>Logout</button> : null}
+                {user ? <button onClick={logout} className='menu__user-logout'>
+                    Logout
+                </button> : null}
                 {!user ? (
                     <div className="menu__guest-options">
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
+                        <Link to="/login" className='menu__login-link'>
+                            Login
+                        </Link>
+                        <Link to="/register" className='menu__register-link'>
+                            Register
+                        </Link>
                     </div>
                 ) : null}
             </div>
