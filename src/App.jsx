@@ -6,7 +6,7 @@ import Notifications from "./pages/Notifications";
 import Messages from "./pages/Messages";
 import Error from "./pages/Error";
 
-import usersLoader from "./loaders/usersLoader";
+// import usersLoader from "./loaders/usersLoader";
 import quacksLoader from "./loaders/quacksLoader";
 
 
@@ -17,8 +17,8 @@ export default function App() {
       {
         path: '/',
         element: <Home />,
-        loader: usersLoader,
-        hydrateFallbackElement: <p>Loading quacks...</p>
+        // loader: quacksLoader,
+        // hydrateFallbackElement: <p>Loading quacks...</p>
       },
       {
         path: '/search',

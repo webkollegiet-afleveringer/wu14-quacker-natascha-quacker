@@ -10,12 +10,13 @@ import { Quacks } from "../models/Quacks.js";
 // MARK: Get All Quacks
 export const getQuacks = async (req, res) => {
     try {
-        // find all quacks and return them as a JSON response
-        const quacks = await Quacks.find();
-        // return the list of quacks as a JSON response
+        const quacks = await Quacks.find()
+            .populate("user", "username avatar")
+            .sort({ createdAt: -1 })
+            .limit(50);
+
         res.json({ quacks });
     }
-    // if there's an error during the database query or any other part of the process, catch the error and return a 500 Internal Server Error response with a generic error message
     catch (err) {
         res.status(500).json({ message: "Server error" });
     }
@@ -30,7 +31,8 @@ export const getQuackById = async (req, res) => {
         const { id } = req.params;
 
         // query the database to find a quack with the specified ID
-        const quack = await Quacks.findById(id);
+        const quack = await Quacks.findById(id)
+            .populate("user", "username avatar");
 
         // if no quack is found with the specified ID, return a 404 Not Found response with an appropriate error message
         if (!quack) {
@@ -45,8 +47,14 @@ export const getQuackById = async (req, res) => {
     }
     // if there's an error during the database query (e.g., invalid ID format) or any other part of the process, catch the error and return a 400 Bad Request response with an appropriate error message indicating that the quack ID is invalid
     catch (err) {
-        res.status(400).json({
-            message: "Invalid quack ID"
+        if (err.name === "CastError") {
+            return res.status(400).json({
+                message: "Invalid quack ID"
+            });
+        }
+
+        res.status(500).json({
+            message: "Server error"
         });
     }
 };
@@ -55,27 +63,29 @@ export const getQuackById = async (req, res) => {
 // MARK: Create Quack
 export const createQuack = async (req, res) => {
     try {
-        // extract the content from the request body (sent by the client when creating a new quack)
-        const { content } = req.body;
+        const { content, tags = [], media = [] } = req.body;
 
-        // create a new quack document in the database using the Quacks model's create() method, passing in an object with the quack's content and default values for other fields
         const newQuack = await Quacks.create({
-            // SET THIS UP BY USING STRUCTURE OF QUACK MODEL
-            // The author should be the ID of the currently logged in user, which we can get from the authentication middleware (e.g., req.user.id)
-            // do i need to import the auth middleware here to access req.user? or is it already available in the controller functions?
-            // 
-            // author: req.user.id,
-
-            content: content || "",
-            likes: 0,
-            replies: 0,
-            timestamp: new Date()
+            createdAt: Date.now(),
+            author: req.user.id,
+            quack: {
+                content: content || "",
+                tags,
+                media,
+                views: [],
+                likes: [],
+                reposts: [],
+                comments: []
+            }
         });
 
-        // return the newly created quack data as a JSON response
-        res.status(201).json({ quack: newQuack });
+        const populatedQuack = await newQuack.populate(
+            "author",
+            "username avatar"
+        );
+
+        res.status(201).json({ quack: populatedQuack });
     }
-    // if there's an error during the database query or any other part of the process, catch the error and return a 500 Internal Server Error response with a generic error message
     catch (err) {
         res.status(500).json({ message: "Server error" });
     }
