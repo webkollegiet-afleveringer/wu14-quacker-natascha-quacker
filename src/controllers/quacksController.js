@@ -77,15 +77,15 @@ export const getQuacks = async (req, res) => {
 // MARK: Create Quack
 export const createQuack = async (req, res) => {
     try {
-        const { quack } = req.body;
+        const { content, media } = req.body;
 
         const newQuack = await Quack.create({
             createdAt: Date.now(),
             author: req.user.id || req.user._id,
             quack: {
-                content: quack.content || "",
+                content: content || "",
                 tags: [],
-                media: quack.media || [],
+                media: media || [],
                 views: [],
                 likes: [],
                 reposts: [],
