@@ -11,13 +11,28 @@ import { zodResolver } from '@hookform/resolvers/zod';
 // when the button is clicked, navigate to the page where this form is located (dont know where yet)
 
 
+// ADD THIS TO src/utils/formatDate.jsx AND IMPORT IT IN THE .jsx FILE THAT DISPLAYS THE QUACKS (example: Quack.jsx)
+// LIKE THIS
+// import { formatDate } from "../utils/formatDate";
+// <p>{formatDate(quack.createdAt)}</p>
+
+// export function formatDate(dateString) {
+//     const date = new Date(dateString);
+
+//     return date.toLocaleDateString("da-DK", {
+//         day: "2-digit",
+//         month: "2-digit",
+//         year: "numeric"
+//     });
+// }
+
 
 export default function CreateQuack() {
 
     const navigate = useNavigate();
 
     // useForm hook to manage the form state and handle form submission. It provides the register function to register form fields, handleSubmit to handle form submission, setError to set form errors, and formState to access the current form errors.
-    // We also use the zodResolver to integrate Zod schema validation with react-hook-form, allowing us to validate the form data against the defined registerSchema when the form is submitted.
+    // We also use the zodResolver to integrate Zod schema validation with react-hook-form, allowing us to validate the form data against the defined quackSchema when the form is submitted.
     const {
         register,
         handleSubmit,
@@ -58,8 +73,25 @@ export default function CreateQuack() {
                 }
             );
 
+            // get current logged in user and update the user.quacks array with the newly created quack's id
+            // make a PATCH request to the users/me endpoint of the API with the new quack's id to update the user's quacks array with the newly created quack. This will allow us to keep track of which quacks belong to which user and display them in the user's profile page.
+            const userRes = await fetch(
+                "https://natascha-quacker-api.onrender.com/users/me",
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        quackId: result.quack._id
+                    })
+                }
+            );
+
             // parse the response from the API as JSON to access the result of the registration attempt, including any success message, error messages, and the newly created user data and token if the registration is successful.
             const result = await res.json();
+            const userResult = await userRes.json();
 
             // if the response is not ok (registration failed), set form errors based on the response from the API.
             if (!res.ok) {
@@ -94,6 +126,13 @@ export default function CreateQuack() {
 
                 // return to exit the onSubmit function early since the registration attempt failed and we don't want to proceed with registering the user or navigating to the home page.
                 return;
+            }
+
+            if (!userRes.ok) {
+                setError("root", {
+                    type: "server",
+                    message: userResult.message || "Failed to update user with new quack"
+                });
             }
 
             // display a success message to the user indicating that the registration was successful. This provides feedback to the user that their account has been created successfully.

@@ -46,8 +46,8 @@ export const passwordField = z
 export const contentField = z
     .string()
     .trim()
-    // can be empty if media is provided, but if content is provided, it must not be empty
     .max(300, "Content must not be longer than 300 characters")
+    .optional();
 
 // media field for creating a quack, optional, must be a string (url or base64), can be empty
 export const mediaField = z

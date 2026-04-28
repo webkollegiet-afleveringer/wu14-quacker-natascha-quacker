@@ -8,7 +8,8 @@ import {
     checkAvailability,
     registerUser,
     loginUser,
-    getCurrentUser
+    getCurrentUser,
+    updateUserQuacks
 } from "../controllers/userControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -49,6 +50,12 @@ router.post("/", registerUser);
 
 // login user
 router.post("/login", loginUser);
+
+
+// MARK: PATCH
+
+// when creating a new quack, we need to update the user's quacks array with the newly created quack's id, so we can keep track of which quacks belong to which user and display them in the user's profile page. This route will be used to update the user's quacks array with the new quack's id when a new quack is created.
+router.patch("/me", protect, updateUserQuacks);
 
 
 
