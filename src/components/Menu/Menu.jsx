@@ -21,14 +21,14 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
                     // this section for when user is logged in
                     <section className="menu__user" style={{ display: user ? 'grid' : 'none' }}>
                         <div className="menu__user-info">
-                            <img src={user.avatar ? user.avatar : defaultAvatar} alt="User Avatar" className='menu__user-avatar' />
+                            <img src={`https://natascha-quacker-api.onrender.com${user.avatar}`} alt="User Avatar" className='menu__user-avatar' />
                             <p className='menu__username'>{user.username ? user.username : 'Username not available'}</p>
                         </div>
                         <div className="menu__user-messages">
                             {/* Link to messages with specific user */}
                             <Link to="/messages" className='menu__message-link'>
                                 {/* insert image for the user who last messaged me */}
-                                <img src={user.avatar ? user.avatar : defaultAvatar} alt="user-avatar" className='menu__message-avatar' />
+                                <img src={`https://natascha-quacker-api.onrender.com${user.avatar}`} alt="user-avatar" className='menu__message-avatar' />
                             </Link>
                             <Link to="/messages" className='menu__messages-link'>
                                 <PiDotsThreeOutlineLight className='message-icon' />
