@@ -48,5 +48,7 @@ app.get("/debug-image", (req, res) => {
 });
 
 
+console.log("APP.JS LOADED");
+
 
 export default app;
