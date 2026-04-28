@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import Header from '../components/Header/Header';
 import Navigation from '../components/Navigation/Navigation';
-// import Register from '../components/Register/Register';
+import Register from '../components/Register/Register';
 import Login from '../components/Login/Login';
 import CreateQuack from '../components/CreateQuack/CreateQuack';
 
@@ -35,6 +35,7 @@ export default function Home() {
             {user ? <p>Hej {user.username}</p> : <p>Ikke logget ind</p>}
             <button onClick={logout}>Logout</button> */}
 
+            <Register />
             <Login />
             <CreateQuack />
             
