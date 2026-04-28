@@ -141,7 +141,7 @@ export default function CreateQuack() {
 
 
             
-                <button className="create-quack__button">Quack</button>
+                <button type="submit" className="create-quack__button">Quack</button>
             
             </form>
 
