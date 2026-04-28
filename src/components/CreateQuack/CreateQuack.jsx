@@ -19,6 +19,7 @@ export default function CreateQuack() {
     // useForm hook to manage the form state and handle form submission. It provides the register function to register form fields, handleSubmit to handle form submission, setError to set form errors, and formState to access the current form errors.
     // We also use the zodResolver to integrate Zod schema validation with react-hook-form, allowing us to validate the form data against the defined registerSchema when the form is submitted.
     const {
+        register,
         handleSubmit,
         setError,
         formState: { errors }
@@ -28,21 +29,26 @@ export default function CreateQuack() {
     });
 
     const onSubmit = async (data) => {
+
         console.log("SUBMIT FIRED", data);
+        
         try {
             // make a POST request to the quacks endpoint of the API with the form data
             const res = await fetch(
                 "https://natascha-quacker-api.onrender.com/quacks",
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    },
                     // body contains the form data as a JSON string, which will be sent to the backend for creating a quack.
                     // The API will validate the data and attempt to create a new quack based on the provided information.
                     body: JSON.stringify({
                     quack: {
                         content: data.content,
-                        media: data.media || [],
                         tags: [],
+                        media: data.media || [],
                         views: [],
                         likes: [],
                         reposts: [],
@@ -118,11 +124,11 @@ export default function CreateQuack() {
                     <p className="create-quack__label">What's on your mind?</p>
                     <textarea
                         placeholder="What's on your mind?"
-                        {...register("quack.content")}
+                        {...register("content")}
                     ></textarea>
-                    {errors.quack?.content && (
+                    {errors.content && (
                         <p className="register__error">
-                            {errors.quack.content.message}
+                            {errors.content.message}
                         </p>
                     )}
                 </label>
@@ -137,12 +143,12 @@ export default function CreateQuack() {
                 <label>
                     <p className="create-quack__label">Add media (optional)</p>
                     <input 
-                        {...register("quack.media")}
+                        {...register("media")}
                         placeholder="Enter media URL"
                     />
-                    {errors.quack?.media && (
+                    {errors.media && (
                         <p className="register__error">
-                            {errors.quack.media.message}
+                            {errors.media.message}
                         </p>
                     )}
                 </label>
