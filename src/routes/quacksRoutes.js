@@ -3,8 +3,8 @@
 
 import express from "express";
 import {
-    getQuacks,
-    getQuackById,
+    // getQuacks,
+    // getQuackById,
     createQuack
 } from "../controllers/quacksController.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -19,12 +19,12 @@ const router = express.Router();
 // MARK: GET
 
 // get all quacks (for home page) - this will be used to fetch all quacks to display on the home page feed
-router.get("/", getQuacks);
+// router.get("/", getQuacks);
 
 
 // Dynamic Routes
 // get quack by ID (for quack details page) - this will be used to fetch the full quack data when visiting a quack details page, to display the quack content and comments
-router.get("/:id", getQuackById);
+// router.get("/:id", getQuackById);
 
 
 

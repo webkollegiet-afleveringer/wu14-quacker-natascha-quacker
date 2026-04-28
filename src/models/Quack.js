@@ -61,4 +61,4 @@ const quackSchema = new mongoose.Schema({
 });
 
 // export the Quack model based on the quackSchema, allowing us to interact with the quacks collection in MongoDB
-export const Quacks = mongoose.model("Quack", quackSchema);
+export const Quack = mongoose.model("Quack", quackSchema);
