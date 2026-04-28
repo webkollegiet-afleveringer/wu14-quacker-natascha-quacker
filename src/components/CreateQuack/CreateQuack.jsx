@@ -28,6 +28,7 @@ export default function CreateQuack() {
     });
 
     const onSubmit = async (data) => {
+        console.log("SUBMIT FIRED", data);
         try {
             // make a POST request to the quacks endpoint of the API with the form data
             const res = await fetch(
@@ -37,7 +38,17 @@ export default function CreateQuack() {
                     headers: { "Content-Type": "application/json" },
                     // body contains the form data as a JSON string, which will be sent to the backend for creating a quack.
                     // The API will validate the data and attempt to create a new quack based on the provided information.
-                    body: JSON.stringify(data)
+                    body: JSON.stringify({
+                    quack: {
+                        content: data.content,
+                        media: data.media || [],
+                        tags: [],
+                        views: [],
+                        likes: [],
+                        reposts: [],
+                        comments: []
+                    }
+                })
                 }
             );
 
@@ -106,13 +117,12 @@ export default function CreateQuack() {
                 <label>
                     <p className="create-quack__label">What's on your mind?</p>
                     <textarea
-                        name="quack-content"
-                        id="quack-content"
                         placeholder="What's on your mind?"
+                        {...register("quack.content")}
                     ></textarea>
-                    {errors["quack-content"] && (
+                    {errors.quack?.content && (
                         <p className="register__error">
-                            {errors["quack-content"].message}
+                            {errors.quack.content.message}
                         </p>
                     )}
                 </label>
@@ -127,13 +137,12 @@ export default function CreateQuack() {
                 <label>
                     <p className="create-quack__label">Add media (optional)</p>
                     <input 
-                        type="file" 
-                        accept="image/*, video/*" 
-                        name="quack-media"
+                        {...register("quack.media")}
+                        placeholder="Enter media URL"
                     />
-                    {errors["quack-media"] && (
+                    {errors.quack?.media && (
                         <p className="register__error">
-                            {errors["quack-media"].message}
+                            {errors.quack.media.message}
                         </p>
                     )}
                 </label>
