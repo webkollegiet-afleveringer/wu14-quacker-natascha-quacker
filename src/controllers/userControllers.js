@@ -135,7 +135,6 @@ export const registerUser = async (req, res) => {
             username: username.toLowerCase(),
             email: email.toLowerCase(),
             password: hashedPassword,
-            avatar: "../assets/default-avatar.png",
             bio: "",
             joined: new Date(),
             following: [],
