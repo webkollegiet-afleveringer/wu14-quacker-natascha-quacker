@@ -70,8 +70,8 @@ export const createQuack = async (req, res) => {
             author: req.user.id,
             quack: {
                 content: content || "",
-                tags,
-                media,
+                tags: [],
+                media: [],
                 views: [],
                 likes: [],
                 reposts: [],

@@ -4,14 +4,13 @@
     display: flex
     flex-direction: column
     gap: 3rem
-    // max-width: 800px
-    margin: 6rem auto
-    // padding: 4rem 10rem
-    // border: 1px solid var.$border-color
-    // border-radius: 4px
+    margin: 2rem 1rem 6rem
+    padding: 2rem 1rem 1rem
+    border: 1px solid var.$border-color
+    border-radius: 4px
 
     h1
-        // color: var.$secondary-title-color
+        color: var.$primary-title-color
         font-size: 1.75rem
         text-align: center
 
@@ -22,14 +21,13 @@
 
     &__error
         color: red
-        // background-color: var.$primary-icon-bg-color
         border-radius: 4px
         text-align: center
 
     &__label
         display: block
         margin: 0 .5rem .5rem
-        // color: var.$primary-text-color
+        color: var.$primary-title-color
         font-size: 1rem
 
     input, textarea
@@ -41,6 +39,11 @@
         &::placeholder
             color: var.$secondary-text-color
     
+    textarea
+        resize: vertical
+        min-height: 100px
+        color: var.$primary-text-color
+
     &__button
         font-size: 1.2rem
         padding: 1rem

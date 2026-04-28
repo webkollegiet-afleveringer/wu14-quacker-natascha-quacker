@@ -24,9 +24,15 @@ const quackSchema = new mongoose.Schema({
         // tags associated with the quack, which is an array of strings
         // displayed as hashtags after the quack content
         // tags will be extracted from the content of the quack by looking for words that start with "#" and removing the "#" symbol before storing them in the database
-        tags: [String],
+        tags: {
+            type: Array,
+            default: []
+        },
         // media associated with the quack, which is an array of strings (e.g., URLs to images or videos)
-        media: [String],
+        media: {
+            type: Array,
+            default: []
+        },
         // arrays of user IDs who have viewed, liked, or reposted the quack, referencing the User model
         views: [
             { 
