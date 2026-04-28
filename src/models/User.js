@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import defaultAvatar from "../assets/default-avatar.png";
+// import defaultAvatar from "../assets/default-avatar.png";
 
 // define a schema for the User model with various fields and their types
 const userSchema = new mongoose.Schema({
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         type: Object, 
         // set default to the default avatar that is also used in menu component, so that users who do not upload an avatar will have the default avatar displayed in their profile and in the header menu. This ensures consistency in the user experience, as all users without a custom avatar will have the same default image displayed across the application.
         // it will be possible to change the avatar in the users profile, and when a user uploads a new avatar, the avatar field will be updated with the new avatar data (example: URL to the uploaded image)
-        default: { url: {defaultAvatar}, public_id: "" } 
+        default: { url: "../assets/default-avatar.png", public_id: "" } 
     },
     bio: String,
     joined: {
