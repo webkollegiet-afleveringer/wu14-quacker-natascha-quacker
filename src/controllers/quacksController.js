@@ -4,6 +4,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Quack } from "../models/Quack.js";
+import { User } from "../models/User.js";
 
 
 
@@ -91,6 +92,11 @@ export const createQuack = async (req, res) => {
                 comments: []
             }
         });
+
+        await User.findByIdAndUpdate(
+            req.user.id,
+            { $push: { quacks: newQuack._id } }
+        );
 
         await newQuack.populate("author", "username avatar");
 

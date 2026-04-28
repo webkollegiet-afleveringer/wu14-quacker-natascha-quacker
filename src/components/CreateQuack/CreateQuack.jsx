@@ -73,26 +73,9 @@ export default function CreateQuack() {
                 }
             );
 
-            // get current logged in user and update the user.quacks array with the newly created quack's id
-            // make a PATCH request to the users/me endpoint of the API with the new quack's id to update the user's quacks array with the newly created quack. This will allow us to keep track of which quacks belong to which user and display them in the user's profile page.
-            const userRes = await fetch(
-                "https://natascha-quacker-api.onrender.com/users/me",
-                {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    },
-                    body: JSON.stringify({
-                        quackId: result.quack._id
-                    })
-                }
-            );
-
             // parse the response from the API as JSON to access the result of the registration attempt, including any success message, error messages, and the newly created user data and token if the registration is successful.
             const result = await res.json();
-            const userResult = await userRes.json();
-
+            
             // if the response is not ok (registration failed), set form errors based on the response from the API.
             if (!res.ok) {
                 // setError to set form errors based on the response from the API
@@ -126,13 +109,6 @@ export default function CreateQuack() {
 
                 // return to exit the onSubmit function early since the registration attempt failed and we don't want to proceed with registering the user or navigating to the home page.
                 return;
-            }
-
-            if (!userRes.ok) {
-                setError("root", {
-                    type: "server",
-                    message: userResult.message || "Failed to update user with new quack"
-                });
             }
 
             // display a success message to the user indicating that the registration was successful. This provides feedback to the user that their account has been created successfully.
