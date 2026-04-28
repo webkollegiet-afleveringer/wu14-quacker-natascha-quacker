@@ -23,14 +23,14 @@ import { Quack } from "../models/Quack.js";
 // };
 export const getQuacks = async (req, res) => {
     try {
-        const quacks = await Quack.find();
-
-        console.log("QUACKS:", quacks);
+        const quacks = await Quack.find()
+            .populate("author", "username avatar")
+            .sort({ createdAt: -1 });
 
         res.json({ quacks });
     }
     catch (err) {
-        console.error("GET QUACKS ERROR:", err);
+        console.error(err);
         res.status(500).json({ message: "Server error" });
     }
 };
@@ -80,11 +80,7 @@ export const createQuack = async (req, res) => {
 
         const newQuack = await Quack.create({
             createdAt: Date.now(),
-            author: {
-                id: req.user._id,
-                username: req.user.username,
-                avatar: req.user.avatar
-            },
+            author: req.user.id || req.user._id,
             quack: {
                 content: quack.content || "",
                 tags: [],
@@ -96,15 +92,12 @@ export const createQuack = async (req, res) => {
             }
         });
 
-        const populatedQuack = await newQuack.populate(
-            "author",
-            "username avatar"
-        );
+        await newQuack.populate("author", "username avatar");
 
-        res.status(201).json({ quack: populatedQuack });
-        // res.status(201).json({ quack: newQuack });
+        res.status(201).json({ quack: newQuack });
     }
     catch (err) {
+        console.error(err);
         res.status(500).json({ message: "Server error" });
     }
 };
