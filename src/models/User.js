@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     password: String,
     avatar: { 
         type: String, 
-        default: "https://www.shutterstock.com/image-photo/one-tree-perfect-grass-field-600w-76166707.jpg"
+        default: "/images/default-avatar.png"
     },
     bio: String,
     joined: {

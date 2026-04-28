@@ -39,7 +39,7 @@ export default function Header({ title }) {
 
                 <div className="header__avatar">
                     {/* show user avatar if user is logged in */}
-                    {user ? (<img src={null} alt="User Avatar" className='header__user-avatar' onClick={toggleMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__default-avatar' onClick={toggleMenu} />) }
+                    {user ? (<img src={`https://natascha-quacker-api.onrender.com${user.avatar}`} alt="User Avatar" className='header__avatar' onClick={toggleMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__avatar' onClick={toggleMenu} />) }
                 </div>
             
             </section>

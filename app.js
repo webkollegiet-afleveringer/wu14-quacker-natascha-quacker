@@ -8,6 +8,8 @@ import cors from "cors";
 import { connectDB } from "./src/config/db.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import quacksRoutes from "./src/routes/quacksRoutes.js";
+import path from "path";
+
 
 connectDB();
 
@@ -15,6 +17,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/images", express.static("public"));
 
 // routes
 // why this is not in userRoutes.js?
