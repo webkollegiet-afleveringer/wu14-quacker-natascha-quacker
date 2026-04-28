@@ -31,7 +31,7 @@ router.get("/", getQuacks);
 // MARK: POST
 
 // create new quack
-router.post("/", protect, createQuack);
+router.post("/", createQuack);
 
 
 
