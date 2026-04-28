@@ -11,6 +11,10 @@ import quacksRoutes from "./src/routes/quacksRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import fs from "fs";
+
+
+
 
 connectDB();
 
@@ -24,13 +28,13 @@ app.use(cors());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log("__dirname:", __dirname);
+console.log("PUBLIC PATH:", path.join(__dirname, "public"));
+
 app.use(
     "/images",
     express.static(path.join(__dirname, "public"))
 );
-
-console.log("__dirname:", __dirname);
-console.log("PUBLIC PATH:", path.join(__dirname, "public"));
 
 // routes
 // why this is not in userRoutes.js?
@@ -47,8 +51,10 @@ app.get("/debug-image", (req, res) => {
     res.sendFile(path.join(__dirname, "public/default-avatar.png"));
 });
 
-
-console.log("APP.JS LOADED");
+console.log(
+  "FILE EXISTS:",
+  fs.existsSync(path.join(__dirname, "public/default-avatar.png"))
+);
 
 
 export default app;
