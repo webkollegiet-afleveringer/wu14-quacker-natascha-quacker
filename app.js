@@ -43,6 +43,10 @@ app.use("/users", userRoutes);
 // we also need to define the routes for quacks, which will handle all quack-related operations (fetching quacks, creating quacks, etc.). We import the quacksRoutes from the routes folder and use it in our app, similar to how we set up the user routes.
 app.use("/quacks", quacksRoutes);
 
+app.get("/debug-image", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/default-avatar.png"));
+});
+
 
 
 export default app;
