@@ -8,10 +8,10 @@ const userSchema = new mongoose.Schema({
     email: { type: String, unique: true },
     password: String,
     avatar: { 
-        type: Object, 
+        type: String, 
         // set default to the default avatar that is also used in menu component, so that users who do not upload an avatar will have the default avatar displayed in their profile and in the header menu. This ensures consistency in the user experience, as all users without a custom avatar will have the same default image displayed across the application.
         // it will be possible to change the avatar in the users profile, and when a user uploads a new avatar, the avatar field will be updated with the new avatar data (example: URL to the uploaded image)
-        default: { url: "../assets/default-avatar.png", public_id: "" } 
+        default: "../assets/default-avatar.png" 
     },
     bio: String,
     joined: {
