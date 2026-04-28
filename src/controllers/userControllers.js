@@ -135,11 +135,13 @@ export const registerUser = async (req, res) => {
             username: username.toLowerCase(),
             email: email.toLowerCase(),
             password: hashedPassword,
-            avatar: "",
+            avatar: {
+                
+            },
             bio: "",
             joined: new Date(),
-            following: 0,
-            followers: 0,
+            following: [],
+            followers: [],
             messages: [],
             quacks: [],
             quacksRepliedTo: [],
