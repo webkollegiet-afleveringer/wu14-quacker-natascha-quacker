@@ -25,9 +25,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(
-  "/images",
-  express.static(path.join(__dirname, "../public"))
+    "/images",
+    express.static(path.join(__dirname, "../public"))
 );
+
+console.log("__dirname:", __dirname);
+console.log("PUBLIC PATH:", path.join(__dirname, "../public"));
 
 // routes
 // why this is not in userRoutes.js?
