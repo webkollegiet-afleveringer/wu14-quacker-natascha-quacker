@@ -12,10 +12,8 @@ import CreateQuack from '../components/CreateQuack/CreateQuack';
 export default function Home() {
 
     const { user, logout } = useAuth();
-
-    // if you want to get current user data without using AuthContext, you can use the useCurrentUser hook like this:
-    // import useCurrentUser from '../hooks/useCurrentUser'; - MOVE THIS TO TOP
-    // const user = useCurrentUser();
+    console.log(user);
+        
 
     const quacks = useLoaderData();
     console.log(quacks);
