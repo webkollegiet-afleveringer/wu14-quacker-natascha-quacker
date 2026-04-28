@@ -7,20 +7,20 @@ import { Quack } from "../models/Quack.js";
 
 
 
-// // MARK: Get All Quacks
-// export const getQuacks = async (req, res) => {
-//     try {
-//         const quacks = await Quack.find()
-//             .populate("user", "username avatar")
-//             .sort({ createdAt: -1 })
-//             .limit(50);
+// MARK: Get All Quacks
+export const getQuacks = async (req, res) => {
+    try {
+        const quacks = await Quack.find()
+            .populate("user", "username avatar")
+            .sort({ createdAt: -1 })
+            .limit(50);
 
-//         res.json({ quacks });
-//     }
-//     catch (err) {
-//         res.status(500).json({ message: "Server error" });
-//     }
-// };
+        res.json({ quacks });
+    }
+    catch (err) {
+        res.status(500).json({ message: "Server error" });
+    }
+};
 
 
 // // MARK: Get Quack by ID

@@ -3,7 +3,7 @@
 
 import express from "express";
 import {
-    // getQuacks,
+    getQuacks,
     // getQuackById,
     createQuack
 } from "../controllers/quacksController.js";
@@ -19,7 +19,7 @@ const router = express.Router();
 // MARK: GET
 
 // get all quacks (for home page) - this will be used to fetch all quacks to display on the home page feed
-// router.get("/", getQuacks);
+router.get("/", getQuacks);
 
 
 // Dynamic Routes
