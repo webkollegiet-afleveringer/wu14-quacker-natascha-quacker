@@ -83,7 +83,8 @@ export default function CreateQuack() {
             alert("Quack created!");
             
             // Navigate the user to the newly created quack's page using the ID of the created quack returned from the API. This allows the user to see their newly created quack and interact with it (example: view, like, comment, etc.).
-            navigate(`/quacks/${result.id}`);
+            // navigate(`/quacks/${result.id}`);
+            navigate(`/`);
 
         }
         // if there is a network error or any other error that occurs during the registration attempt that is not handled by the API response, catch the error and set a general form error with a message indicating that there was a network error. This will inform the user that something went wrong with the registration attempt.

@@ -67,24 +67,27 @@ export const createQuack = async (req, res) => {
 
         const newQuack = await Quack.create({
             createdAt: Date.now(),
-            author: req.user.id,
-            quack: {
-                content: content || "",
-                tags: [],
-                media: [],
-                views: [],
-                likes: [],
-                reposts: [],
-                comments: []
-            }
+            content: content || "",
+            media: media || [],
+            // author: req.user.id,
+            // quack: {
+            //     content: content || "",
+            //     tags: [],
+            //     media: media || [],
+            //     views: [],
+            //     likes: [],
+            //     reposts: [],
+            //     comments: []
+            // }
         });
 
-        const populatedQuack = await newQuack.populate(
-            "author",
-            "username avatar"
-        );
+        // const populatedQuack = await newQuack.populate(
+        //     "author",
+        //     "username avatar"
+        // );
 
-        res.status(201).json({ quack: populatedQuack });
+        // res.status(201).json({ quack: populatedQuack });
+        res.status(201).json({ quack: newQuack });
     }
     catch (err) {
         res.status(500).json({ message: "Server error" });
