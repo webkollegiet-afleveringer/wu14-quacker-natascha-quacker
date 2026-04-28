@@ -78,6 +78,9 @@ export const createQuack = async (req, res) => {
 
         const userId = req.user.id;
 
+        console.log("CREATE QUACK HIT");
+        console.log("USER ID:", userId);
+
         const tags = quack.content
         ?.match(/#\w+/g)
         ?.map(tag => tag.slice(1)) || [];
@@ -96,6 +99,10 @@ export const createQuack = async (req, res) => {
         });
 
         await newQuack.save({ session });
+
+        console.log("NEW QUACK ID:", newQuack._id);
+
+        console.log("PUSHING TO USER:", newQuack._id);
 
         await User.findByIdAndUpdate(
             userId,
