@@ -8,33 +8,13 @@ import cors from "cors";
 import { connectDB } from "./src/config/db.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import quacksRoutes from "./src/routes/quacksRoutes.js";
-import path from "path";
-import { fileURLToPath } from "url";
-
-import fs from "fs";
-
-
-
 
 connectDB();
 
 const app = express();
 
-app.use(express.json());
-
 app.use(cors());
-
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-console.log("__dirname:", __dirname);
-console.log("PUBLIC PATH:", path.join(__dirname, "public"));
-
-app.use(
-    "/images",
-    express.static(path.join(__dirname, "public"))
-);
+app.use(express.json());
 
 // routes
 // why this is not in userRoutes.js?
@@ -47,14 +27,6 @@ app.use("/users", userRoutes);
 // we also need to define the routes for quacks, which will handle all quack-related operations (fetching quacks, creating quacks, etc.). We import the quacksRoutes from the routes folder and use it in our app, similar to how we set up the user routes.
 app.use("/quacks", quacksRoutes);
 
-app.get("/debug-image", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/default-avatar.png"));
-});
-
-console.log(
-  "FILE EXISTS:",
-  fs.existsSync(path.join(__dirname, "public/default-avatar.png"))
-);
 
 
 export default app;

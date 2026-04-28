@@ -1,10 +1,11 @@
 import './Header.sass';
-import logo from '../../assets/quacker-logo.png';
-import { IoSettingsOutline } from "react-icons/io5";
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { useAuth } from "../../hooks/useAuth.jsx";
 import Menu from '../Menu/Menu';
-import { useEffect, useState } from 'react';
+import defaultAvatar from '../../assets/default_avatar.png';
+import logo from '../../assets/quacker-logo.png';
+import { IoSettingsOutline } from "react-icons/io5";
 
 
 export default function Header({ title }) {
@@ -39,7 +40,7 @@ export default function Header({ title }) {
 
                 <div className="header__avatar">
                     {/* show user avatar if user is logged in */}
-                    {user ? (<img src={`https://natascha-quacker-api.onrender.com${user.avatar}`} alt="User Avatar" className='header__avatar' onClick={toggleMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__avatar' onClick={toggleMenu} />) }
+                    {user ? (<img src={user.avatar ? user.avatar : defaultAvatar} alt="User Avatar" className='header__avatar' onClick={toggleMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__avatar' onClick={toggleMenu} />) }
                 </div>
             
             </section>
