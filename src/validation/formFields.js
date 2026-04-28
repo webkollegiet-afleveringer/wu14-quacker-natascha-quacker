@@ -53,4 +53,4 @@ export const contentField = z
 export const mediaField = z
     .string()
     .trim()
-    // can be empty if content is provided
+    .optional();
