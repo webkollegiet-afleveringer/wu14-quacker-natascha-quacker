@@ -243,7 +243,31 @@ export const getCurrentUser = async (req, res) => {
         });
     }
 };
-    
+
+
+// MARK: Update User Quacks
+export const updateUserQuacks = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+        // add the new quack ID to the user's quacks array and save the updated user document in the database
+        user.quacks.push(req.body.quackId);
+        await user.save();
+        res.json({ message: "User quacks updated" });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: "Server error"
+        });
+    }
+};  
+
 
 // MARK: Update User Profile
 // method: PUT

@@ -36,7 +36,7 @@ export default function Home() {
             <button onClick={logout}>Logout</button> */}
 
             {/* <Register /> */}
-            {/* <Login /> */}
+            <Login />
             <CreateQuack />
             
             <Navigation />
