@@ -8,16 +8,29 @@ import { Quack } from "../models/Quack.js";
 
 
 // MARK: Get All Quacks
+// export const getQuacks = async (req, res) => {
+//     try {
+//         const quacks = await Quack.find()
+//             .populate("user", "username avatar")
+//             .sort({ createdAt: -1 })
+//             .limit(50);
+
+//         res.json({ quacks });
+//     }
+//     catch (err) {
+//         res.status(500).json({ message: "Server error" });
+//     }
+// };
 export const getQuacks = async (req, res) => {
     try {
-        const quacks = await Quack.find()
-            .populate("user", "username avatar")
-            .sort({ createdAt: -1 })
-            .limit(50);
+        const quacks = await Quack.find();
+
+        console.log("QUACKS:", quacks);
 
         res.json({ quacks });
     }
     catch (err) {
+        console.error("GET QUACKS ERROR:", err);
         res.status(500).json({ message: "Server error" });
     }
 };
@@ -67,7 +80,11 @@ export const createQuack = async (req, res) => {
 
         const newQuack = await Quack.create({
             createdAt: Date.now(),
-            author: req.user.id,
+            author: {
+                id: req.user._id,
+                username: req.user.username,
+                avatar: req.user.avatar
+            },
             quack: {
                 content: quack.content || "",
                 tags: [],
@@ -79,13 +96,13 @@ export const createQuack = async (req, res) => {
             }
         });
 
-        // const populatedQuack = await newQuack.populate(
-        //     "author",
-        //     "username avatar"
-        // );
+        const populatedQuack = await newQuack.populate(
+            "author",
+            "username avatar"
+        );
 
-        // res.status(201).json({ quack: populatedQuack });
-        res.status(201).json({ quack: newQuack });
+        res.status(201).json({ quack: populatedQuack });
+        // res.status(201).json({ quack: newQuack });
     }
     catch (err) {
         res.status(500).json({ message: "Server error" });
