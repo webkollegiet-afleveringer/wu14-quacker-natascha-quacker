@@ -17,8 +17,8 @@ export default function Home() {
     // import useCurrentUser from '../hooks/useCurrentUser'; - MOVE THIS TO TOP
     // const user = useCurrentUser();
 
-    // const quacks = useLoaderData();
-    // console.log(quacks);
+    const quacks = useLoaderData();
+    console.log(quacks);
     
 
     return (

@@ -1,6 +1,3 @@
-// SET THUS UP BY USING STRUCTURE OF USER MODEL
-// BUT CHANGE TO FIT HOW QUACKS ARE SET UP IN db.json
-
 import mongoose from "mongoose";
 import { array } from "zod";
 
