@@ -40,7 +40,9 @@ export const protect = (req, res, next) => {
         const decoded = jwt.verify(token, SECRET);
 
         // use the decoded token to attach the user's information to the request object (req.user), so that protected routes can access the user's information (e.g., req.user.id, req.user.username) when handling the request
-        req.user = decoded;
+        req.user = {
+            id: decoded.id
+        };
 
         // call next() to pass control to the next middleware function or route handler in the stack, allowing the request to proceed to the protected route if the token is valid
         next();

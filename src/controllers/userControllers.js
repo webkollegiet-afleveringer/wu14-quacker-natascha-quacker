@@ -151,7 +151,7 @@ export const registerUser = async (req, res) => {
         // the secret key (SECRET), 
         // and an options object that sets the token's expiration time (7 days in this case)
         // sign the token with the user's ID and username as the payload, using the secret key and setting an expiration time (e.g., 7 days).
-        console.log("SIGN SECRET:", process.env.JWT_SECRET);
+        // console.log("SIGN SECRET:", process.env.JWT_SECRET);
         const token = jwt.sign(
             { id: newUser._id, username: newUser.username },
             SECRET,
@@ -167,7 +167,7 @@ export const registerUser = async (req, res) => {
     }
     // if there's an error during the user creation process or any other part of the process, catch the error and return a 500 Internal Server Error response with a generic error message indicating that there was a server error
     catch (err) {
-        console.error(err);
+        // console.error(err);
         res.status(500).json({ message: "Server error" });
     }
 };
@@ -206,10 +206,10 @@ export const loginUser = async (req, res) => {
 
         // if the email exists and the password matches, generate a JWT token for the authenticated user using jwt.sign() method, which takes a payload (an object containing the user's ID and username), the secret key (SECRET), and an options object that sets the token's expiration time (7 days in this case)
         // sign the token with the user's ID and username as the payload, using the secret key and setting an expiration time (7 days).
-        console.log("SIGN SECRET:", process.env.JWT_SECRET);
+        // console.log("SIGN SECRET:", process.env.JWT_SECRET);
         const token = jwt.sign(
             { id: user._id, username: user.username },
-            process.env.JWT_SECRET,
+            SECRET,
             { expiresIn: "7d" }
         );
 
