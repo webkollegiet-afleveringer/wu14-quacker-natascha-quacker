@@ -23,7 +23,6 @@ app.use(express.json());
 // By using app.use("/users", userRoutes), we are telling our Express app to use the userRoutes for any requests that start with "/users".
 // This keeps our code clean and maintainable.
 app.use("/users", userRoutes);
-app.use("/images", express.static("public"));
 
 // we also need to define the routes for quacks, which will handle all quack-related operations (fetching quacks, creating quacks, etc.). We import the quacksRoutes from the routes folder and use it in our app, similar to how we set up the user routes.
 app.use("/quacks", quacksRoutes);
