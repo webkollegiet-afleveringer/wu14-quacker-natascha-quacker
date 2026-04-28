@@ -9,16 +9,25 @@ import { connectDB } from "./src/config/db.js";
 import userRoutes from "./src/routes/userRoutes.js";
 import quacksRoutes from "./src/routes/quacksRoutes.js";
 import path from "path";
+import { fileURLToPath } from "url";
 
 
 connectDB();
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
-app.use("/images", express.static("public"));
+app.use(cors());
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(
+  "/images",
+  express.static(path.join(__dirname, "../public"))
+);
 
 // routes
 // why this is not in userRoutes.js?
