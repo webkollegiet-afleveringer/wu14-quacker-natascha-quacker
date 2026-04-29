@@ -12,8 +12,8 @@ export const getQuacks = async (req, res) => {
     try {
         // find all quacks in the database
         const quacks = await Quack.find()
-            // populate the author field of each quack with the corresponding user's username and avatar, so that we can display the author's information when fetching the quacks to display on the home page feed.
-            .populate("author", "username avatar")
+            // populate the author field of each quack with the corresponding user's name, username and avatar, so that we can display the author's information when fetching the quacks to display on the home page feed.
+            .populate("author", "name username avatar")
             // sort the quacks by createdAt in descending order (newest quacks first) to display the most recent quacks at the top of the home page feed.
             .sort({ createdAt: -1 });
 
