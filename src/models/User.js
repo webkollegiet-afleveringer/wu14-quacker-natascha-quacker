@@ -29,9 +29,8 @@ const userSchema = new mongoose.Schema({
         default: [] 
     },
     quacks: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Quack",
-        default: []
+        type: Array, 
+        default: [] 
     },
     quacksRepliedTo: { 
         type: Array, 
