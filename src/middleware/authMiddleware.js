@@ -14,7 +14,7 @@ if (!SECRET) {
 // MARK: Protect Middleware
 export const protect = (req, res, next) => {
 
-    console.log("VERIFY SECRET:", SECRET);
+    // console.log("VERIFY SECRET:", SECRET);
 
     // check for the presence of the Authorization headers
     // (authHeader will be in the format "Bearer <token>")
