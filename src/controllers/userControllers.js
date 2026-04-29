@@ -233,10 +233,17 @@ export const loginUser = async (req, res) => {
 export const getCurrentUser = async (req, res) => {
     try {
         
+        // the protect middleware has already verified the JWT token and attached the decoded user information to the request object (req.user), so we can access the user's ID from req.user.id to fetch the current logged in user's data from the database.
         const userId = req.user.id;
 
+        // query the database to find the user with the specified ID
         const user = await User.findById(userId)
+            // populate the user's quacks to include the full quack data (content, tags, media, createdAt) instead of just the quack IDs, so that we can display the user's quacks
             .populate({
+                // path specifies the field in the User model that we want to populate, which is "quacks" in this case.
+                // the User models quacks field is defined as an array of ObjectIds that reference the Quack model, so we need to use populate to get the full quack data when fetching the user.
+                // quackId = the ObjectId stored in the user's quacks array
+                // so we find the quack document in the Quack collection that has an _id matching the quackId, and replace the quackId in the user's quacks array with the full quack document (content, tags, media, createdAt) for each quack.
                 path: "quacks",
                 // options: {
                 //     sort: {

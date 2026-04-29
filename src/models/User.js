@@ -4,8 +4,14 @@ import mongoose from "mongoose";
 // define a schema for the User model with various fields and their types
 const userSchema = new mongoose.Schema({
     name: String,
-    username: { type: String, unique: true },
-    email: { type: String, unique: true },
+    username: { 
+        type: String, 
+        unique: true
+    },
+    email: {
+        type: String,
+        unique: true
+    },
     password: String,
     avatar: { 
         type: String, 
@@ -28,8 +34,10 @@ const userSchema = new mongoose.Schema({
         type: Array, 
         default: [] 
     },
-    quacks: [{ 
+    quacks: [{
+        // mongoose.Schema.Types.ObjectId returns the unique identifier (ObjectId = id of the quack document) for the quack document that the user has created
         type: mongoose.Schema.Types.ObjectId, 
+        // ref is used to specify the model that this field references, so when an id is gotten from the ObjectId, Mongoose knows to look in the Quack collection to find the corresponding quack document and populate the user's quacks field with the full quack data instead of just the quack id's
         ref: "Quack" 
     }],
     quacksRepliedTo: { 

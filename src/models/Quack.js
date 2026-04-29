@@ -7,11 +7,13 @@ const quackSchema = new mongoose.Schema({
         default: Date.now
     },
     author: {
+        // reference to the User model, which allows us to populate the author field with the full user data (username and avatar) when fetching quacks from the database
+        // mongoose.Schema.Types.ObjectId returns the unique identifier for the user document that created the quack
+        // ref: "User" tells Mongoose which model to use when populating this field with the actual user data.
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
-    // quack: {
     // text in the quack, which is required
     content: {
         type: String,
