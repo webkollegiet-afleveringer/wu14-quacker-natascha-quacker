@@ -23,43 +23,6 @@ export const getQuacks = async (req, res) => {
 };
 
 
-// // MARK: Get Quack by ID
-// export const getQuackById = async (req, res) => {
-//     try {
-//         // extract the quack ID from the request parameters
-//         // (/quacks/12345 - req.params.id will be "12345")
-//         const { id } = req.params;
-
-//         // query the database to find a quack with the specified ID
-//         const quack = await Quack.findById(id)
-//             .populate("user", "username avatar");
-
-//         // if no quack is found with the specified ID, return a 404 Not Found response with an appropriate error message
-//         if (!quack) {
-//             return res.status(404).json({
-//                 message: "Quack not found"
-//             });
-//         }
-
-//         // return the quack data as a JSON response
-//         res.json({ quack });
-
-//     }
-//     // if there's an error during the database query (e.g., invalid ID format) or any other part of the process, catch the error and return a 400 Bad Request response with an appropriate error message indicating that the quack ID is invalid
-//     catch (err) {
-//         if (err.name === "CastError") {
-//             return res.status(400).json({
-//                 message: "Invalid quack ID"
-//             });
-//         }
-
-//         res.status(500).json({
-//             message: "Server error"
-//         });
-//     }
-// };
-
-
 // MARK: Create Quack
 export const createQuack = async (req, res) => {
     
@@ -88,11 +51,9 @@ export const createQuack = async (req, res) => {
 
         const newQuack = await Quack.create({
             // author: userId,
-            quack: {
-                content: content || "",
-                tags: [],
-                media: media || [],
-            }
+            content: content || "",
+            tags: [],
+            media: media || [],
             // quack: {
                 // content: quack.content || "",
                 // tags: tags,
@@ -133,3 +94,40 @@ export const createQuack = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+
+// // MARK: Get Quack by ID
+// export const getQuackById = async (req, res) => {
+//     try {
+//         // extract the quack ID from the request parameters
+//         // (/quacks/12345 - req.params.id will be "12345")
+//         const { id } = req.params;
+
+//         // query the database to find a quack with the specified ID
+//         const quack = await Quack.findById(id)
+//             .populate("user", "username avatar");
+
+//         // if no quack is found with the specified ID, return a 404 Not Found response with an appropriate error message
+//         if (!quack) {
+//             return res.status(404).json({
+//                 message: "Quack not found"
+//             });
+//         }
+
+//         // return the quack data as a JSON response
+//         res.json({ quack });
+
+//     }
+//     // if there's an error during the database query (e.g., invalid ID format) or any other part of the process, catch the error and return a 400 Bad Request response with an appropriate error message indicating that the quack ID is invalid
+//     catch (err) {
+//         if (err.name === "CastError") {
+//             return res.status(400).json({
+//                 message: "Invalid quack ID"
+//             });
+//         }
+
+//         res.status(500).json({
+//             message: "Server error"
+//         });
+//     }
+// };
