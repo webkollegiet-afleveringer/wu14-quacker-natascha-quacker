@@ -53,7 +53,13 @@ export const createQuack = async (req, res) => {
             userId,
             { 
                 $push: { 
-                    quacks: newQuack._id 
+                    quacks: { 
+                        _id: newQuack._id,
+                        content: newQuack.content,
+                        tags: newQuack.tags,
+                        media: newQuack.media,
+                        createdAt: newQuack.createdAt
+                    } 
                 } 
             },
             {
