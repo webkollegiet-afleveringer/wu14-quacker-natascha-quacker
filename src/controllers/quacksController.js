@@ -50,7 +50,9 @@ export const createQuack = async (req, res) => {
         // ?.map(tag => tag.slice(1)) || [];
 
         const newQuack = await Quack.create({
-            author: userId,
+            author: [
+                userId,
+            ],
             content: content || "",
             tags: [],
             media: media || [],
