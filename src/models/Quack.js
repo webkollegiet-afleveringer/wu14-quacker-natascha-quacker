@@ -61,14 +61,14 @@ const quackSchema = new mongoose.Schema({
     // }]
 });
 
-// quackSchema.set("toJSON", {
-//     transform: (doc, ret) => {
-//         ret.id = ret._id;
-//         delete ret._id;
-//         delete ret.__v;
-//         return ret;
-//     }
-// });
+quackSchema.set("toJSON", {
+    transform: (doc, ret) => {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+        return ret;
+    }
+});
 
 // export the Quack model based on the quackSchema, allowing us to interact with the quacks collection in MongoDB
 export const Quack = mongoose.model("Quack", quackSchema);

@@ -26,24 +26,10 @@ export const getQuacks = async (req, res) => {
 // MARK: Create Quack
 export const createQuack = async (req, res) => {
     
-    // const session = await mongoose.startSession();
-
     try {
-        // session.startTransaction();
-
-        // const { quack } = req.body;
         const { content, media } = req.body;
 
-        // if (!quack) {
-        //     await session.abortTransaction();
-        //     session.endSession();
-        //     return res.status(400).json({ message: "Missing quack data" });
-        // }
-
         const userId = req.user.id;
-
-        // console.log("CREATE QUACK HIT");
-        // console.log("USER ID:", userId);
 
         // const tags = quack.content
         // ?.match(/#\w+/g)
@@ -60,10 +46,7 @@ export const createQuack = async (req, res) => {
             // comments: []
         });
 
-        // await newQuack.save({ session });
-
         console.log("NEW QUACK ID:", newQuack._id);
-
         console.log("PUSHING TO USER:", newQuack._id);
 
         await User.findByIdAndUpdate(
@@ -78,20 +61,13 @@ export const createQuack = async (req, res) => {
             }
         );
 
-        // await session.commitTransaction();
-        // session.endSession();
-
         // await newQuack.populate("author", "username avatar");
 
         res.status(201).json({ quack: newQuack });
 
     }
     catch (err) {
-        // await session.abortTransaction();
-        // session.endSession();
-
         console.error("CREATE QUACK ERROR:", err);
-
         res.status(500).json({ message: "Server error" });
     }
 };
