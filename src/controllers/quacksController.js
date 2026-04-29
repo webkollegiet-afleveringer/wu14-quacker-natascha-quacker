@@ -62,15 +62,15 @@ export const createQuack = async (req, res) => {
 
         // await newQuack.save({ session });
 
-        // console.log("NEW QUACK ID:", newQuack._id);
+        console.log("NEW QUACK ID:", newQuack._id);
 
-        // console.log("PUSHING TO USER:", newQuack._id);
+        console.log("PUSHING TO USER:", newQuack._id);
 
         await User.findByIdAndUpdate(
             userId,
             { 
                 $push: { 
-                    quacks: newQuack.id 
+                    quacks: newQuack._id 
                 } 
             },
             {
