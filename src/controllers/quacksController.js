@@ -26,10 +26,10 @@ export const getQuacks = async (req, res) => {
 // MARK: Create Quack
 export const createQuack = async (req, res) => {
     
-    const session = await mongoose.startSession();
+    // const session = await mongoose.startSession();
 
     try {
-        session.startTransaction();
+        // session.startTransaction();
 
         // const { quack } = req.body;
         const { content, media } = req.body;
@@ -50,9 +50,7 @@ export const createQuack = async (req, res) => {
         // ?.map(tag => tag.slice(1)) || [];
 
         const newQuack = await Quack.create({
-            author: [
-                userId,
-            ],
+            author: userId,
             content: content || "",
             tags: [],
             media: media || [],
