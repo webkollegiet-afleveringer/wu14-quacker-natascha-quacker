@@ -232,7 +232,9 @@ export const loginUser = async (req, res) => {
 // MARK: Get Current User
 export const getCurrentUser = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select("-password");
+        const user = await User.findById(req.user.id)
+        .select("-password")
+        .populate("quacks", "content tags media createdAt");
 
         res.json({ user });
 

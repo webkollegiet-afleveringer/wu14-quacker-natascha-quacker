@@ -74,7 +74,7 @@ export const createQuack = async (req, res) => {
                 } 
             },
             {
-                new: true,
+                returnDocument: "after"
             }
         );
 
