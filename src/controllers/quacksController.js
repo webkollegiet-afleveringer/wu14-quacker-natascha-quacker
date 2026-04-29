@@ -75,7 +75,7 @@ export const createQuack = async (req, res) => {
         // await session.commitTransaction();
         // session.endSession();
 
-        await newQuack.populate("author", "username avatar");
+        // await newQuack.populate("author", "username avatar");
 
         res.status(201).json({ quack: newQuack });
 
