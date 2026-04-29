@@ -68,59 +68,63 @@ export const createQuack = async (req, res) => {
     try {
         session.startTransaction();
 
-        const { quack } = req.body;
+        // const { quack } = req.body;
+        const { content, media } = req.body;
 
-        if (!quack) {
-            await session.abortTransaction();
-            session.endSession();
-            return res.status(400).json({ message: "Missing quack data" });
-        }
+        // if (!quack) {
+        //     await session.abortTransaction();
+        //     session.endSession();
+        //     return res.status(400).json({ message: "Missing quack data" });
+        // }
 
-        const userId = req.user.id;
+        // const userId = req.user.id;
 
-        console.log("CREATE QUACK HIT");
-        console.log("USER ID:", userId);
+        // console.log("CREATE QUACK HIT");
+        // console.log("USER ID:", userId);
 
-        const tags = quack.content
-        ?.match(/#\w+/g)
-        ?.map(tag => tag.slice(1)) || [];
+        // const tags = quack.content
+        // ?.match(/#\w+/g)
+        // ?.map(tag => tag.slice(1)) || [];
 
-        const newQuack = new Quack({
-            author: userId,
-            quack: {
-                content: quack.content || "",
-                tags: tags,
-                media: quack.media || [],
-                views: [],
-                likes: [],
-                reposts: [],
-                comments: []
-            }
+        const newQuack = await Quack.create({
+            // author: userId,
+            content: content || "",
+            tags: [],
+            media: media || [],
+            // quack: {
+                // content: quack.content || "",
+                // tags: tags,
+                // media: quack.media || [],
+                // views: [],
+                // likes: [],
+                // reposts: [],
+                // comments: []
+            // }
         });
 
-        await newQuack.save({ session });
+        // await newQuack.save({ session });
 
-        console.log("NEW QUACK ID:", newQuack._id);
+        // console.log("NEW QUACK ID:", newQuack._id);
 
-        console.log("PUSHING TO USER:", newQuack._id);
+        // console.log("PUSHING TO USER:", newQuack._id);
 
-        await User.findByIdAndUpdate(
-            userId,
-            { $push: { quacks: newQuack._id } },
-            { session }
-        );
+        // await User.findByIdAndUpdate(
+        //     userId,
+        //     { $push: { quacks: newQuack._id } },
+        //     { session }
+        // );
 
-        await session.commitTransaction();
-        session.endSession();
+        // await session.commitTransaction();
+        // session.endSession();
 
-        await newQuack.populate("author", "username avatar");
+        // await newQuack.populate("author", "username avatar");
 
         res.status(201).json({ quack: newQuack });
 
     }
     catch (err) {
-        await session.abortTransaction();
-        session.endSession();
+        // await session.abortTransaction();
+        // session.endSession();
 
         console.error("CREATE QUACK ERROR:", err);
 
