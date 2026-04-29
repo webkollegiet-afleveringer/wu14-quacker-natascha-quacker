@@ -40,7 +40,7 @@ export const createQuack = async (req, res) => {
         //     return res.status(400).json({ message: "Missing quack data" });
         // }
 
-        // const userId = req.user.id;
+        const userId = req.user.id;
 
         // console.log("CREATE QUACK HIT");
         // console.log("USER ID:", userId);
@@ -50,7 +50,7 @@ export const createQuack = async (req, res) => {
         // ?.map(tag => tag.slice(1)) || [];
 
         const newQuack = await Quack.create({
-            // author: userId,
+            author: userId,
             content: content || "",
             tags: [],
             media: media || [],
@@ -80,7 +80,7 @@ export const createQuack = async (req, res) => {
         // await session.commitTransaction();
         // session.endSession();
 
-        // await newQuack.populate("author", "username avatar");
+        await newQuack.populate("author", "username avatar");
 
         res.status(201).json({ quack: newQuack });
 
