@@ -88,9 +88,11 @@ export const createQuack = async (req, res) => {
 
         const newQuack = await Quack.create({
             // author: userId,
-            content: content || "",
-            tags: [],
-            media: media || [],
+            quack: {
+                content: content || "",
+                tags: [],
+                media: media || [],
+            }
             // quack: {
                 // content: quack.content || "",
                 // tags: tags,
