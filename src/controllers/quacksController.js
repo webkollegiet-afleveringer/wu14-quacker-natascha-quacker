@@ -50,19 +50,16 @@ export const createQuack = async (req, res) => {
         // ?.map(tag => tag.slice(1)) || [];
 
         const newQuack = await Quack.create({
-            author: userId,
+            author: {
+                id: userId,
+            },
             content: content || "",
             tags: [],
             media: media || [],
-            // quack: {
-                // content: quack.content || "",
-                // tags: tags,
-                // media: quack.media || [],
-                // views: [],
-                // likes: [],
-                // reposts: [],
-                // comments: []
-            // }
+            // views: [],
+            // likes: [],
+            // reposts: [],
+            // comments: []
         });
 
         // await newQuack.save({ session });

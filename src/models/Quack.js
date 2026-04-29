@@ -29,37 +29,36 @@ const quackSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-        // arrays of user IDs who have viewed, liked, or reposted the quack, referencing the User model
-        // views: [
-        //     { 
-        //         type: mongoose.Schema.Types.ObjectId, 
-        //         ref: "User" 
-        //     }
-        // ],
-        // likes: [
-        //     { 
-        //         type: mongoose.Schema.Types.ObjectId, 
-        //         ref: "User" 
-        //     }
-        // ],
-        // reposts: [
-        //     { 
-        //         type: mongoose.Schema.Types.ObjectId, 
-        //         ref: "User" 
-        //     }
-        // ],
-        // // array of comment objects, where each comment has a reference to the user who made the comment and the content of the comment
-        // comments: [{
-        //     user: { 
-        //         type: mongoose.Schema.Types.ObjectId, 
-        //         ref: "User" 
-        //     },
-        //     content: { 
-        //         type: String, 
-        //         required: true 
-        //     }
-        // }]
-    // }
+    // arrays of user IDs who have viewed, liked, or reposted the quack, referencing the User model
+    // views: [
+    //     { 
+    //         type: mongoose.Schema.Types.ObjectId, 
+    //         ref: "User" 
+    //     }
+    // ],
+    // likes: [
+    //     { 
+    //         type: mongoose.Schema.Types.ObjectId, 
+    //         ref: "User" 
+    //     }
+    // ],
+    // reposts: [
+    //     { 
+    //         type: mongoose.Schema.Types.ObjectId, 
+    //         ref: "User" 
+    //     }
+    // ],
+    // // array of comment objects, where each comment has a reference to the user who made the comment and the content of the comment
+    // comments: [{
+    //     user: { 
+    //         type: mongoose.Schema.Types.ObjectId, 
+    //         ref: "User" 
+    //     },
+    //     content: { 
+    //         type: String, 
+    //         required: true 
+    //     }
+    // }]
 });
 
 quackSchema.set("toJSON", {
