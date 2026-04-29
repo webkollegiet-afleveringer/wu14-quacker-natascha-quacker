@@ -59,18 +59,20 @@ export default function CreateQuack() {
                     },
                     // body contains the form data as a JSON string, which will be sent to the backend for creating a quack.
                     // The API will validate the data and attempt to create a new quack based on the provided information.
-                    body: JSON.stringify(data)
-                    // body: JSON.stringify({
-                    //     quack: {
-                    //         content: data.content,
-                    //         tags: [],
-                    //         media: data.media || [],
-                    //         // views: [],
-                    //         // likes: [],
-                    //         // reposts: [],
-                    //         // comments: []
-                    //     }
-                    // })
+                    
+                    // body: JSON.stringify(data)
+
+                    body: JSON.stringify({
+                        quack: {
+                            content: data.content,
+                            tags: [],
+                            media: data.media || [],
+                            // views: [],
+                            // likes: [],
+                            // reposts: [],
+                            // comments: []
+                        }
+                    })
                 }
             );
 
