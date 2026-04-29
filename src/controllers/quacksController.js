@@ -11,8 +11,8 @@ import { User } from "../models/User.js";
 export const getQuacks = async (req, res) => {
     try {
         const quacks = await Quack.find()
-            .populate("author", "username avatar")
-            .sort({ createdAt: -1 });
+            // .populate("author", "username avatar")
+            // .sort({ createdAt: -1 });
 
         res.json({ quacks });
     }
