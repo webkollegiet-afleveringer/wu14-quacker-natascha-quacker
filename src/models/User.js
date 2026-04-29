@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema({
         type: Array, 
         default: [] 
     },
-    quacks: { 
-        type: Array, 
-        default: [] 
-    },
+    quacks: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: "Quack" 
+    }],
     quacksRepliedTo: { 
         type: Array, 
         default: [] 

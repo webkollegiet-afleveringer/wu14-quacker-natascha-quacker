@@ -31,43 +31,24 @@ export const createQuack = async (req, res) => {
 
         const userId = req.user.id;
 
-        // const tags = quack.content
-        // ?.match(/#\w+/g)
-        // ?.map(tag => tag.slice(1)) || [];
-
         const newQuack = await Quack.create({
             author: userId,
             content: content || "",
             tags: [],
             media: media || [],
-            // views: [],
-            // likes: [],
-            // reposts: [],
-            // comments: []
         });
-
-        console.log("NEW QUACK ID:", newQuack._id);
-        console.log("PUSHING TO USER:", newQuack._id);
 
         await User.findByIdAndUpdate(
             userId,
             { 
                 $push: { 
-                    quacks: { 
-                        _id: newQuack._id,
-                        content: newQuack.content,
-                        tags: newQuack.tags,
-                        media: newQuack.media,
-                        createdAt: newQuack.createdAt
-                    } 
+                    quacks: newQuack._id
                 } 
             },
             {
                 returnDocument: "after"
             }
         );
-
-        // await newQuack.populate("author", "username avatar");
 
         res.status(201).json({ quack: newQuack });
 

@@ -232,13 +232,25 @@ export const loginUser = async (req, res) => {
 // MARK: Get Current User
 export const getCurrentUser = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id)
+        
+        const userId = req.user.id;
+
+        const user = await User.findById(userId)
+            .populate({
+                path: "quacks",
+                // options: {
+                //     sort: {
+                //         createdAt: -1
+                //     }
+                // },
+            })
             .select("-password")
 
         res.json({ user });
 
     }
-    catch {
+    catch (err) {
+        console.error(err);
         res.status(500).json({
             message: "Server error"
         });
