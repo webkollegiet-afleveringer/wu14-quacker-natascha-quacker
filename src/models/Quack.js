@@ -6,11 +6,11 @@ const quackSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    // author: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User",
-    //     required: true
-    // },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     // quack: {
     // text in the quack, which is required
     content: {
