@@ -1,5 +1,5 @@
+import "./Quack.sass";
 // display all quacks on the home page feed, and also display the quacks on the user's profile page (the quacks that the user has created)
-import "./quack.sass";
 
 
 export default function Quack({ quack }) {
