@@ -28,6 +28,7 @@ export const getQuacks = async (req, res) => {
 };
 
 
+
 // MARK: Create Quack
 export const createQuack = async (req, res) => {
     
@@ -90,6 +91,60 @@ export const createQuack = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
+
+
+// // MARK: Delete Quack
+// export const deleteQuack = async (req, res) => {
+//     try {
+//         // extract the quack ID from the request parameters
+//         const { id } = req.params;
+        
+//         // find the quack in the database by its id
+//         const quack = await Quack.findById(id);
+
+//         // if no quack is found with the specified ID, return a 404 Not Found response with an appropriate error message
+//         if (!quack) {
+//             return res.status(404).json({
+//                 message: "Quack not found"
+//             });
+//         }
+
+//         // check if the user making the request is the author of the quack by comparing the quack's author field (which contains the user ID of the author) with the user ID from the request object (req.user.id) that was set by the protect middleware after verifying the JWT token. This ensures that only the author of the quack can delete it.
+//         if (quack.author.toString() !== req.user.id) {
+//             return res.status(403).json({
+//                 message: "Unauthorized"
+//             });
+//         }
+
+//         // if the user is the author of the quack, proceed to delete the quack from the database using its ID, and return a success message indicating that the quack was deleted successfully.
+//         await Quack.findByIdAndDelete(id);
+        
+//         // get users id
+//         const userId = req.user.id;
+//         // delete quack from the users quacks array by pulling the quack ID from the array, so that when a quack is deleted, it is also removed from the user's list of quacks to maintain data consistency.
+//         await User.findByIdAndUpdate(
+//             userId,
+//             {
+//                 $pull: { 
+//                     quacks: id
+//                 }
+//             },
+//             {
+//                 returnDocument: "after"
+//             }
+//         );
+
+//         // return a success message indicating that the quack was deleted successfully, which can be used to update the home page feed and remove the deleted quack from the display.
+//         res.json({ message: "Quack deleted successfully" });
+//     }
+//     // if there's an error during the database query (e.g., invalid ID format) or any other part of the process, catch the error and return a 400 Bad Request response with an appropriate error message indicating that the quack ID is invalid, or a 500 Internal Server Error response for any other server errors.
+//     catch (err) {
+//         console.error("DELETE QUACK ERROR:", err);
+//         res.status(500).json({ message: "Server error" });
+//     }
+// };
+
 
 
 // // MARK: Get Quack by ID

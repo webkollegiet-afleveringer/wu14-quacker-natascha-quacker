@@ -35,5 +35,12 @@ router.post("/", protect, createQuack);
 
 
 
+// MARK: DELETE
+
+// delete quack by ID)
+// router.delete("/:id", protect, deleteQuackById);
+
+
+
 
 export default router;

@@ -33,9 +33,9 @@ export default function Home() {
             {user ? <p>Hej {user.username}</p> : <p>Ikke logget ind</p>}
             <button onClick={logout}>Logout</button> */}
 
-            {/* <Register /> */}
+            {/* <Register />
             <Login />
-            <CreateQuack />
+            <CreateQuack /> */}
             
             <Navigation />
         </section>
