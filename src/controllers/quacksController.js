@@ -66,11 +66,17 @@ export const createQuack = async (req, res) => {
 
         // console.log("PUSHING TO USER:", newQuack._id);
 
-        // await User.findByIdAndUpdate(
-        //     userId,
-        //     { $push: { quacks: newQuack._id } },
-        //     { session }
-        // );
+        await User.findByIdAndUpdate(
+            userId,
+            { 
+                $push: { 
+                    quacks: newQuack.id 
+                } 
+            },
+            {
+                new: true,
+            }
+        );
 
         // await session.commitTransaction();
         // session.endSession();
