@@ -11,7 +11,7 @@ import { User } from "../models/User.js";
 export const getQuacks = async (req, res) => {
     try {
         const quacks = await Quack.find()
-            // .populate("author", "username avatar")
+            .populate("author", "username avatar")
             // .sort({ createdAt: -1 });
 
         res.json({ quacks });
@@ -50,9 +50,7 @@ export const createQuack = async (req, res) => {
         // ?.map(tag => tag.slice(1)) || [];
 
         const newQuack = await Quack.create({
-            author: {
-                id: userId,
-            },
+            author: userId,
             content: content || "",
             tags: [],
             media: media || [],
