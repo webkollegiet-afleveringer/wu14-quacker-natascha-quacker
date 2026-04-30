@@ -35,7 +35,7 @@ export default function App() {
         element: <Messages />,
       },
       {
-        path: '/profile/:id',
+        path: '/users/:id',
         element: <Profile />,
         loader: userLoader,
         hydrateFallbackElement: <p>Loading profile...</p>

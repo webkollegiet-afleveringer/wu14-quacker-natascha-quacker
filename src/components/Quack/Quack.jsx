@@ -16,7 +16,7 @@ export default function Quack({ quack }) {
             <article key={quack.id} className="quack__article">
 
                 {/* link to author users profile */}
-                <Link to={`/profile/${quack.author?.id}`} className="quack__author-link">
+                <Link to={`/users/${quack.author?.id}`} className="quack__author-link">
                     <img src={quack.author?.avatar} alt={quack.author?.username} className="quack__author-image" />
                 </Link>    
                 
@@ -25,7 +25,7 @@ export default function Quack({ quack }) {
                     
                     <div className="quack__author">
                         {/* link to author users profile */}
-                        <Link to={`/profile/${quack.author?.id}`} className="quack__author-name">
+                        <Link to={`/users/${quack.author?.id}`} className="quack__author-name">
                             {quack.author.name && (
                                 <p>{quack.author.name}</p>
                             )}
