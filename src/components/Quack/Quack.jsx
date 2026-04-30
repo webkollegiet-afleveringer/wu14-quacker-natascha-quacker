@@ -3,6 +3,8 @@ import { BiMessageRounded } from "react-icons/bi";
 import { HiOutlineArrowPathRoundedSquare } from "react-icons/hi2";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { HiOutlineArrowUpTray } from "react-icons/hi2";
+import { Link } from "react-router";
+
 // display all quacks on the home page feed, and also display the quacks on the user's profile page (the quacks that the user has created)
 
 
@@ -12,16 +14,22 @@ export default function Quack({ quack }) {
         <section className="quack">
 
             <article key={quack.id} className="quack__article">
-                    
-                <img src={quack.author?.avatar} alt={quack.author?.username} className="quack__author-image" />
+
+                {/* link to author users profile */}
+                <Link to={`/profile/${quack.author?.id}`} className="quack__author-link">
+                    <img src={quack.author?.avatar} alt={quack.author?.username} className="quack__author-image" />
+                </Link>    
+                
                 
                 <section className="quack__quack">
                     
                     <div className="quack__author">
-                        {quack.author.name && (
-                            <p className="quack__author-name">{quack.author.name}</p>
-                        )}
-                        
+                        {/* link to author users profile */}
+                        <Link to={`/profile/${quack.author?.id}`} className="quack__author-name">
+                            {quack.author.name && (
+                                <p>{quack.author.name}</p>
+                            )}
+                        </Link>
                         {quack.author.username && (
                             <p className="quack__author-username">@{quack.author.username}</p>
                         )}
@@ -42,9 +50,9 @@ export default function Quack({ quack }) {
                                     {quack.tags.map((tag) => (
                                         // for each tag, create a link to the tag page with the tag name as the link text, so that when a user clicks on a tag, they can see all quacks with that tag
                                         // (not implemented yet, but this is how we would set up the link to the tag page for each tag associated with the quack)
-                                        <a href={`/tags/${tag}`} key={tag} className="quack__tag">
+                                        <Link to={`/tags/${tag}`} key={tag} className="quack__tag">
                                             #{tag}
-                                        </a>
+                                        </Link>
                                     ))}
                                 </div>
                             ) : null}
@@ -81,10 +89,12 @@ export default function Quack({ quack }) {
                         
                         {/* clicking the reposts count button will take the user to a page that shows all reposts of this quack */}
                         
-                        <button className="quack__interaction-button">
-                            <HiOutlineArrowPathRoundedSquare className="icon" />
-                            {quack.reposts && quack.reposts.length > 0 ? quack.reposts.length : 0}
-                        </button>
+                        <Link to={`/quacks/reposts/${quack.id}`}>
+                            <button className="quack__interaction-button">
+                                <HiOutlineArrowPathRoundedSquare className="icon" />
+                                {quack.reposts && quack.reposts.length > 0 ? quack.reposts.length : 0}
+                            </button>
+                        </Link>
                         
                         {/* liking a quack will increase the like count and add the quack to the users quacksLiked array */}
                         
@@ -94,10 +104,11 @@ export default function Quack({ quack }) {
                         </button>
                         
                         {/* maybe link to the create quack page and check if user got here from the repost button. If so, pre-fill the repost form with the original quack */}
-                        
-                        <a href={`/quacks/${quack.id}/repost`} className="quack__interaction-button">
+                        {/* can i maybe send the original quack data inside the Link somehow? */}
+                        {/* I think i did in another project - check newsify maybe */}
+                        <Link to={`/quacks/${quack.id}/repost`} className="quack__interaction-button">
                             <HiOutlineArrowUpTray className="icon" />
-                        </a>
+                        </Link>
                     
                     </div>
 
