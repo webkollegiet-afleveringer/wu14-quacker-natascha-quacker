@@ -53,7 +53,7 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
                         <ul>
                             {/* links to current logged in user's profile */}
                             <li>
-                                <Link to={`/profile/${user.id}`} className='menu__profile-link'>
+                                <Link to={`/users/${user.id}`} className='menu__profile-link'>
                                     <IoPersonOutline className='menu__icon' />
                                     Profile
                                 </Link>
