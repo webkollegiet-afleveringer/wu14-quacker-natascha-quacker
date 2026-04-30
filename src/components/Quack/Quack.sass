@@ -1,19 +1,15 @@
 @use '../../style/variables' as var;
     
 .quack
-    display: flex
-    flex-direction: column
+    display: grid
+    grid-template-columns: auto 1fr
     gap: 1rem
     padding: 1rem
     border-bottom: 1px solid var.$border-color
     color: var.$primary-text-color
     background-color: var.$background-color
 
-    &__article
-        display: grid
-        grid-template-columns: auto 1fr
-        gap: 1rem
-
+    // MARK: Author Image
     &__author-image
         height: 3.5rem
         aspect-ratio: 1
@@ -21,6 +17,7 @@
         background-color: var.$icon-color
 
 
+    // MARK: Author Info
     &__author
         display: flex
         gap: .25rem
@@ -36,23 +33,15 @@
         font-size: 1rem
         color: var.$secondary-text-color
 
-
-    &__content
-        // display: block
-    &__tags
-        display: flex
-        gap: .5rem
-        align-items: center
     
+    // MARK: Tags
     &__tag
-        display: flex
-        gap: 1rem
-        align-items: center
         color: var.$primary-link-color
         font-size: 1rem
         text-decoration: none
 
 
+    // MARK: Interactions
     &__interactions
         display: flex
         gap: 2rem
@@ -69,6 +58,7 @@
         border: none
         color: var.$secondary-text-color
         font-size: 1rem
+        text-decoration: none
         cursor: pointer
         .icon
             font-size: 1.4rem

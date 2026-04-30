@@ -48,13 +48,6 @@ export const createQuack = async (req, res) => {
                 .map(tag => tag.substring(1))
             : [];
 
-        // // remove tags from content before storing it in the database, so that the content field only contains the text of the quack without the hashtags. This allows us to display the quack content separately from the hashtags when fetching and displaying the quacks on the frontend.
-        // const contentWithoutTags = content
-        //     ? content.split(" ")
-        //         .filter(word => !word.startsWith("#"))
-        //         .join(" ")
-        //     : "";
-
         // create a new quack document in the database using the Quack model, with the author field set to the user's ID, and the content and media fields set to the values extracted from the request body.
         // This will save the new quack to the database and return the created quack document.
         const newQuack = await Quack.create({
