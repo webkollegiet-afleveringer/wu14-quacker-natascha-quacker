@@ -7,11 +7,11 @@ import { useForm, Watch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
-import "./Register.sass";
+import "./RegisterForm.sass";
 import { registerSchema } from "../../validation/authSchema";
 
 
-export default function Register() {
+export default function RegisterForm() {
     // useNavigate hook to programmatically navigate to different routes. This allows the Register component to navigate to the home page ("/") after a successful registration.
     const navigate = useNavigate();
 
@@ -211,7 +211,7 @@ export default function Register() {
     
     return (
         <section className="register">
-            <h1>Create Quackount</h1>
+            <h1>Create <span>Quackount</span></h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="register__form">
 

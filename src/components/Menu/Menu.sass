@@ -38,17 +38,13 @@
         padding: 2rem 2rem 0 2rem
         grid-template-columns: auto 1fr
     
+
+    // MARK: User Avatar
     &__user-avatar
         height: 3rem
         width: 3rem
         border-radius: 50%
         background-color: var.$icon-color
-
-    &__username
-        font-size: 1.5rem
-        font-weight: bold
-        margin: .5rem 0
-        color: var.$primary-title-color
 
 
     // MARK: Messages
@@ -58,14 +54,12 @@
         justify-content: flex-end
         gap: 1rem
 
-
     // Link to messages with specific user
     &__message-avatar
         height: 2rem
         width: 2rem
         border-radius: 50%
         background-color: var.$icon-color
-
 
     // Link to all messages with all users
     &__messages-link
@@ -80,12 +74,32 @@
         .message-icon
             color: var.$icon-color-active
 
+
+    // MARK: Name | Username
+    &__user-info
+        grid-column: 1 / 3
+        grid-row: 2 / 3
+        margin: .5rem 0
+
+    &__name
+        font-size: 1.4rem
+        font-weight: bold
+        // margin: .5rem 0
+        color: var.$primary-title-color
+    
+    &__username
+        font-size: 1.1rem
+        color: var.$secondary-text-color
+
+
+    // MARK: Follow
     &__user-stats
         grid-column: 1 / 3
+        grid-row: 3 / 4
         display: flex
         gap: 2rem
         color: var.$secondary-text-color
-        margin: 1rem 0
+        margin: .5rem 0 0
         span
             color: var.$primary-text-color
             font-weight: bold

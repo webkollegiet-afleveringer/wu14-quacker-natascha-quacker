@@ -5,11 +5,11 @@ import Search from "./pages/Search";
 import Notifications from "./pages/Notifications";
 import Messages from "./pages/Messages";
 import Error from "./pages/Error";
-
-// import usersLoader from "./loaders/usersLoader";
 import quacksLoader from "./loaders/quacksLoader";
 import Profile from "./pages/Profile";
 import userLoader from "./loaders/userLoader";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 
 export default function App() {
@@ -39,6 +39,14 @@ export default function App() {
         element: <Profile />,
         loader: userLoader,
         hydrateFallbackElement: <p>Loading profile...</p>
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/register',
+        element: <Register />,
       },
       {
         path: '*',
