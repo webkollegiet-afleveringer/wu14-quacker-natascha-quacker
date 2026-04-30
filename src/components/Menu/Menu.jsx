@@ -51,32 +51,33 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
                 {user ? (
                     <nav className="menu__nav">
                         <ul>
+                            {/* links to current logged in user's profile */}
                             <li>
-                                <Link to="/profile" className='menu__profile-link'>
+                                <Link to={`/profile/${user.id}`} className='menu__profile-link'>
                                     <IoPersonOutline className='menu__icon' />
                                     Profile
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/lists" className='menu__lists-link'>
+                                <Link to={`/lists/${user.id}`} className='menu__lists-link'>
                                     <CiViewList className='menu__icon' />
                                     Lists
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/notifications" className='menu__notifications-link'>
+                                <Link to={`/notifications/${user.id}`} className='menu__notifications-link'>
                                     <BiMessageRoundedDetail className='menu__icon' />
                                     Topics
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/bookmarks" className='menu__bookmarks-link'>
+                                <Link to={`/bookmarks/${user.id}`} className='menu__bookmarks-link'>
                                     <FaRegBookmark className='menu__icon' />
                                     Bookmarks
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/moments" className='menu__moments-link'>
+                                <Link to={`/moments/${user.id}`} className='menu__moments-link'>
                                     <AiOutlineThunderbolt className='menu__icon' />
                                     Moments
                                 </Link>

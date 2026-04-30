@@ -8,6 +8,8 @@ import Error from "./pages/Error";
 
 // import usersLoader from "./loaders/usersLoader";
 import quacksLoader from "./loaders/quacksLoader";
+import Profile from "./pages/Profile";
+import userLoader from "./loaders/userLoader";
 
 
 export default function App() {
@@ -31,6 +33,12 @@ export default function App() {
       {
         path: '/messages',
         element: <Messages />,
+      },
+      {
+        path: '/profile/:id',
+        element: <Profile />,
+        loader: userLoader,
+        hydrateFallbackElement: <p>Loading profile...</p>
       },
       {
         path: '*',

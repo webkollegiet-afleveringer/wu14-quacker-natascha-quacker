@@ -37,9 +37,9 @@ export default function Home() {
             
             </main>
 
-            {/* <Register />
+            {/* <Register /> */}
             <Login />
-            <CreateQuack /> */}
+            <CreateQuack />
             
             <Navigation />
         </section>
