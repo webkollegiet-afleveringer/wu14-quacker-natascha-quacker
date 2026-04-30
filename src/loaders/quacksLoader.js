@@ -7,5 +7,5 @@ export default async function quacksLoader() {
 
     const data = await response.json();
 
-    return data.quacks;
+    return data;
 }
