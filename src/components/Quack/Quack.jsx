@@ -38,26 +38,52 @@ export default function Quack({ quack }) {
                     {/* if content or media exists */}
                     {quack.content && (
                         // show text div
-                        <div className="quack__text">
+                        // <div className="quack__text">
 
-                            <p>{quack.content}</p>
+                            <p className="quack__content">
+                                {quack.content}
+                                {/* check content field for hashtags */}
+                                {quack.content.includes("#") && (
+                                    <span className="quack__tags">
+                                        {/* split content into words and loop through them */}
+                                        {quack.content.split(" ").map((word, index) => {
+                                            // if word starts with #, show it as a tag
+                                            if (word.startsWith("#")) {
+                                                const tag = word.substring(1);
+                                                return (
+                                                    <Link to={`/tags/${tag}`} key={index} className="quack__tag">
+                                                        #{tag}
+                                                    </Link>
+                                                );
+                                            } else {
+                                                return null;
+                                            }
+                                        })}
+                                    </span>
+                                )}
 
-                            {/* if tags exists - show tags div */}
-                            {quack.tags && quack.tags.length > 0 ? (
-                                // show tags div
-                                <div className="quack__tags">
-                                    {/* and map through them */}
-                                    {quack.tags.map((tag) => (
-                                        // for each tag, create a link to the tag page with the tag name as the link text, so that when a user clicks on a tag, they can see all quacks with that tag
-                                        // (not implemented yet, but this is how we would set up the link to the tag page for each tag associated with the quack)
-                                        <Link to={`/tags/${tag}`} key={tag} className="quack__tag">
-                                            #{tag}
-                                        </Link>
-                                    ))}
-                                </div>
-                            ) : null}
 
-                        </div>
+
+
+                                {/* if tags exists - show tags div */}
+                                {/* {quack.tags && quack.tags.length > 0 ? ( */}
+                                    {/* // show tags div */}
+                                    {/* <span className="quack__tags"> */}
+                                        {/* and map through them */}
+                                        {/* {quack.tags.map((tag) => ( */}
+                                            {/* // for each tag, create a link to the tag page with the tag name as the link text, so that when a user clicks on a tag, they can see all quacks with that tag */}
+                                            {/* // (not implemented yet, but this is how we would set up the link to the tag page for each tag associated with the quack) */}
+                                            {/* <Link to={`/tags/${tag}`} key={tag} className="quack__tag"> */}
+                                                {/* #{tag} */}
+                                            {/* </Link> */}
+                                        {/* ))} */}
+                                    {/* </span> */}
+                                {/* ) : null} */}
+                            </p>
+
+                            
+
+                        // </div>
                     )}
 
                     
