@@ -1,51 +1,51 @@
 @use '../../style/variables' as var;
     
-.create-quack
-    display: flex
-    flex-direction: column
-    gap: 3rem
-    margin: 2rem 1rem 6rem
-    padding: 2rem 1rem 1rem
+.login
+    margin: 2rem auto
+    padding: 2rem
     border: 1px solid var.$border-color
     border-radius: 4px
+    width: 90%
 
     h1
         color: var.$primary-title-color
-        font-size: 1.75rem
+        font-size: 2rem
         text-align: center
+        margin: 0 0 4rem
+        span
+            color: var.$icon-color-active
+            display: block
+            font-size: 2.5rem
+            text-decoration: underline
+            text-underline-offset: 0.75rem
 
     &__form
         display: flex
         flex-direction: column
-        gap: 2rem
+        gap: 3rem
 
     &__error
         color: red
         border-radius: 4px
         text-align: center
+        font-size: 1.25rem
 
     &__label
         display: block
-        margin: 0 .5rem .5rem
-        color: var.$primary-title-color
-        font-size: 1rem
+        margin: 0 0 .5rem
+        color: var.$primary-text-color
+        font-size: 1.25rem
 
-    input, textarea
+    input
         width: 100%
-        font-size: 1rem
+        font-size: 1.25rem
         padding: 1rem .75rem
         border: 1px solid var.$border-color
-        color: var.$secondary-text-color
         &::placeholder
             color: var.$secondary-text-color
     
-    textarea
-        resize: vertical
-        min-height: 100px
-        color: var.$primary-text-color
-
     &__button
-        font-size: 1.2rem
+        font-size: 1.25rem
         padding: 1rem
         border: 2px solid var.$border-color
         background-color: var.$background-color

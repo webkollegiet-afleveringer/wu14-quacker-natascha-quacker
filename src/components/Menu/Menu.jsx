@@ -20,10 +20,7 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
                 {user ? (
                     // this section for when user is logged in
                     <section className="menu__user" style={{ display: user ? 'grid' : 'none' }}>
-                        <div className="menu__user-info">
-                            <img src={user.avatar ? user.avatar : defaultAvatar} alt="User Avatar" className='menu__user-avatar' />
-                            <p className='menu__username'>{user.username ? user.username : 'Username not available'}</p>
-                        </div>
+                        <img src={user.avatar ? user.avatar : defaultAvatar} alt="User Avatar" className='menu__user-avatar' />
                         <div className="menu__user-messages">
                             {/* Link to messages with specific user */}
                             <Link to="/messages" className='menu__message-link'>
@@ -34,6 +31,11 @@ export default function Menu({ user, logout, menuOpen, closeMenu }) {
                                 <PiDotsThreeOutlineLight className='message-icon' />
                             </Link>
                         </div>
+                        <div className="menu__user-info">
+                            <p className='menu__name'>{user.name ? user.name : 'Name not available'}</p>
+                            <p className='menu__username'>@{user.username ? user.username : 'Username not available'}</p>
+                        </div>
+                        
                         <div className="menu__user-stats">
                             <p><span>{user.following ? user.following.length : 0}</span> Following</p>
                             <p><span>{user.followers ? user.followers.length : 0}</span> Followers</p>

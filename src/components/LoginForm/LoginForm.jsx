@@ -5,10 +5,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth.jsx";
-import "./Login.sass";
+import "./LoginForm.sass";
 
 
-export default function Login() {
+export default function LoginForm() {
 
     // useAuth hook to access the authentication state and functions provided by the AuthContext. This allows the Login component to call the login function to update the authentication state when a user successfully logs in.
     const { login } = useAuth();
@@ -72,7 +72,7 @@ export default function Login() {
 
     return (
         <section className="login">
-            <h1>Login</h1>
+            <h1>Login to your <span>Quackount</span></h1>
 
             {/* set the form submission handler */}
             {/* we do it like this instead of just onSubmit={onSubmit} because we need to use the handleSubmit function from react-hook-form and specify that it needs to use the onSubmit function that we defined */}

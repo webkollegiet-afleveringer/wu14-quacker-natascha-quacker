@@ -3,8 +3,6 @@ import { useLoaderData } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import Header from '../components/Header/Header';
 import Navigation from '../components/Navigation/Navigation';
-import Register from '../components/Register/Register';
-import Login from '../components/Login/Login';
 import CreateQuack from '../components/CreateQuack/CreateQuack';
 import Quack from '../components/Quack/Quack';
 
@@ -38,7 +36,7 @@ export default function Home() {
             </main>
 
             {/* <Register /> */}
-            <Login />
+            {/* <Login /> */}
             <CreateQuack />
             
             <Navigation />
