@@ -8,8 +8,18 @@ import { Link } from "react-router";
 
 export default function Quack({ quack }) {
 
+    // display date in format "dd.mm.yyyy"
+    // const date = new Date(quack.createdAt);
+    // const formattedDate = date.toLocaleDateString("da-DK", {
+    //     day: "2-digit",
+    //     month: "2-digit",
+    //     year: "numeric"
+    // });
+
+
     return (
         <section className="quack">
+            {/* <p>{formattedDate}</p> */}
 
             {/* MARK: Author Image */}
             {/* link to author users profile */}

@@ -3,18 +3,19 @@ import { useLoaderData } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import Header from '../components/Header/Header';
 import Navigation from '../components/Navigation/Navigation';
-import CreateQuack from '../components/CreateQuack/CreateQuack';
+import CreateQuackButton from '../components/CreateQuackButton/CreateQuackButton';
 import Quack from '../components/Quack/Quack';
 
 
 
 export default function Home() {
 
+    // get the user data from the useAuth hook, which is used to get the current logged in user and their data
     const { user, logout } = useAuth();
-    console.log(user);
-        
+    // console.log(user); 
 
-    const quacks = useLoaderData();
+    // get the quacks data from the quacksLoader, which is used as a loader for this route in App.jsx
+    const { quacks } = useLoaderData();
     console.log(quacks);
     
 
@@ -32,14 +33,14 @@ export default function Home() {
                     ))}
             
                 </section>
-            
-            </main>
 
-            {/* <Register /> */}
-            {/* <Login /> */}
-            <CreateQuack />
+                {/* blue button to create a new quack */}
+                <CreateQuackButton />
+
+            </main>
             
             <Navigation />
+
         </section>
     )
 }

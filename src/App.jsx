@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import userLoader from "./loaders/userLoader";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import CreateQuack from "./pages/CreateQuack";
 
 
 export default function App() {
@@ -47,6 +48,10 @@ export default function App() {
       {
         path: '/register',
         element: <Register />,
+      },
+      {
+        path: '/create-quack',
+        element: <CreateQuack />,
       },
       {
         path: '*',

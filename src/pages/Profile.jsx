@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header/Header";
+import CreateQuackButton from '../components/CreateQuackButton/CreateQuackButton';
 import Navigation from "../components/Navigation/Navigation";
 
 
@@ -49,6 +50,9 @@ export default function Profile() {
                         This is {viewedUser.name}'s profile page. Here you can follow/unfollow {viewedUser.name} and view their quacks.
                     </p>
                 )}
+
+                {/* blue button to create a new quack */}
+                <CreateQuackButton />
 
             </main>
             

@@ -1,33 +1,17 @@
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { quackSchema } from '../../validation/quackSchema';
-import './CreateQuack.sass';
+import './CreateQuackForm.sass';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAuth } from '../../hooks/useAuth';
 
 
-// create a button for creating a quack, which opens this form
-// button is placed absolute in the bottom right corner of the screen, and is visible on all pages except the create quack page
-// only show button if user is logged in (check AuthContext for user state)
-// when the button is clicked, navigate to the page where this form is located (dont know where yet)
+export default function CreateQuackForm() {
 
-
-// ADD THIS TO src/utils/formatDate.jsx AND IMPORT IT IN THE .jsx FILE THAT DISPLAYS THE QUACKS (example: Quack.jsx)
-// LIKE THIS
-// import { formatDate } from "../utils/formatDate";
-// <p>{formatDate(quack.createdAt)}</p>
-
-// export function formatDate(dateString) {
-//     const date = new Date(dateString);
-
-//     return date.toLocaleDateString("da-DK", {
-//         day: "2-digit",
-//         month: "2-digit",
-//         year: "numeric"
-//     });
-// }
-
-
-export default function CreateQuack() {
+    // get current logged in user from AuthContext to check if user is logged in and to get the user's token for authentication when making the API request to create a quack.
+    // user is not used in the current implementation of this form, but it can be used in the future to associate the created quack with the logged-in user or to display the user's information in the form.
+    const { user } = useAuth();
+    
 
     const navigate = useNavigate();
 
@@ -37,6 +21,7 @@ export default function CreateQuack() {
         register,
         handleSubmit,
         setError,
+        watch,
         formState: { errors }
     } = useForm({
         resolver: zodResolver(quackSchema),
@@ -55,24 +40,11 @@ export default function CreateQuack() {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                        Authorization: `Bearer ${localStorage.getItem("token")}` // include the user's token in the Authorization header for authentication when creating a quack. This ensures that only authenticated users can create quacks, and the API can associate the created quack with the correct user based on the token.
                     },
                     // body contains the form data as a JSON string, which will be sent to the backend for creating a quack.
                     // The API will validate the data and attempt to create a new quack based on the provided information.
-                    
                     body: JSON.stringify(data)
-
-                    // body: JSON.stringify({
-                    //     quack: {
-                    //         content: data.content,
-                    //         tags: [],
-                    //         media: data.media || [],
-                    //         // views: [],
-                    //         // likes: [],
-                    //         // reposts: [],
-                    //         // comments: []
-                    //     }
-                    // })
                 }
             );
 
@@ -133,52 +105,61 @@ export default function CreateQuack() {
 
 
     return (
-        <section className="create-quack">
-            <h1>Create Quack</h1>
+        // <section className="create-quack-form">
 
-            <form className="create-quack__form" onSubmit={handleSubmit(onSubmit)}>
-            
-                <label>
-                    <p className="create-quack__label">What's on your mind?</p>
+            <form className="create-quack-form" onSubmit={handleSubmit(onSubmit)}>
+
+                <div className="create-quack-form__buttons">
+                    <Link to="/" className="create-quack-form__link">
+                        Cancel
+                    </Link>
+                    {/* disable button if no text is provided in textarea or no media is selected */}
+                    {/* if button is disabled, set background color to indicate it's not clickable */}
+                    <button type="submit" className="create-quack-form__button" disabled={!watch("content") && !watch("media")} style={{ backgroundColor: (!watch("content") && !watch("media")) ? "var.$disable-color" : "var.$primary-link-color" }}>
+                        Quack
+                    </button>
+                </div>
+
+                {errors.content && (
+                    <p className="create-quack-form__error">
+                        {errors.content.message}
+                    </p>
+                )}
+
+                <div className="create-quack-form__input-container">
+                    <img src={user?.avatar} alt={user?.username} className="create-quack-form__avatar" />
                     <textarea
-                        placeholder="What's on your mind?"
+                        placeholder="What's quackening?"
                         {...register("content")}
                     ></textarea>
-                    {errors.content && (
-                        <p className="register__error">
-                            {errors.content.message}
-                        </p>
-                    )}
-                </label>
+                </div>
+
+
+                {/* set media to a iamge scroller with images from users camera roll */}
                 
 
-                {/* tags */}
-                {/* extract tags from quack content */}
-                {/* look for words that start with "#" and remove the "#" symbol */}
-                {/* store tags in an array */}
-
                 {/* media input */}
-                <label>
-                    <p className="create-quack__label">Add media (optional)</p>
+                {/* is set as array in the data structure */}
+                {/* <div className="create-quack-form__media-input">
+                    <select name="" id="">
+                        <option value="">Select media type</option>
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                    </select> */}
                     <input 
                         {...register("media")}
                         placeholder="Enter media URL"
                     />
-                    {errors.media && (
-                        <p className="register__error">
-                            {errors.media.message}
-                        </p>
-                    )}
-                </label>
-
-
-
-            
-                <button type="submit" className="create-quack__button">Quack</button>
+                {/* </div> */}
+                
+                {errors.media && (
+                    <p className="create-quack-form__error">
+                        {errors.media.message}
+                    </p>
+                )}
             
             </form>
 
-        </section>
     )
 
 }
