@@ -1,0 +1,75 @@
+@use '../../style/variables' as var;
+    
+.create-quack-form
+
+    // MARK: Buttons
+    &__buttons
+        display: flex
+        justify-content: space-between
+        align-items: center
+        padding: 1rem
+    
+    // MARK: Cancel
+    &__link
+        color: var.$primary-link-color
+        font-size: 1rem
+        text-decoration: none
+
+    // MARK: Submit
+    &__button
+        font-size: 1.1rem
+        padding: .5rem 1rem
+        background-color: var.$primary-link-color
+        color: white
+        border: none
+        border-radius: 30px
+        cursor: pointer
+        &:disabled
+            background-color: var.$disable-color
+            cursor: not-allowed
+
+
+    // MARK: Error
+    &__error
+        color: red
+        border-radius: 4px
+        text-align: center
+        margin-bottom: 1rem
+
+
+    // MARK: Text Container
+    &__input-container
+        display: flex
+        gap: .5rem
+        padding: 0 1rem
+
+    // MARK: Avatar
+    &__avatar
+        width: 3rem
+        height: 3rem
+        border-radius: 50%
+        object-fit: cover
+
+    // MARK: Textarea
+    textarea
+        width: 100%
+        font-size: 1rem
+        padding: 0 1rem
+        border: none
+        resize: vertical
+        min-height: 200px
+        color: var.$primary-text-color
+        &::placeholder
+            color: var.$secondary-text-color
+        &:focus-visible
+            outline: none
+
+    input
+        width: 100%
+        font-size: 1rem
+        padding: 1rem
+        border: none
+        border-top: 1px solid var.$border-color
+        color: var.$primary-text-color
+        &::placeholder
+            color: var.$secondary-text-color

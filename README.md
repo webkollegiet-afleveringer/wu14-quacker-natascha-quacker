@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="quacker-logo.svg" alt="Centered Image" width="200">
+  <img src="./src/assets/quacker-logo.svg" alt="Centered Image" width="200">
 </div>
 
 # Udvikling af webapp til Quacker
@@ -13,3 +13,14 @@ Registreringssiden er dog ikke en del af designmaterialet, og det er derfor jere
 I vælger selv, hvilken backend‑løsning I vil arbejde med, så længe den understøtter de funktioner, I vurderer nødvendige for jeres prototype, eksempelvis oprettelse af brugere, login og håndtering af opslag. 
 
 Det forventes, at I arbejder med en klar komponentstruktur, gennemtænkt state‑håndtering og en samlet løsning, der afspejler, hvordan et rigtigt socialt medie kunne fungere i praksis.
+
+## Minimumskrav
+- Oprettelse af API med f.eks. Express.js, der understøtter følgende funktionaliteter:
+  - oprettelse af nye brugere
+  - login
+  - oprettelse af quacks (beskeder)
+  - håndtering af følgere
+- Oprettelse af nye brugere med grundlæggende validering af indtastede oplysninger.
+- Login‑funktionalitet, der giver adgang til brugerens personlige feed og profil.
+- Mulighed for at oprette quacks, som vises i brugerens eget feed.
+- Funktionalitet til at følge andre brugere, så deres quacks fremgår i feedet.

@@ -1,0 +1,32 @@
+@use '../../style/variables' as var;
+    
+.header
+    position: sticky
+    top: 0
+    z-index: 100
+    display: grid
+    grid-template-columns: 1fr auto 1fr
+    justify-content: center
+    align-items: center
+    padding: 1rem
+    background-color: var.$background-color
+    border-bottom: 1px solid var.$border-color
+
+    &__settings-section
+        justify-self: end    
+
+    &__avatar
+        height: 2.2rem
+        aspect-ratio: 1
+        border-radius: 50%
+        background-color: var.$icon-color
+
+    &__logo
+        height: 2rem
+
+    &__settings
+        height: 1.8rem
+        width: 1.8rem
+        .icon
+            color: var.$icon-color-active
+            font-size: 1.8rem

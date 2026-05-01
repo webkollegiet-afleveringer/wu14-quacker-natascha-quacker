@@ -1,0 +1,54 @@
+@use '../../style/variables' as var;
+    
+.register
+    margin: 2rem auto 8rem
+    padding: 2rem
+    border: 1px solid var.$border-color
+    border-radius: 4px
+    width: 90%
+
+    h1
+        color: var.$primary-title-color
+        font-size: 2rem
+        text-align: center
+        margin: 0 0 4rem
+        span
+            color: var.$icon-color-active
+            display: block
+            font-size: 2.5rem
+            text-decoration: underline
+            text-underline-offset: 0.75rem
+
+    &__form
+        display: flex
+        flex-direction: column
+        gap: 3rem
+
+    &__error
+        color: red
+        border-radius: 4px
+        text-align: center
+        font-size: 1.25rem
+
+    &__label
+        display: block
+        margin: 0 0 .5rem
+        color: var.$primary-text-color
+        font-size: 1.25rem
+
+    input
+        width: 100%
+        font-size: 1.25rem
+        padding: 1rem .75rem
+        border: 1px solid var.$border-color
+        &::placeholder
+            color: var.$secondary-text-color
+    
+    &__button
+        font-size: 1.25rem
+        padding: 1rem
+        border: 2px solid var.$border-color
+        background-color: var.$background-color
+        color: var.$icon-color-active
+        cursor: pointer
+        width: 100%
