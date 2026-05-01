@@ -3,6 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import Header from "../components/Header/Header";
 import CreateQuackButton from '../components/CreateQuackButton/CreateQuackButton';
 import Navigation from "../components/Navigation/Navigation";
+import UserProfile from "../components/EditFollowButton/EditFollowButton";
 
 
 export default function Profile() {
@@ -27,13 +28,19 @@ export default function Profile() {
 
     // check if the profile being viewed has the same id as the currently logged in user
     // save the result (true or false) in a variable called isOwnProfile
-    const isOwnProfile = viewedUser.id === loggedInUser?.id;
+    // const isOwnProfile = viewedUser.id === loggedInUser?.id;
 
 
     return (
         <section className="profile-page">
 
-            <Header />
+            {/* background image for when header is on profile page */}
+                {/* background image can be edited in the users "edit profile" - ADD BG IMAGE TO API */}
+            {/* LEFT- back button instead of users avatar on left side of header */}
+            {/* MIDDLE - hide logo/title */}
+            {/* RIGHT - hide settings icon */}
+            {/* <Header background={true}  /> */}
+            <Header showAvatar={false} />
             
             <main>
 
@@ -41,15 +48,7 @@ export default function Profile() {
                 <h2>@{viewedUser.username}</h2>
 
                 {/* if the viewed user is the same as the logged-in user */}
-                {isOwnProfile ? (
-                    // show the profile page with options to edit profile and create new quacks
-                    <p>This is your profile page. Here you can edit your profile and create new quacks.</p>
-                ) : (
-                    // if the viewed user is not the same as the logged-in user, show the profile page with an option to follow/unfollow the user and view their quacks
-                    <p>
-                        This is {viewedUser.name}'s profile page. Here you can follow/unfollow {viewedUser.name} and view their quacks.
-                    </p>
-                )}
+                <UserProfile userLoggedIn={loggedInUser} viewedUser={viewedUser} />
 
                 {/* blue button to create a new quack */}
                 <CreateQuackButton />

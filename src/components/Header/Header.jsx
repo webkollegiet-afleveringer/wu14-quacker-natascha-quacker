@@ -8,7 +8,7 @@ import logo from '../../assets/quacker-logo.png';
 import { IoSettingsOutline } from "react-icons/io5";
 
 
-export default function Header({ title }) {
+export default function Header({ showAvatar = false }) {
 
     const { user, logout, loading } = useAuth();
 
@@ -36,11 +36,26 @@ export default function Header({ title }) {
             
                 {/* <button>back</button> */}
                 
-                {/* On click - slide open menu on left */}
-
-                <div className="header__avatar">
-                    {/* show user avatar if user is logged in */}
-                    {user ? (<img src={user.avatar ? user.avatar : defaultAvatar} alt="User Avatar" className='header__avatar' onClick={toggleMenu} />) : ( <img src={logo} alt="Default Avatar" className='header__avatar' onClick={toggleMenu} />) }
+                <div className="header__avatar" style={{ display: showAvatar ? 'block' : 'none' }}>
+                    {/* if user is logged in */}
+                    {user ? (
+                        // show their avatar if they have one, otherwise show the default avatar
+                        <img 
+                            src={user.avatar ? user.avatar : defaultAvatar} 
+                            alt="User Avatar" 
+                            className='header__avatar' 
+                            onClick={toggleMenu} 
+                        />
+                    // if no user is logged in
+                    ) : ( 
+                        // show the default avatar and still allow access to the menu (which will show login/signup options instead of user info and logout)
+                        <img 
+                            src={logo} 
+                            alt="Default Avatar" 
+                            className='header__avatar' 
+                            onClick={toggleMenu} 
+                        />
+                    )}
                 </div>
             
             </section>
@@ -62,8 +77,6 @@ export default function Header({ title }) {
                 <Link to="/settings" className='header__settings'>
                     <IoSettingsOutline className='icon' />
                 </Link>
-                
-                {/* <button>Done</button> */}
             
             </section>
 
