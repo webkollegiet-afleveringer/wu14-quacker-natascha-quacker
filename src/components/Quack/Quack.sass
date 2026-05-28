@@ -1,0 +1,64 @@
+@use '../../style/variables' as var;
+    
+.quack
+    display: grid
+    grid-template-columns: auto 1fr
+    gap: 1rem
+    padding: 1rem
+    border-bottom: 1px solid var.$border-color
+    color: var.$primary-text-color
+    background-color: var.$background-color
+
+    // MARK: Author Image
+    &__author-image
+        height: 3.5rem
+        aspect-ratio: 1
+        border-radius: 50%
+        background-color: var.$icon-color
+
+
+    // MARK: Author Info
+    &__author
+        display: flex
+        gap: .25rem
+        align-items: center
+
+    &__author-name
+        font-size: 1.2rem
+        font-weight: bold
+        text-decoration: none
+        color: var.$primary-text-color
+
+    &__author-username
+        font-size: 1rem
+        color: var.$secondary-text-color
+
+    
+    // MARK: Tags
+    &__tag
+        color: var.$primary-link-color
+        font-size: 1rem
+        text-decoration: none
+
+
+    // MARK: Interactions
+    &__interactions
+        display: flex
+        gap: 2rem
+        align-items: center
+        justify-content: space-between
+        width: 90%
+        margin: 1rem 0 0
+
+    &__interaction-button
+        display: flex
+        gap: .25rem
+        align-items: center
+        background: none
+        border: none
+        color: var.$secondary-text-color
+        font-size: 1rem
+        text-decoration: none
+        cursor: pointer
+        .icon
+            font-size: 1.4rem
