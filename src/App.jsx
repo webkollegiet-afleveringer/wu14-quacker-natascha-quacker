@@ -58,9 +58,9 @@ export default function App() {
         element: <Error />
       }
     ],
-    // {
-    //   basename: "/wu14-quacker-natascha-quacker/"
-    // }
+    {
+      basename: "/wu14-quacker-natascha-quacker/"
+    }
   );
 
   return (
